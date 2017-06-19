@@ -1,241 +1,251 @@
 package com.mmf.ancientcostume;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.graphics.Palette;
-import android.support.v7.widget.ShareActionProvider;
-import android.support.v7.widget.Toolbar;
-import android.util.TypedValue;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.Window;
-import android.widget.Toast;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.mmf.ancientcostume.R;
 import com.mmf.ancientcostume.baidu.BaiduFragment;
-import com.mmf.ancientcostume.fragment.SuperAwesomeCardFragment;
 import com.mmf.ancientcostume.fragment.home.HomeFragment;
 import com.mmf.ancientcostume.fragment.home.RecordActivity;
-import com.mmf.ancientcostume.widget.PagerSlidingTabStrip;
 
-public class MainActivity extends ActionBarActivity {
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private ShareActionProvider mShareActionProvider;
-    private PagerSlidingTabStrip mPagerSlidingTabStrip;
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+public class MainActivity extends FragmentActivity {
+    @BindView(R.id.lyt_own)
+    LinearLayout lytOwn;
+    @BindView(R.id.lyt_home)
+    LinearLayout lytHome;
+    @BindView(R.id.lyt_other)
+    LinearLayout lytOther;
+    @BindView(R.id.lyt_collect)
+    LinearLayout lytCollect;
     private ViewPager mViewPager;
-    private Toolbar mToolbar;
+    //灰色以及相对应的RGB值
+    private int mGrayColor;
+    private int mGrayRed;
+    private int mGrayGreen;
+    private int mGrayBlue;
+    //灰色以及相对应的RGB值
+    private int mGreenColor;
+    private int mGreenRed;
+    private int mGreenGreen;
+    private int mGreenBlue;
+    private List<Fragment> textViews;//viewpager中适配的 item
+    private ImageView[] mBorderimageViews;  //外部的边框
+    private ImageView[] mContentImageViews; //内部的内容
+    private ImageView[] mWhiteImageViews;  //发现上面的白色部分
+    private TextView[] mTitleViews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initViews();
-    }
+        ButterKnife.bind(this);
+        initColor();
+        mViewPager = (ViewPager) findViewById(R.id.pager_view);
+        textViews = new ArrayList<>();
+        textViews.add(new RecordActivity());
+        textViews.add(new BaiduFragment());
+        textViews.add(new HomeFragment());
+        textViews.add(new RecordActivity());
 
-    private void initViews() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        // toolbar.setLogo(R.drawable.ic_launcher);
-        mToolbar.setTitle("Rocko");// 标题的文字需在setSupportActionBar之前，不然会无效
-        // toolbar.setSubtitle("副标题");
-        setSupportActionBar(mToolbar);
-        /* 这些通过ActionBar来设置也是一样的，注意要在setSupportActionBar(toolbar);之后，不然就报错了 */
-        // getSupportActionBar().setTitle("标题");
-        // getSupportActionBar().setSubtitle("副标题");
-        // getSupportActionBar().setLogo(R.drawable.ic_launcher);
+        ImageView imageView1 = (ImageView) findViewById(R.id.image1);
+        ImageView imageView2 = (ImageView) findViewById(R.id.image2);
+        ImageView imageView3 = (ImageView) findViewById(R.id.image3);
+        ImageView imageView4 = (ImageView) findViewById(R.id.image4);
+        mBorderimageViews = new ImageView[]{imageView1, imageView2, imageView3, imageView4};
 
-		/* 菜单的监听可以在toolbar里设置，也可以像ActionBar那样，通过下面的两个回调方法来处理 */
-        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+        ImageView topImageView1 = (ImageView) findViewById(R.id.image1_top);
+        ImageView topImageView2 = (ImageView) findViewById(R.id.image2_top);
+        ImageView topImageView3 = (ImageView) findViewById(R.id.image3_top);
+        ImageView topImageView4 = (ImageView) findViewById(R.id.image4_top);
+        mContentImageViews = new ImageView[]{topImageView1, topImageView2, topImageView3, topImageView4};
+
+
+        ImageView whiteImageView1 = (ImageView) findViewById(R.id.image1_white);
+        ImageView whiteImageView2 = (ImageView) findViewById(R.id.image2_white);
+        ImageView whiteImageView3 = (ImageView) findViewById(R.id.image3_white);
+        ImageView whiteImageView4 = (ImageView) findViewById(R.id.image3_white);
+        mWhiteImageViews = new ImageView[]{whiteImageView1, whiteImageView2, whiteImageView3, whiteImageView4};
+
+
+        TextView titileView1 = (TextView) findViewById(R.id.text1);
+        TextView titileView2 = (TextView) findViewById(R.id.text2);
+        TextView titileView3 = (TextView) findViewById(R.id.text3);
+        TextView titileView4 = (TextView) findViewById(R.id.text4);
+        mTitleViews = new TextView[]{titileView1, titileView2, titileView3, titileView4};
+        MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(adapter);
+        setSelection(0);
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_settings:
-                        Toast.makeText(MainActivity.this, "action_settings", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.action_share:
-                        Toast.makeText(MainActivity.this, "action_share", Toast.LENGTH_SHORT).show();
-                        break;
-                    default:
-                        break;
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                System.out.println("******position--" + position + "   ***positionOffset***" + positionOffset + "   **positionOffsetPixels**" + positionOffsetPixels);
+                if (positionOffset > 0) {
+                    if (positionOffset < 0.5) {
+                        //  滑动到一半前，上一页的边框保持绿色不变，下一页的边框由灰色变为绿色
+                        mBorderimageViews[position].setColorFilter(mGreenColor, PorterDuff.Mode.SRC_IN);
+                        mBorderimageViews[position + 1].setColorFilter(getGrayToGreen(positionOffset), PorterDuff.Mode.SRC_IN);
+                        //   上一页的内容保持由实心变为透明，下一页的内容保持透明
+                        mContentImageViews[position].setAlpha((1 - 2 * positionOffset));
+                        mWhiteImageViews[position].setAlpha((1 - 2 * positionOffset));
+                        mContentImageViews[position + 1].setAlpha(0f);
+                        //文字颜色变化
+                        mTitleViews[position].setTextColor(mGreenColor);
+                        mTitleViews[position + 1].setTextColor(getGrayToGreen(positionOffset));
+
+                    } else {
+                        //滑动到一半后，上一页的边框由lvse变为灰色，，下一页边框保持绿色不变
+                        mBorderimageViews[position].setColorFilter(getGreenToGray(positionOffset), PorterDuff.Mode.SRC_IN);
+                        mBorderimageViews[position + 1].setColorFilter(mGreenColor, PorterDuff.Mode.SRC_IN);
+                        //上一页的内容保持透明，下一页的内容由透明变为实心绿色
+                        mContentImageViews[position].setAlpha(0f);
+                        mContentImageViews[position + 1].setAlpha(2 * positionOffset - 1);
+                        mTitleViews[position].setTextColor(getGreenToGray(positionOffset));
+                        mTitleViews[position + 1].setTextColor(mGreenColor);
+                        if (positionOffset > 0.6) {
+                            mWhiteImageViews[position + 1].setVisibility(View.VISIBLE);
+                            mWhiteImageViews[position + 1].setAlpha(10 * positionOffset - 6);
+                        } else {
+                            mWhiteImageViews[position + 1].setVisibility(View.GONE);
+                        }
+                    }
+                } else {
+                    setSelection(position);
                 }
-                return true;
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                setSelection(position);
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        /* findView */
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open,
-                R.string.drawer_close);
-        mDrawerToggle.syncState();
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        mPagerSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
-        mPagerSlidingTabStrip.setViewPager(mViewPager);
-        mPagerSlidingTabStrip.setOnPageChangeListener(new OnPageChangeListener() {
 
-            @Override
-            public void onPageSelected(int arg0) {
-                colorChange(arg0);
-            }
-
-            @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int arg0) {
-            }
-        });
-        initTabsValue();
     }
 
-    /**
-     * mPagerSlidingTabStrip默认值配置
-     */
-    private void initTabsValue() {
-        // 底部游标颜色
-        mPagerSlidingTabStrip.setIndicatorColor(Color.BLUE);
-        // tab的分割线颜色
-        mPagerSlidingTabStrip.setDividerColor(Color.TRANSPARENT);
-        // tab背景
-        mPagerSlidingTabStrip.setBackgroundColor(Color.parseColor("#4876FF"));
-        // tab底线高度
-        mPagerSlidingTabStrip.setUnderlineHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                1, getResources().getDisplayMetrics()));
-        // 游标高度
-        mPagerSlidingTabStrip.setIndicatorHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                5, getResources().getDisplayMetrics()));
-        // 选中的文字颜色
-        mPagerSlidingTabStrip.setSelectedTextColor(Color.WHITE);
-        // 正常文字颜色
-        mPagerSlidingTabStrip.setTextColor(Color.BLACK);
-    }
 
     /**
-     * 界面颜色的更改
-     */
-    @SuppressLint("NewApi")
-    private void colorChange(int position) {
-        // 用来提取颜色的Bitmap
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
-                SuperAwesomeCardFragment.getBackgroundBitmapPosition(position));
-        // Palette的部分
-        Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
-            /**
-             * 提取完之后的回调方法
-             */
-            @Override
-            public void onGenerated(Palette palette) {
-                Palette.Swatch vibrant = palette.getVibrantSwatch();
-				/* 界面颜色UI统一性处理,看起来更Material一些 */
-                mPagerSlidingTabStrip.setBackgroundColor(vibrant.getRgb());
-                mPagerSlidingTabStrip.setTextColor(vibrant.getTitleTextColor());
-                // 其中状态栏、游标、底部导航栏的颜色需要加深一下，也可以不加，具体情况在代码之后说明
-                mPagerSlidingTabStrip.setIndicatorColor(colorBurn(vibrant.getRgb()));
-
-                mToolbar.setBackgroundColor(vibrant.getRgb());
-                if (android.os.Build.VERSION.SDK_INT >= 21) {
-                    Window window = getWindow();
-                    // 很明显，这两货是新API才有的。
-                    window.setStatusBarColor(colorBurn(vibrant.getRgb()));
-//                    window.setNavigationBarColor(colorBurn(vibrant.getRgb()));
-                }
-            }
-        });
-    }
-
-    /**
-     * 颜色加深处理
+     * 设置索引  当前导航页边框绿色，内容实心绿，其他页边框灰色，内容透明
      *
-     * @param RGBValues RGB的值，由alpha（透明度）、red（红）、green（绿）、blue（蓝）构成，
-     *                  Android中我们一般使用它的16进制，
-     *                  例如："#FFAABBCC",最左边到最右每两个字母就是代表alpha（透明度）、
-     *                  red（红）、green（绿）、blue（蓝）。每种颜色值占一个字节(8位)，值域0~255
-     *                  所以下面使用移位的方法可以得到每种颜色的值，然后每种颜色值减小一下，在合成RGB颜色，颜色就会看起来深一些了
+     * @param position
+     */
+    private void setSelection(int position) {
+        System.out.println("setSelection(int position) " + position);
+        for (int i = 0; i < mBorderimageViews.length; i++) {
+            if (i == position) {
+                mBorderimageViews[i].setColorFilter(mGreenColor, PorterDuff.Mode.SRC_IN);
+                mContentImageViews[i].setAlpha(1f);
+                mWhiteImageViews[i].setVisibility(View.VISIBLE);
+                mTitleViews[i].setTextColor(mGreenColor);
+            } else {
+                mBorderimageViews[i].setColorFilter(mGrayColor, PorterDuff.Mode.SRC_IN);
+                mContentImageViews[i].setAlpha(0f);
+                mWhiteImageViews[i].setVisibility(View.GONE);
+                mTitleViews[i].setTextColor(mGrayColor);
+            }
+        }
+    }
+
+
+    private void initColor() {
+        mGrayColor = getResources().getColor(R.color.gray);
+        mGrayRed = Color.red(mGrayColor);
+        mGrayGreen = Color.green(mGrayColor);
+        mGrayBlue = Color.blue(mGrayColor);
+        mGreenColor = getResources().getColor(R.color.colorAccent);
+        mGreenRed = Color.red(mGreenColor);
+        mGreenGreen = Color.green(mGreenColor);
+        mGreenBlue = Color.blue(mGreenColor);
+    }
+
+    /**
+     * 偏移量在 0——0.5区间 ，左边一项颜色不变，右边一项颜色从灰色变为绿色，根据两点式算出变化函数
+     *
+     * @param positionOffset
      * @return
      */
-    private int colorBurn(int RGBValues) {
-        int alpha = RGBValues >> 24;
-        int red = RGBValues >> 16 & 0xFF;
-        int green = RGBValues >> 8 & 0xFF;
-        int blue = RGBValues & 0xFF;
-        red = (int) Math.floor(red * (1 - 0.1));
-        green = (int) Math.floor(green * (1 - 0.1));
-        blue = (int) Math.floor(blue * (1 - 0.1));
-        return Color.rgb(red, green, blue);
+    private int getGrayToGreen(float positionOffset) {
+        int red = (int) (positionOffset * (mGreenRed - mGrayRed) * 2 + mGrayRed);
+        int green = (int) (positionOffset * (mGreenGreen - mGrayGreen) * 2 + mGrayGreen);
+        int blue = (int) ((positionOffset) * (mGreenBlue - mGrayBlue) * 2 + mGrayBlue);
+        Log.d("why ", "#### " + red + "  " + green + "  " + blue);
+        return Color.argb(255, red, green, blue);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-		/* ShareActionProvider配置 */
-        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menu
-                .findItem(R.id.action_share));
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/*");
-        mShareActionProvider.setShareIntent(intent);
-        return super.onCreateOptionsMenu(menu);
+    /**
+     * 偏移量在 0.5--1 区间，颜色从绿色变成灰色，根据两点式算出变化函数
+     *
+     * @param positionOffset
+     * @return
+     */
+    private int getGreenToGray(float positionOffset) {
+        int red = (int) (positionOffset * (mGrayRed - mGreenRed) * 2 + 2 * mGreenRed - mGrayRed);
+        int green = (int) (positionOffset * (mGrayGreen - mGreenGreen) * 2 + 2 * mGreenGreen - mGrayGreen);
+        int blue = (int) (positionOffset * (mGrayBlue - mGreenBlue) * 2 + 2 * mGreenBlue - mGrayBlue);
+        Log.d("why ", "#### " + red + "  " + green + "  " + blue);
+        return Color.argb(255, red, green, blue);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // switch (item.getItemId()) {
-        // case R.id.action_settings:
-        // Toast.makeText(MainActivity.this, "action_settings", 0).show();
-        // break;
-        // case R.id.action_share:
-        // Toast.makeText(MainActivity.this, "action_share", 0).show();
-        // break;
-        // default:
-        // break;
-        // }
-        return super.onOptionsItemSelected(item);
+    @OnClick({R.id.lyt_other, R.id.lyt_collect, R.id.lyt_own, R.id.lyt_home})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.lyt_home:
+                mViewPager.setCurrentItem(0);
+                break;
+            case R.id.lyt_other:
+                mViewPager.setCurrentItem(1);
+                break;
+            case R.id.lyt_collect:
+                mViewPager.setCurrentItem(2);
+                break;
+            case R.id.lyt_own:
+                mViewPager.setCurrentItem(3);
+                break;
+        }
     }
 
-    /* ***************FragmentPagerAdapter***************** */
+
     public class MyPagerAdapter extends FragmentPagerAdapter {
 
-        private final String[] TITLES = {"分类", "主页", "热门推荐", "热门收藏", "本月热榜", "今日热榜", "专栏", "随机"};
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
-        public CharSequence getPageTitle(int position) {
-            return TITLES[position];
-        }
-
-        @Override
         public int getCount() {
-            return TITLES.length;
+            return 4;
         }
 
         @Override
         public Fragment getItem(int position) {
-            if (position == 1) {
-                return new RecordActivity();
-            } else if (position == 2) {
-                return new BaiduFragment();
-            } else {
-                return new HomeFragment();
-            }
+            return textViews.get(position);
         }
 
     }
-
 }
