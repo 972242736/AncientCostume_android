@@ -80,7 +80,7 @@ public class MainActivity extends FragmentActivity {
 
         ImageView whiteImageView1 = (ImageView) findViewById(R.id.image1_white);
         ImageView whiteImageView2 = (ImageView) findViewById(R.id.image2_white);
-        ImageView whiteImageView3 = (ImageView) findViewById(R.id.image3_white);
+        ImageView whiteImageView3 = (ImageView)   findViewById(R.id.image3_white);
         ImageView whiteImageView4 = (ImageView) findViewById(R.id.image3_white);
         mWhiteImageViews = new ImageView[]{whiteImageView1, whiteImageView2, whiteImageView3, whiteImageView4};
 

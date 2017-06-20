@@ -3,9 +3,9 @@
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
 
         <!-- toolbar（actionbar）颜色 -->
-        <item name="colorPrimary">#4876FF</item>
+        <item name="colorPrimary">#FF4081</item>
         <!-- 状态栏颜色 -->
-        <item name="colorPrimaryDark">#3A5FCD</item>
+        <item name="colorPrimaryDark">#FF4081</item>
         <!-- 窗口的背景颜色 -->
         <item name="android:windowBackground">@android:color/white</item>
         <!-- SearchView -->
@@ -60,8 +60,8 @@
     </style>
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/colorAccent</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 </resources>
