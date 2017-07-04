@@ -25,7 +25,7 @@ import com.baidu.mapapi.search.poi.PoiSearch;
 import com.mmf.ancientcostume.MyApplication;
 import com.mmf.ancientcostume.R;
 import com.mmf.ancientcostume.baidu.bean.PositionInfo;
-import com.mmf.ancientcostume.presenter.home.HomePresenter;
+import com.mmf.ancientcostume.presenter.imp.home.HomePresenterImp;
 import com.mmf.ancientcostume.view.home.IHomeView;
 
 import java.util.List;
@@ -78,7 +78,7 @@ public class BaiduFragment extends Fragment implements IHomeView {
 //                        .city("厦门")
 //                        .keyword("厦门");
 //                mKSearch.searchInCity(poiCitySearchOption);
-                HomePresenter presenter = new HomePresenter(BaiduFragment.this, getActivity());
+                HomePresenterImp presenter = new HomePresenterImp(BaiduFragment.this, getActivity());
                 presenter.getInfo(latLng.longitude + "," + latLng.latitude);
             }
         });

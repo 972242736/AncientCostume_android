@@ -1,32 +1,41 @@
 package com.mmf.ancientcostume.common.utils.service;
 
-import rx.Observable;
 import android.graphics.Bitmap;
 import android.util.Log;
 
-
 import com.mmf.ancientcostume.common.utils.ClippingPicture;
 import com.mmf.ancientcostume.common.utils.Constant;
+import com.mmf.ancientcostume.presenter.IPresenter;
 
 import java.io.File;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 public class RetrofitUtil {
     /**
      * 服务器地址
      */
     private static final String API_HOST = SecretConstant.API_HOST;
+    protected final String TAG = "RxJava";
     private static Retrofit retrofit;
+    protected IPresenter presenter;
+    protected CompositeSubscription mCompositeSubscription = new CompositeSubscription();
+    ;
 
     public static Retrofit getRetrofit(String url) {
         if (retrofit == null) {
@@ -40,14 +49,13 @@ public class RetrofitUtil {
             // File httpCacheDirectory = new File(BaseApplication.getInstance().getExternalCacheDir(), "responses");
             //通过拦截器设置缓存，暂未实现
             //CacheInterceptor cacheInterceptor = new CacheInterceptor();
-
             OkHttpClient client = new OkHttpClient.Builder()
                     //设置缓存
-                    //      .cache(new Cache(httpCacheDirectory, 10 * 1024 * 1024))
+                    // .cache(new Cache(httpCacheDirectory, 10 * 1024 * 1024))
                     //log请求参数
                     .addInterceptor(interceptor)
-                            //网络请求缓存，未实现
-                            //    .addInterceptor(cacheInterceptor)
+                    //网络请求缓存，未实现
+                    // .addInterceptor(cacheInterceptor)
                     .build();
             retrofit = new Retrofit.Builder()
                     .client(client)
@@ -92,7 +100,7 @@ public class RetrofitUtil {
 
 
     /**
-     * 自定义异常，当接口返回的{@link Response#code}不为{@link Constant#OK}时，需要跑出此异常
+     * 自定义异常，当接口返回的{@link Response#}不为{@link Constant#OK}时，需要跑出此异常
      * eg：登陆时验证码错误；参数为传递等
      */
     public static class APIException extends Exception {
@@ -110,53 +118,7 @@ public class RetrofitUtil {
         }
     }
 
-
-    /**
-     * http://www.jianshu.com/p/e9e03194199e
-     * <p/>
-     * Transformer实际上就是一个Func1<Observable<T>, Observable<R>>，
-     * 换言之就是：可以通过它将一种类型的Observable转换成另一种类型的Observable，
-     * 和调用一系列的内联操作符是一模一样的。
-     *
-     * @param <T>
-     * @return
-     */
-//    protected <T> Observable.Transformer<T, T> applySchedulers() {
-////        return new Observable.Transformer<T, T>() {
-////            @Override
-////            public Observable<T> call(Observable<T> observable) {
-////                return observable.subscribeOn(Schedulers.io())
-////                        .observeOn(AndroidSchedulers.mainThread());
-////            }
-////        };
-//
-//        return (Observable.Transformer<T, T>) schedulersTransformer;
-//    }
-//
-//    final Observable.Transformer schedulersTransformer = new Observable.Transformer() {
-//        @Override
-//        public Object call(Object observable) {
-//            return ((Observable) observable).subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    ;
-//        }
-//    };
-
     protected <T> Observable.Transformer<Response<T>, T> applySchedulers() {
-//        return new Observable.Transformer<Response<T>, T>() {
-//            @Override
-//            public Observable<T> call(Observable<Response<T>> responseObservable) {
-//                return responseObservable.subscribeOn(Schedulers.io())
-//                        .observeOn(AndroidSchedulers.mainThread())
-//                        .flatMap(new Func1<Response<T>, Observable<T>>() {
-//                            @Override
-//                            public Observable<T> call(Response<T> tResponse) {
-//                                return flatResponse(tResponse);
-//                            }
-//                        })
-//                        ;
-//            }
-//        };
         return (Observable.Transformer<Response<T>, T>) transformer;
     }
 
@@ -168,12 +130,63 @@ public class RetrofitUtil {
                     .flatMap(new Func1() {
                         @Override
                         public Object call(Object response) {
-                            return flatResponse((Response<Object>)response);
+                            return flatResponse((Response<Object>) response);
                         }
-                    })
-                    ;
+                    });
         }
     };
+
+    /**
+     * 创建观察者
+     *
+     * @param onNext
+     * @param <T>
+     * @return
+     */
+    protected <T> Subscriber newSubscriber(final Action1<? super T> onNext) {
+        return new Subscriber<T>() {
+            @Override
+            public void onCompleted() {
+                presenter.showToast("");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                if (e instanceof RetrofitUtil.APIException) {
+                    RetrofitUtil.APIException exception = (RetrofitUtil.APIException) e;
+                    presenter.showToast(exception.message);
+                } else if (e instanceof SocketTimeoutException) {
+                    presenter.showToast(e.getMessage());
+                } else if (e instanceof ConnectException) {
+                    presenter.showToast(e.getMessage());
+                }
+                Log.e(TAG, String.valueOf(e.getMessage()));
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(T t) {
+                if (!mCompositeSubscription.isUnsubscribed()) {
+                    onNext.call(t);
+                }
+            }
+        };
+    }
+
+    protected <T> void success(Observable<T> observable) {
+        Subscription subscription = observable.doOnNext(new Action1<T>() {
+            @Override
+            public void call(T remindDTOs) {
+                presenter.success(remindDTOs);
+            }
+        }).subscribe(newSubscriber(new Action1<T>() {
+            @Override
+            public void call(T remindDTOs) {
+                Log.i(TAG, "getNotification---" + remindDTOs.toString());
+            }
+        }));
+        mCompositeSubscription.add(subscription);
+    }
 
 
     /**

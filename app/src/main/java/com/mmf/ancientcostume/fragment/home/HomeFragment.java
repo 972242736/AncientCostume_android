@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.mmf.ancientcostume.R;
 import com.mmf.ancientcostume.adapter.home.LawyerAdapter;
-import com.mmf.ancientcostume.presenter.home.HomePresenter;
+import com.mmf.ancientcostume.presenter.imp.home.HomePresenterImp;
 import com.mmf.ancientcostume.view.home.IHomeView;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private SwipeRefreshLayout swipeRefreshWidget;
     private RecyclerView rvLawyer;
     private LawyerAdapter adapter;
-    private HomePresenter presenter;
+    private HomePresenterImp presenter;
 
     @Nullable
     @Override
@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         swipeRefreshWidget.setOnRefreshListener(this);
         adapter = new LawyerAdapter(getActivity());
         rvLawyer.setAdapter(adapter);
-        presenter = new HomePresenter(this,getActivity());
+        presenter = new HomePresenterImp(this,getActivity());
     }
 
     private void getLawyer() {

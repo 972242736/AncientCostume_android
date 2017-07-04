@@ -63,7 +63,6 @@ public class WelcomeActivity extends FragmentActivity {
         ItemPagerAdapter adapter = new ItemPagerAdapter(ivList);
         vpWelcome.setAdapter(adapter);
         setVpListener();
-//        setSelection(0);
     }
 
     @OnClick(R.id.btn_enter)
