@@ -2,18 +2,9 @@ package com.mmf.ancientcostume.base.presenter;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.mmf.ancientcostume.common.utils.service.RetrofitUtil;
 import com.mmf.ancientcostume.widget.DialogLoading;
-
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
-
-import rx.Subscriber;
-import rx.functions.Action1;
-import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by MMF

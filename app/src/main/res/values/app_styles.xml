@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 设置了高度的 lly-->
+    <style name="User_item_style">
+        <item name="android:layout_height">@dimen/public_space_value_60</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:padding">@dimen/public_space_value_8</item>
+    </style>
+    <!-- 背景白色-->
+    <style name="Lly_top_style">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_marginTop">@dimen/public_space_value_8</item>
+    </style>
+    <style name="Line_horizontal">
+        <item name="android:layout_height">@dimen/public_space_value_1</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/line_color</item>
+    </style>
+</resources>

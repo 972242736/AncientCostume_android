@@ -15,4 +15,12 @@
         <attr name="pstsTextAllCaps" format="boolean" />
     </declare-styleable>
 
+
+    <declare-styleable name="CorrugateView">
+        <attr name="imgSize" format="dimension" />
+        <attr name="waveHeight" format="dimension" />
+        <attr name="rollDistance" format="integer" />
+        <attr name="rollTime" format="integer" />
+    </declare-styleable>
+
 </resources>

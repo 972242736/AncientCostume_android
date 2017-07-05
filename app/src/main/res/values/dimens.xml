@@ -4,6 +4,12 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="top_distance">50dp</dimen>
+    <dimen name="top_distance_20">20dp</dimen>
+    <dimen name="top_distance_100">100dp</dimen>
+    <dimen name="text_paint_15">15sp</dimen>
+
     <!-- 公用的间距，以距离值标记 -->
     <dimen name="public_space_value_0">0dp</dimen>
     <dimen name="public_space_value_0.5">0.5dp</dimen>

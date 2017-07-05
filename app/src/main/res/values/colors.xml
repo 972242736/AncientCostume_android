@@ -14,7 +14,7 @@
     <color name="BG3">#F0F0F0</color>
     <color name="S1">#F0F0F0</color>
     <color name="S2">#E6E6E6</color>
-    <color name="S3">#CCCCCC</color>
+    <color name="line_color">#CCCCCC</color>
     <color name="S4">#999999</color>
     <color name="T1">#FFFFFF</color>
     <color name="T2">#CCCCCC</color>
@@ -28,4 +28,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="gray">#999999</color>
     <color name="green">#45c01a</color>
+
+    <color name="top_withe">#bfffffff</color>
+    <color name="top_red">#FB3D53</color>
 </resources>

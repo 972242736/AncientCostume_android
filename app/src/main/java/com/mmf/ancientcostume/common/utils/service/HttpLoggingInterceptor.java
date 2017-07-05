@@ -16,9 +16,7 @@ import okhttp3.Response;
 import okhttp3.internal.Platform;
 import okio.Buffer;
 
-/**
- * Created by Sunflower on 2016/1/12.
- */
+
 public class HttpLoggingInterceptor implements Interceptor {
     private static final Charset UTF8 = Charset.forName("UTF-8");
 

@@ -32,7 +32,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.home_fragment, null);
+        view = inflater.inflate(R.layout.fragment_home, null);
         initView();
         getLawyer();
         return view;

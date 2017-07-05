@@ -18,6 +18,7 @@ import com.mmf.ancientcostume.R;
 import com.mmf.ancientcostume.baidu.BaiduFragment;
 import com.mmf.ancientcostume.fragment.home.HomeFragment;
 import com.mmf.ancientcostume.fragment.home.RecordActivity;
+import com.mmf.ancientcostume.fragment.user.UserFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +64,7 @@ public class MainActivity extends FragmentActivity {
         textViews.add(new RecordActivity());
         textViews.add(new BaiduFragment());
         textViews.add(new HomeFragment());
-        textViews.add(new RecordActivity());
+        textViews.add(new UserFragment());
 
         ImageView imageView1 = (ImageView) findViewById(R.id.image1);
         ImageView imageView2 = (ImageView) findViewById(R.id.image2);
