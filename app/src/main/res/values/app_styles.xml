@@ -5,18 +5,32 @@
         <item name="android:layout_height">@dimen/public_space_value_60</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:padding">@dimen/public_space_value_8</item>
+        <item name="android:orientation">horizontal</item>
     </style>
     <!-- 背景白色-->
     <style name="Lly_top_style">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:background">@color/white</item>
+        <item name="android:paddingLeft">@dimen/public_space_value_8</item>
+        <item name="android:paddingRight">@dimen/public_space_value_8</item>
         <item name="android:layout_marginTop">@dimen/public_space_value_8</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+    <style name="User_text_style">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/T4</item>
     </style>
     <style name="Line_horizontal">
         <item name="android:layout_height">@dimen/public_space_value_1</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:background">@color/line_color</item>
     </style>
+    <style name="anim_popup_dir">
+        <item name="android:windowEnterAnimation">@anim/slide_in</item>
+        <item name="android:windowExitAnimation">@anim/slide_out</item>
+    </style>
+
 </resources>

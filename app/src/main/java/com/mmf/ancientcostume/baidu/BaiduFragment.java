@@ -87,20 +87,23 @@ public class BaiduFragment extends Fragment implements IHomeView {
 
     public void setCity(LatLng point) {
         latLng = point;
-        tvCity.setText(MyApplication.getInstance().getCurrlocation().getCity());
-        MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(point, 16);
-        //设置地图中心点以及缩放级别
-        //MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
-        mBaiduMap.animateMapStatus(u);
-        //构建Marker图标
-        BitmapDescriptor bitmap = BitmapDescriptorFactory
-                .fromResource(R.drawable.icon_marka);
-        //构建MarkerOption，用于在地图上添加Marker
-        MarkerOptions option = new MarkerOptions()
-                .position(point)
-                .icon(bitmap);
-    //在地图上添加Marker，并显示
-        mBaiduMap.addOverlay(option);
+        if(MyApplication.getInstance().getCurrlocation() != null){
+            tvCity.setText(MyApplication.getInstance().getCurrlocation().getCity());
+            MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(point, 16);
+            //设置地图中心点以及缩放级别
+            //MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+            mBaiduMap.animateMapStatus(u);
+            //构建Marker图标
+            BitmapDescriptor bitmap = BitmapDescriptorFactory
+                    .fromResource(R.drawable.icon_marka);
+            //构建MarkerOption，用于在地图上添加Marker
+            MarkerOptions option = new MarkerOptions()
+                    .position(point)
+                    .icon(bitmap);
+            //在地图上添加Marker，并显示
+            mBaiduMap.addOverlay(option);
+        }
+
     }
 
 
