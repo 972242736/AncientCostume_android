@@ -3,6 +3,7 @@ package com.mmf.ancientcostume.service.home;
 import com.mmf.ancientcostume.baidu.bean.PositionInfo;
 import com.mmf.ancientcostume.common.utils.service.Response;
 import com.mmf.ancientcostume.model.LawyerInfo;
+import com.mmf.ancientcostume.model.User;
 
 import java.util.List;
 
@@ -21,6 +22,6 @@ public interface HomeServiceApi {
     @GET("geosearch/v3/nearby")
     Observable<Response<List<PositionInfo>>> getInfo(@Query("ak") String s2,@Query("geotable_id")  String s, @Query("mcode") String s1,@Query("location") String loc);
     @GET("user/list")
-    Observable<Response<String>> list();
+    Observable<Response<List<User>>> list(@Query("name")String name);
 
 }

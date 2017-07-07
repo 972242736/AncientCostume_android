@@ -6,6 +6,7 @@ import com.mmf.ancientcostume.baidu.bean.PositionInfo;
 import com.mmf.ancientcostume.common.utils.service.RetrofitUtil;
 import com.mmf.ancientcostume.common.utils.service.SecretConstant;
 import com.mmf.ancientcostume.model.LawyerInfo;
+import com.mmf.ancientcostume.model.User;
 import com.mmf.ancientcostume.presenter.IPresenter;
 
 import java.util.List;
@@ -41,9 +42,12 @@ public class HomeService extends RetrofitUtil {
         success(lawyerInfoList);
     }
 
-    public Observable<List<PositionInfo>> getInfo(String loc) {
-        return getService().getInfo("nQS647KWkRaA8LkIXvCKwfuIcrbl9sHC", "157287", "3C:B5:09:43:AB:5C:FB:F1:A1:B8:DB:6A:CD:F2:6D:6D:76:74:70:26;com.mmf.framework", loc)
-                .compose(this.<List<PositionInfo>>applySchedulers());
+    public void list() {
+        Observable<List<User>> lawyerInfoList = getService().list("mao")
+                .compose(this.<List<User>>applySchedulers());
+        success(lawyerInfoList);
+//        return getService().getInfo("nQS647KWkRaA8LkIXvCKwfuIcrbl9sHC", "157287", "3C:B5:09:43:AB:5C:FB:F1:A1:B8:DB:6A:CD:F2:6D:6D:76:74:70:26;com.mmf.framework", loc)
+//                .compose(this.<List<PositionInfo>>applySchedulers());
     }
 
 }

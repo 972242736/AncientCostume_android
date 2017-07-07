@@ -1,12 +1,16 @@
 package com.mmf.ancientcostume.presenter.imp.home;
 
+import android.app.Activity;
 import android.content.Context;
+import android.widget.Toast;
 
 import com.mmf.ancientcostume.base.presenter.BasePresenter;
+import com.mmf.ancientcostume.model.User;
 import com.mmf.ancientcostume.presenter.IPresenter;
 import com.mmf.ancientcostume.service.home.HomeService;
 import com.mmf.ancientcostume.view.home.IHomeView;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -28,8 +32,9 @@ public class HomePresenterImp extends BasePresenter implements IPresenter<Object
         mHomeService.getLawyer();
 //        mCompositeSubscription.add(subscription);
     }
-    public void getInfo(String loc) {
-        showLoadingDialog();
+    public void list() {
+        mHomeService.list();
+//        showLoadingDialog();
 //        mHomeService.getInfo(loc);
 //        Subscription subscription =
 //                .doOnNext(new Action1<List<PositionInfo>>() {
@@ -49,7 +54,8 @@ public class HomePresenterImp extends BasePresenter implements IPresenter<Object
     }
 
     @Override
-    public void success(Object out) {
-
+    public void success(final Object out) {
+        System.out.println("*********"+((List<User>)out).get(0).getName());
+        view.setList(((List<User>)out));
     }
 }

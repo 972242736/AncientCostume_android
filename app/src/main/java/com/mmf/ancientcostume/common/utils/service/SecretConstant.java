@@ -3,10 +3,6 @@ package com.mmf.ancientcostume.common.utils.service;
 
 public class SecretConstant {
 //    public final static String API_HOST = "http://api.map.baidu.com";
-    public final static String API_HOST = "http://localhost:8080/";
+    public final static String API_HOST = "http://192.168.74.81:8090/";
 
-    /**
-     * github上的token
-     */
-    public final static String GITHUB_AUTH_TOKEN = "";
 }

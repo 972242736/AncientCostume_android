@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.mmf.ancientcostume.R;
 import com.mmf.ancientcostume.adapter.home.LawyerAdapter;
@@ -53,6 +54,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     private void getLawyer() {
 //        presenter.getLawyer();
+        presenter.list();
     }
 
     @Override
@@ -63,6 +65,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void setList(List list) {
-        adapter.setItems(list);
+        Toast.makeText(getActivity(),list.toString(),Toast.LENGTH_SHORT).show();
+//        adapter.setItems(list);
     }
 }

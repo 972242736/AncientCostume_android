@@ -9,6 +9,7 @@ import com.mmf.ancientcostume.presenter.IPresenter;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import rx.Observable;
 
@@ -31,7 +32,7 @@ public class UserService extends RetrofitUtil {
         return userService;
     }
 
-    public void uploadPhoto(String data,Map<String, RequestBody> bodyMap) {
+    public void uploadPhoto(String data,Map<String, MultipartBody.Part> bodyMap) {
         Observable<List<String>> lawyerInfoList = getService().uploadPhoto(data,bodyMap)
                 .compose(this.<List<String>>applySchedulers());
         success(lawyerInfoList);

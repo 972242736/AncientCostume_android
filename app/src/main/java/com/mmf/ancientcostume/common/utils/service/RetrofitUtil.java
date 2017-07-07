@@ -81,11 +81,11 @@ public class RetrofitUtil {
             public void call(Subscriber<? super T> subscriber) {
                 if (response.isSuccess()) {
                     if (!subscriber.isUnsubscribed()) {
-                        subscriber.onNext(response.contents);
+                        subscriber.onNext(response.data);
                     }
                 } else {
                     if (!subscriber.isUnsubscribed()) {
-                        subscriber.onError(new APIException(response.error_code, response.reason));
+                        subscriber.onError(new APIException(response.code, response.message));
                     }
                     return;
                 }

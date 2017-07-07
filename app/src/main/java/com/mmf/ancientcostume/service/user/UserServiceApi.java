@@ -7,6 +7,7 @@ import com.mmf.ancientcostume.model.LawyerInfo;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
@@ -23,6 +24,6 @@ import rx.Observable;
  */
 public interface UserServiceApi {
     @Multipart
-    @POST("uploadPhoto")
-    Observable<Response<List<String>>> uploadPhoto(@Part("data") String data, @PartMap Map<String, RequestBody> params);
+    @POST("file/uploadPhoto")
+    Observable<Response<List<String>>> uploadPhoto(@Part("data") String data, @Part("params") Map<String, MultipartBody.Part> params);
    }

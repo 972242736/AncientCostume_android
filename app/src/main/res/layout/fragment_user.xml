@@ -13,9 +13,16 @@
         <!--app:rollTime="20"-->
         <!--app:rollDistance="5"-->
         <!--android:layout_height="70dp" />-->
+    <ImageView
+        android:id="@+id/iv_test"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/pictures_no"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/iv_test"
         android:orientation="vertical">
         <LinearLayout
             style="@style/Lly_top_style">

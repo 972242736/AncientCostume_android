@@ -207,7 +207,7 @@ public class SelPhotoActivity extends Activity implements ListImageDirPopupWindo
                         imageFloder.setFirstImagePath(path);
                     }
 
-                    int picSize = parentFile.list(new FilenameFilter() {
+                    int picSize = parentFile.list( new FilenameFilter() {
                         @Override
                         public boolean accept(File dir, String filename) {
                             if (filename.endsWith(".jpg")

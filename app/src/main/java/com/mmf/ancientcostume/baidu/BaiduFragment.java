@@ -79,7 +79,7 @@ public class BaiduFragment extends Fragment implements IHomeView {
 //                        .keyword("厦门");
 //                mKSearch.searchInCity(poiCitySearchOption);
                 HomePresenterImp presenter = new HomePresenterImp(BaiduFragment.this, getActivity());
-                presenter.getInfo(latLng.longitude + "," + latLng.latitude);
+//                presenter.getInfo(latLng.longitude + "," + latLng.latitude);
             }
         });
     }
@@ -87,7 +87,7 @@ public class BaiduFragment extends Fragment implements IHomeView {
 
     public void setCity(LatLng point) {
         latLng = point;
-        if(MyApplication.getInstance().getCurrlocation() != null){
+        if (MyApplication.getInstance().getCurrlocation() != null) {
             tvCity.setText(MyApplication.getInstance().getCurrlocation().getCity());
             MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(point, 16);
             //设置地图中心点以及缩放级别
@@ -187,8 +187,8 @@ public class BaiduFragment extends Fragment implements IHomeView {
     @Override
     public void setList(List list) {
         listPos = list;
-        for(PositionInfo item :listPos){
-            LatLng latLng = new LatLng(item.getLocation().get(1),item.getLocation().get(0));
+        for (PositionInfo item : listPos) {
+            LatLng latLng = new LatLng(item.getLocation().get(1), item.getLocation().get(0));
             setCity(latLng);
         }
     }
