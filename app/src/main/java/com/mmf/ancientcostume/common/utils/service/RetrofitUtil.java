@@ -58,6 +58,7 @@ public class RetrofitUtil {
             retrofit = new Retrofit.Builder()
                     .client(client)
                     .baseUrl(url)
+//                    .("paltform", "android")
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .build();

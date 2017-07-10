@@ -26,4 +26,7 @@ public interface UserServiceApi {
     @Multipart
     @POST("file/uploadPhoto")
     Observable<Response<List<String>>> uploadPhoto(@Part("data") String data, @PartMap Map<String, RequestBody> params);
+
+    @POST("file/upload")
+    Observable<Response<List<String>>> upload(@PartMap Map<String, RequestBody> params);
    }

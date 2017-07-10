@@ -108,7 +108,8 @@ public class UserFragment extends Fragment implements IHomeView<String> {
             }
         }
         UserPresenterImp presenter = new UserPresenterImp(this, getContext());
-        presenter.uploadPhoto("试试", bodyMap);
+//        presenter.uploadPhoto("试试", bodyMap);
+        presenter.uploadPhoto( bodyMap);
     }
 
     @Override
