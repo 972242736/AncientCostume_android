@@ -92,17 +92,19 @@ public class UserFragment extends Fragment implements IHomeView<String> {
 //        for (String tempPath : pathList) {
 //            listUri.add(getImageContentUri(getActivity(), new File(tempPath)));
 //        }
-        Map<String, MultipartBody.Part> bodyMap = new HashMap<>();
+//        Map<String, MultipartBody.Part> bodyMap = new HashMap<>();
+        Map<String, RequestBody> bodyMap = new HashMap<>();
         if (pathList.size() > 0) {
             for (int i = 0; i < pathList.size(); i++) {
                 File file = new File(pathList.get(i));
-                RequestBody requestFile =
-                        RequestBody.create(MediaType.parse("multipart/form-data"), file);
+//                RequestBody requestFile =
+//                        RequestBody.create(MediaType.parse("multipart/form-data"), file);
 
 // MultipartBody.Part is used to send also the actual file name
-                MultipartBody.Part body =
-                        MultipartBody.Part.createFormData("image", file.getName(), requestFile);
-                bodyMap.put("file" + i + "\"; filename=\"" + file.getName(), body);
+//                MultipartBody.Part body =
+//                        MultipartBody.Part.createFormData("image", file.getName(), requestFile);
+//                bodyMap.put("file" + i + "\"; filename=\"" + file.getName(), body);
+                bodyMap.put("file" + i + ":filename=" + file.getName(), RequestBody.create(MediaType.parse("image/png"),file));
             }
         }
         UserPresenterImp presenter = new UserPresenterImp(this, getContext());

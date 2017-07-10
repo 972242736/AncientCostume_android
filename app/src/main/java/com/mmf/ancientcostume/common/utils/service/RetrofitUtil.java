@@ -31,10 +31,8 @@ public class RetrofitUtil {
      * 服务器地址
      */
     private static final String API_HOST = SecretConstant.API_HOST;
-    protected final String TAG = "RxJava";
     private static Retrofit retrofit;
     protected IPresenter presenter;
-    protected CompositeSubscription mCompositeSubscription = new CompositeSubscription();
     ;
 
     public static Retrofit getRetrofit(String url) {
@@ -136,57 +134,7 @@ public class RetrofitUtil {
         }
     };
 
-    /**
-     * 创建观察者
-     *
-     * @param onNext
-     * @param <T>
-     * @return
-     */
-    protected <T> Subscriber newSubscriber(final Action1<? super T> onNext) {
-        return new Subscriber<T>() {
-            @Override
-            public void onCompleted() {
-                presenter.showToast("");
-            }
 
-            @Override
-            public void onError(Throwable e) {
-                if (e instanceof RetrofitUtil.APIException) {
-                    RetrofitUtil.APIException exception = (RetrofitUtil.APIException) e;
-                    presenter.showToast(exception.message);
-                } else if (e instanceof SocketTimeoutException) {
-                    presenter.showToast(e.getMessage());
-                } else if (e instanceof ConnectException) {
-                    presenter.showToast(e.getMessage());
-                }
-                Log.e(TAG, String.valueOf(e.getMessage()));
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onNext(T t) {
-                if (!mCompositeSubscription.isUnsubscribed()) {
-                    onNext.call(t);
-                }
-            }
-        };
-    }
-
-    protected <T> void success(Observable<T> observable) {
-        Subscription subscription = observable.doOnNext(new Action1<T>() {
-            @Override
-            public void call(T remindDTOs) {
-                presenter.success(remindDTOs);
-            }
-        }).subscribe(newSubscriber(new Action1<T>() {
-            @Override
-            public void call(T remindDTOs) {
-                Log.i(TAG, "getNotification---" + remindDTOs.toString());
-            }
-        }));
-        mCompositeSubscription.add(subscription);
-    }
 
 
     /**

@@ -32,10 +32,8 @@ public class UserService extends RetrofitUtil {
         return userService;
     }
 
-    public void uploadPhoto(String data,Map<String, MultipartBody.Part> bodyMap) {
-        Observable<List<String>> lawyerInfoList = getService().uploadPhoto(data,bodyMap)
-                .compose(this.<List<String>>applySchedulers());
-        success(lawyerInfoList);
+    public  Observable<List<String>> uploadPhoto(String data,Map<String, RequestBody> bodyMap) {
+       return getService().uploadPhoto(data,bodyMap).compose(this.<List<String>>applySchedulers());
     }
 
 

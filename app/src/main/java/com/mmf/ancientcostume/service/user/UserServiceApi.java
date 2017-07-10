@@ -25,5 +25,5 @@ import rx.Observable;
 public interface UserServiceApi {
     @Multipart
     @POST("file/uploadPhoto")
-    Observable<Response<List<String>>> uploadPhoto(@Part("data") String data, @Part("params") Map<String, MultipartBody.Part> params);
+    Observable<Response<List<String>>> uploadPhoto(@Part("data") String data, @PartMap Map<String, RequestBody> params);
    }
