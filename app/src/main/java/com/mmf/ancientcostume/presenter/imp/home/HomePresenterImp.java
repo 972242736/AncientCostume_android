@@ -2,8 +2,10 @@ package com.mmf.ancientcostume.presenter.imp.home;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.mmf.ancientcostume.baidu.bean.PositionInfo;
 import com.mmf.ancientcostume.base.presenter.BasePresenter;
 import com.mmf.ancientcostume.model.User;
 import com.mmf.ancientcostume.presenter.IPresenter;
@@ -12,6 +14,9 @@ import com.mmf.ancientcostume.view.home.IHomeView;
 
 import java.util.List;
 import java.util.Objects;
+
+import rx.Subscription;
+import rx.functions.Action1;
 
 /**
  * Created by MMF
@@ -33,24 +38,24 @@ public class HomePresenterImp extends BasePresenter implements IPresenter<Object
 //        mCompositeSubscription.add(subscription);
     }
     public void list() {
-        mHomeService.list();
-//        showLoadingDialog();
+        showLoadingDialog();
 //        mHomeService.getInfo(loc);
-//        Subscription subscription =
-//                .doOnNext(new Action1<List<PositionInfo>>() {
-//                    @Override
-//                    public void call(List<PositionInfo> remindDTOs) {
-//                        List<PositionInfo> remindDTOs_ = remindDTOs;
+        Subscription subscription =
+                mHomeService.list().doOnNext(new Action1<List<User>>() {
+                    @Override
+                    public void call(List<User> remindDTOs) {
+                        List<User> remindDTOs_ = remindDTOs;
+                        showToast(remindDTOs_.get(0).getName());
 //                        view.setList(remindDTOs);
-//                    }
-//                })
-//                .subscribe(newSubscriber(new Action1<List<PositionInfo>>() {
-//                    @Override
-//                    public void call(List<PositionInfo> remindDTOs) {
-//                        Log.i(TAG, "getNotification---" + remindDTOs.toString());
-//                    }
-//                }));
-//        mCompositeSubscription.add(subscription);
+                    }
+                })
+                .subscribe(newSubscriber(new Action1<List<User>>() {
+                    @Override
+                    public void call(List<User> remindDTOs) {
+                        Log.i(TAG, "getNotification---" + remindDTOs.toString());
+                    }
+                }));
+        mCompositeSubscription.add(subscription);
     }
 
     @Override

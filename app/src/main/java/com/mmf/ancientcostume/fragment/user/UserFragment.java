@@ -1,7 +1,5 @@
 package com.mmf.ancientcostume.fragment.user;
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,7 +8,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,12 +30,10 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.internal.Utils;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-
-import static android.content.ContentValues.TAG;
+import retrofit2.http.Part;
 
 /**
  * Created by MMF
@@ -47,12 +42,14 @@ import static android.content.ContentValues.TAG;
  */
 public class UserFragment extends Fragment implements IHomeView<String> {
 
-    //    @BindView(R.id.cv_waves)
+//    @BindView(R.id.cv_waves)
 //    CorrugateView cvWaves;
-    @BindView(R.id.lyt_selPhoto)
-    LinearLayout lytSelPhoto;
     @BindView(R.id.iv_test)
     ImageView ivTest;
+    @BindView(R.id.lyt_selPhoto)
+    LinearLayout lytSelPhoto;
+    @BindView(R.id.lyt_selPhoto1)
+    LinearLayout lytSelPhoto1;
     private View view;
 
     @Nullable
@@ -70,46 +67,48 @@ public class UserFragment extends Fragment implements IHomeView<String> {
 //        cvWaves.cancelTask();
     }
 
-
-    @OnClick(R.id.lyt_selPhoto)
-    public void onViewClicked() {
-        Intent intent = new Intent(getActivity(), SelPhotoActivity.class);
-        startActivityForResult(intent, 1);
-//        Intent intent = new Intent(Intent.ACTION_PICK, null);
-//        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-//        startActivityForResult(Intent.createChooser(intent,"选择照片"),1);
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         String imgUrls = data.getStringExtra("imgUrls");
         String[] tempArray = imgUrls.substring(1, imgUrls.length() - 1).split(",");
         List<String> pathList = Arrays.asList(tempArray);
-//        Uri uri = data.getData();
         Picasso.with(getActivity()).load(getImageContentUri(getActivity(), new File(pathList.get(0)))).into(ivTest);
         List<Uri> listUri = new ArrayList<>();
+        switch (requestCode) {
+            case 1:
+               List<MultipartBody.Part> bodyMap = new ArrayList<>();
+                if (pathList.size() > 0) {
+                    for (int i = 0; i < pathList.size(); i++) {
+                        File file = new File(pathList.get(i));
+                        RequestBody requestFile =
+                                RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                        MultipartBody.Part body =
+                                MultipartBody.Part.createFormData("image", file.getName(), requestFile);
+                        bodyMap.add( body);
+                    }
+                }
+                UserPresenterImp presenter = new UserPresenterImp(this, getContext());
+                presenter.uploadPhoto(bodyMap);
+                break;
+            case 2:
+                Map<String, RequestBody> bodyMap1 = new HashMap<String, RequestBody>();
+                if (pathList.size() > 0) {
+                    for (int i = 0; i < pathList.size(); i++) {
+                        File file = new File(pathList.get(i));
+                        bodyMap1.put("file" + i + "\"; filename=\"" + file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                    }
+                }
+                UserPresenterImp presenter1 = new UserPresenterImp(this, getContext());
+                presenter1.uploadPhoto1(bodyMap1);
+                break;
+            default:
+                break;
+        }
 //        for (String tempPath : pathList) {
 //            listUri.add(getImageContentUri(getActivity(), new File(tempPath)));
 //        }
-//        Map<String, MultipartBody.Part> bodyMap = new HashMap<>();
-        Map<String, RequestBody> bodyMap = new HashMap<>();
-        if (pathList.size() > 0) {
-            for (int i = 0; i < pathList.size(); i++) {
-                File file = new File(pathList.get(i));
-//                RequestBody requestFile =
-//                        RequestBody.create(MediaType.parse("multipart/form-data"), file);
 
-// MultipartBody.Part is used to send also the actual file name
-//                MultipartBody.Part body =
-//                        MultipartBody.Part.createFormData("image", file.getName(), requestFile);
-//                bodyMap.put("file" + i + "\"; filename=\"" + file.getName(), body);
-                bodyMap.put("file" + i + ":filename=" + file.getName(), RequestBody.create(MediaType.parse("image/png"),file));
-            }
-        }
-        UserPresenterImp presenter = new UserPresenterImp(this, getContext());
-//        presenter.uploadPhoto("试试", bodyMap);
-        presenter.uploadPhoto( bodyMap);
     }
 
     @Override
@@ -117,7 +116,7 @@ public class UserFragment extends Fragment implements IHomeView<String> {
 
     }
 
-    public static Uri getImageContentUri(Context context, java.io.File imageFile) {
+    public static Uri getImageContentUri(Context context, File imageFile) {
 //        String filePath = imageFile;
         String filePath = imageFile.getAbsolutePath();
         Cursor cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
@@ -135,6 +134,23 @@ public class UserFragment extends Fragment implements IHomeView<String> {
 //            } else {
             return null;
 //            }
+        }
+    }
+
+
+    @OnClick({R.id.lyt_selPhoto, R.id.lyt_selPhoto1})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.lyt_selPhoto:
+                Intent intent = new Intent(getActivity(), SelPhotoActivity.class);
+                startActivityForResult(intent, 1);
+//                startActivityForResult(Intent.createChooser(intent,"选择照片"),1);
+                break;
+            case R.id.lyt_selPhoto1:
+                Intent intent1 = new Intent(getActivity(), SelPhotoActivity.class);
+                startActivityForResult(intent1, 2);
+//                startActivityForResult(Intent.createChooser(intent1,"选择照片"),2);
+                break;
         }
     }
 

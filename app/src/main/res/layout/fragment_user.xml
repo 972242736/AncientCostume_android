@@ -33,6 +33,14 @@
                     style="@style/User_text_style"
                     android:text="sel photo"/>
             </LinearLayout>
+            <LinearLayout
+               style="@style/User_item_style"
+                android:layout_marginTop="1dp"
+                android:id="@+id/lyt_selPhoto1">
+                <TextView
+                    style="@style/User_text_style"
+                    android:text="sel photo1"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

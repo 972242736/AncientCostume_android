@@ -9,8 +9,11 @@ import com.mmf.ancientcostume.model.LawyerInfo;
 import com.mmf.ancientcostume.model.User;
 import com.mmf.ancientcostume.presenter.IPresenter;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import okhttp3.RequestBody;
 import rx.Observable;
 import rx.Subscription;
 import rx.functions.Action1;
@@ -43,7 +46,10 @@ public class HomeService extends RetrofitUtil {
     }
 
     public Observable<List<User>>  list() {
-        return getService().list("mao")
+        Map<String, Object> params = new HashMap<>() ;
+        params.put("mao","mao");
+        params.put("passwd","mao");
+        return getService().list(params)
                 .compose(this.<List<User>>applySchedulers());
 //        success(lawyerInfoList);
 //        return getService().getInfo("nQS647KWkRaA8LkIXvCKwfuIcrbl9sHC", "157287", "3C:B5:09:43:AB:5C:FB:F1:A1:B8:DB:6A:CD:F2:6D:6D:76:74:70:26;com.mmf.framework", loc)

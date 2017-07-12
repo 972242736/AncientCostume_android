@@ -45,12 +45,31 @@ public class UserPresenterImp extends BasePresenter implements IPresenter<Object
         mCompositeSubscription.add(subscription);
     }
 
-    public void uploadPhoto(Map<String, RequestBody> bodyMap) {
+    public void uploadPhoto(List<MultipartBody.Part> bodyMap) {
         showLoadingDialog();
         subscription = mUserService.uploadPhoto(bodyMap).doOnNext(new Action1<List<String>>() {
+
             @Override
             public void call(List<String> remindDTOs) {
-                success(remindDTOs);
+                hideLoadingDialog();
+                showToast(remindDTOs.get(0));
+            }
+        }).subscribe(newSubscriber(new Action1<List<String>>() {
+            @Override
+            public void call(List<String> remindDTOs) {
+                Log.i(TAG, "getNotification---" + remindDTOs.toString());
+            }
+        }));
+        mCompositeSubscription.add(subscription);
+    }
+    public void uploadPhoto1(Map<String, RequestBody> bodyMap) {
+        showLoadingDialog();
+        subscription = mUserService.uploadPhoto1(bodyMap).doOnNext(new Action1<List<String>>() {
+
+            @Override
+            public void call(List<String> remindDTOs) {
+                hideLoadingDialog();
+                showToast(remindDTOs.get(0));
             }
         }).subscribe(newSubscriber(new Action1<List<String>>() {
             @Override

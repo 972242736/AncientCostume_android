@@ -19,14 +19,17 @@ import rx.Observable;
 
 /**
  * Created by MMF
- * date 2016/9/26
+ * date 2016/9/26.
  * Description:
  */
 public interface UserServiceApi {
     @Multipart
     @POST("file/uploadPhoto")
     Observable<Response<List<String>>> uploadPhoto(@Part("data") String data, @PartMap Map<String, RequestBody> params);
-
+    @Multipart
+    @POST("file/upload1")
+    Observable<Response<List<String>>> upload1(@PartMap Map<String, RequestBody> params);
+    @Multipart
     @POST("file/upload")
-    Observable<Response<List<String>>> upload(@PartMap Map<String, RequestBody> params);
+    Observable<Response<List<String>>> upload(@Part List<MultipartBody.Part> files);
    }
