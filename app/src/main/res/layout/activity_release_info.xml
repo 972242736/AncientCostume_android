@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_background"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_sel"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="sel" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_preview_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout style="@style/Lly_normal_style_vertical">
+
+        <EditText
+            android:id="@+id/et_title"
+            style="@style/Release_edit_style"
+            android:hint="产品标题，热搜词汇等"
+            android:minHeight="@dimen/public_space_value_48" />
+
+        <View style="@style/Line_horizontal" />
+
+        <EditText
+            android:id="@+id/et_describe"
+            style="@style/Release_edit_style"
+            android:gravity="top"
+            android:hint="描述下你的商品、活动信息、提示信息等"
+            android:minHeight="80dp" />
+
+        <View style="@style/Line_horizontal" />
+
+        <LinearLayout
+            style="@style/Lly_normal_style_horizontal"
+            android:paddingLeft="@dimen/public_space_value_8"
+            android:paddingRight="@dimen/public_space_value_8">
+
+            <TextView
+                style="@style/Remind_text_style"
+                android:text="租金：" />
+
+            <EditText
+                android:id="@+id/ed_rental"
+                style="@style/Release_edit_normal_style"
+                android:layout_weight="1"
+                android:hint="￥0.00"
+                android:inputType="numberDecimal" />
+
+            <View
+                style="@style/Line_vertical"
+                android:layout_marginLeft="@dimen/public_space_value_8" />
+
+            <TextView
+                style="@style/Remind_text_normal_style"
+                android:layout_marginLeft="@dimen/public_space_value_8"
+                android:layout_marginRight="@dimen/public_space_value_8"
+                android:text="押金：" />
+
+            <EditText
+                android:id="@+id/ed_deposit"
+                style="@style/Release_edit_normal_style"
+                android:layout_weight="1"
+                android:hint="￥0.00"
+                android:inputType="numberDecimal" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_introduce_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

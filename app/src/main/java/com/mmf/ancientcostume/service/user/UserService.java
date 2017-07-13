@@ -6,6 +6,7 @@ import com.mmf.ancientcostume.common.utils.service.SecretConstant;
 import com.mmf.ancientcostume.model.LawyerInfo;
 import com.mmf.ancientcostume.presenter.IPresenter;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,11 +36,14 @@ public class UserService extends RetrofitUtil {
     public  Observable<List<String>> uploadPhoto(String data,Map<String, RequestBody> bodyMap) {
        return getService().uploadPhoto(data,bodyMap).compose(this.<List<String>>applySchedulers());
     }
-    public  Observable<List<String>> uploadPhoto(List<MultipartBody.Part> bodyMap) {
+    public  Observable<List<String>> uploadPhoto(Map<String,MultipartBody.Part> bodyMap) {
        return getService().upload(bodyMap).compose(this.<List<String>>applySchedulers());
     }
     public  Observable<List<String>> uploadPhoto1(Map<String, RequestBody> bodyMap) {
-       return getService().upload1(bodyMap).compose(this.<List<String>>applySchedulers());
+        Map<String, Object> params = new HashMap<>() ;
+        params.put("mao","mao");
+        params.put("passwd","mao");
+       return getService().upload1(params,bodyMap).compose(this.<List<String>>applySchedulers());
     }
 
 

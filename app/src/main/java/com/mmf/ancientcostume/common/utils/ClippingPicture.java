@@ -3,6 +3,7 @@ package com.mmf.ancientcostume.common.utils;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
@@ -15,6 +16,8 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -30,12 +33,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * 图片剪切
- *
- * @author zhangyb@ifenguo.com
- * @createDate 2015年3月10日
- */
 public class ClippingPicture {
 
     /**
@@ -498,5 +495,25 @@ public class ClippingPicture {
         }
         view.destroyDrawingCache();
         return baos.toByteArray();
+    }
+    public static Uri getImageContentUri(Context context, File imageFile) {
+//        String filePath = imageFile;
+        String filePath = imageFile.getAbsolutePath();
+        Cursor cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                new String[]{MediaStore.Images.Media._ID}, MediaStore.Images.Media.DATA + "=? ",
+                new String[]{filePath}, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            int id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
+            Uri baseUri = Uri.parse("content://media/external/images/media");
+            return Uri.withAppendedPath(baseUri, "" + id);
+        } else {
+//            if (imageFile.exists()) {
+//                ContentValues values = new ContentValues();
+//                values.put(MediaStore.Images.Media.DATA, filePath);
+//                return context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+//            } else {
+            return null;
+//            }
+        }
     }
 }

@@ -45,7 +45,7 @@ public class UserPresenterImp extends BasePresenter implements IPresenter<Object
         mCompositeSubscription.add(subscription);
     }
 
-    public void uploadPhoto(List<MultipartBody.Part> bodyMap) {
+    public void uploadPhoto(Map<String,MultipartBody.Part> bodyMap) {
         showLoadingDialog();
         subscription = mUserService.uploadPhoto(bodyMap).doOnNext(new Action1<List<String>>() {
 

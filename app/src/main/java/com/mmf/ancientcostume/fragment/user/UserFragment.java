@@ -33,7 +33,6 @@ import butterknife.OnClick;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import retrofit2.http.Part;
 
 /**
  * Created by MMF
@@ -42,7 +41,7 @@ import retrofit2.http.Part;
  */
 public class UserFragment extends Fragment implements IHomeView<String> {
 
-//    @BindView(R.id.cv_waves)
+    //    @BindView(R.id.cv_waves)
 //    CorrugateView cvWaves;
     @BindView(R.id.iv_test)
     ImageView ivTest;
@@ -50,6 +49,8 @@ public class UserFragment extends Fragment implements IHomeView<String> {
     LinearLayout lytSelPhoto;
     @BindView(R.id.lyt_selPhoto1)
     LinearLayout lytSelPhoto1;
+    @BindView(R.id.lyt_test)
+    LinearLayout lytTest;
     private View view;
 
     @Nullable
@@ -77,15 +78,15 @@ public class UserFragment extends Fragment implements IHomeView<String> {
         List<Uri> listUri = new ArrayList<>();
         switch (requestCode) {
             case 1:
-               List<MultipartBody.Part> bodyMap = new ArrayList<>();
+                Map<String,MultipartBody.Part> bodyMap = new HashMap<>();
                 if (pathList.size() > 0) {
                     for (int i = 0; i < pathList.size(); i++) {
-                        File file = new File(pathList.get(i));
+                        File file = new File(pathList.get(i).trim());
                         RequestBody requestFile =
                                 RequestBody.create(MediaType.parse("multipart/form-data"), file);
                         MultipartBody.Part body =
                                 MultipartBody.Part.createFormData("image", file.getName(), requestFile);
-                        bodyMap.add( body);
+                        bodyMap.put("1",body);
                     }
                 }
                 UserPresenterImp presenter = new UserPresenterImp(this, getContext());
@@ -95,7 +96,7 @@ public class UserFragment extends Fragment implements IHomeView<String> {
                 Map<String, RequestBody> bodyMap1 = new HashMap<String, RequestBody>();
                 if (pathList.size() > 0) {
                     for (int i = 0; i < pathList.size(); i++) {
-                        File file = new File(pathList.get(i));
+                        File file = new File(pathList.get(i).trim());
                         bodyMap1.put("file" + i + "\"; filename=\"" + file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
                     }
                 }
@@ -138,7 +139,7 @@ public class UserFragment extends Fragment implements IHomeView<String> {
     }
 
 
-    @OnClick({R.id.lyt_selPhoto, R.id.lyt_selPhoto1})
+    @OnClick({R.id.lyt_selPhoto, R.id.lyt_selPhoto1,R.id.lyt_test})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.lyt_selPhoto:
@@ -151,7 +152,11 @@ public class UserFragment extends Fragment implements IHomeView<String> {
                 startActivityForResult(intent1, 2);
 //                startActivityForResult(Intent.createChooser(intent1,"选择照片"),2);
                 break;
+            case R.id.lyt_test:
+                Intent intent2 = new Intent(getActivity(), ReleaseActivity.class);
+                startActivity(intent2);
+//                startActivityForResult(Intent.createChooser(intent1,"选择照片"),2);
+                break;
         }
     }
-
 }

@@ -50,6 +50,7 @@
     <dimen name="public_space_value_40">40dp</dimen>
     <dimen name="public_space_value_43">43dp</dimen>
     <dimen name="public_space_value_45">45dp</dimen>
+    <dimen name="public_space_value_48">48dp</dimen>
     <dimen name="public_space_value_50">50dp</dimen>
     <dimen name="public_space_value_52">52dp</dimen>
     <dimen name="public_space_value_55">55dp</dimen>

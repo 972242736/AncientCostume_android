@@ -17,15 +17,79 @@
         <item name="android:layout_marginTop">@dimen/public_space_value_8</item>
         <item name="android:orientation">vertical</item>
     </style>
+    <style name="Lly_normal_style_vertical">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+    <style name="Lly_normal_style_horizontal">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:minHeight">@dimen/public_space_value_48</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
     <style name="User_text_style">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/public_textsize_value_12</item>
+        <item name="android:textColor">@color/T4</item>
+    </style>
+    <style name="Remind_text_style">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:padding">@dimen/public_space_value_8</item>
+        <item name="android:textSize">@dimen/public_textsize_value_16</item>
+        <item name="android:textColor">@color/T4</item>
+    </style>
+    <style name="Remind_text_normal_style">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">@dimen/public_textsize_value_16</item>
+        <item name="android:textColor">@color/T5</item>
+    </style>
+    <style name="Release_edit_style">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textSize">@dimen/public_textsize_value_14</item>
+        <item name="android:padding">@dimen/public_space_value_8</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:textColorHint">@color/S2</item>
+        <item name="android:textColor">@color/T4</item>
+    </style>
+    <style name="Release_edit_normal_style">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textSize">@dimen/public_textsize_value_14</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:textColorHint">@color/S2</item>
         <item name="android:textColor">@color/T4</item>
     </style>
     <style name="Line_horizontal">
-        <item name="android:layout_height">@dimen/public_space_value_1</item>
+        <item name="android:layout_height">@dimen/public_space_value_0.5</item>
         <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/line_color</item>
+        <item name="android:layout_marginLeft">@dimen/public_space_value_8</item>
+        <item name="android:layout_marginRight">@dimen/public_space_value_8</item>
+    </style>
+    <style name="Line_horizontal_normal">
+        <item name="android:layout_height">@dimen/public_space_value_0.5</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/line_color</item>
+    </style>
+    <style name="Line_vertical">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">@dimen/public_space_value_0.5</item>
+        <item name="android:background">@color/line_color</item>
+        <item name="android:layout_marginTop">@dimen/public_space_value_8</item>
+        <item name="android:layout_marginBottom">@dimen/public_space_value_8</item>
+    </style>
+    <style name="Line_vertical_normal">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">@dimen/public_space_value_0.5</item>
         <item name="android:background">@color/line_color</item>
     </style>
     <style name="anim_popup_dir">

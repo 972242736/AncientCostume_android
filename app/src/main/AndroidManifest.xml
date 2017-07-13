@@ -30,7 +30,8 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <!--<activity android:name=".MainActivity">-->
+        <activity android:name="com.mmf.ancientcostume.fragment.user.ReleaseActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -38,6 +39,7 @@
         </activity>
         <!--<activity android:name="com.mmf.ancientcostume.MainActivity" />-->
         <activity android:name="com.mmf.ancientcostume.other.zhy.imageloader.SelPhotoActivity" />
+        <!--<activity android:name="com.mmf.ancientcostume.fragment.user.ReleaseActivityity" />-->
         <!-- 百度定位开始 -->
         <service
             android:name="com.baidu.location.f"
