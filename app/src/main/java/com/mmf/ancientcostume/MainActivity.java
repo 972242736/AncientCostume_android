@@ -14,10 +14,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.mmf.ancientcostume.R;
 import com.mmf.ancientcostume.baidu.BaiduFragment;
 import com.mmf.ancientcostume.fragment.home.HomeFragment;
-import com.mmf.ancientcostume.fragment.home.RecordActivity;
+import com.mmf.ancientcostume.fragment.user.ReleaseFragment;
 import com.mmf.ancientcostume.fragment.user.UserFragment;
 
 import java.util.ArrayList;
@@ -61,7 +60,7 @@ public class MainActivity extends FragmentActivity {
         initColor();
         mViewPager = (ViewPager) findViewById(R.id.pager_view);
         textViews = new ArrayList<>();
-        textViews.add(new RecordActivity());
+        textViews.add(new ReleaseFragment());
         textViews.add(new BaiduFragment());
         textViews.add(new HomeFragment());
         textViews.add(new UserFragment());

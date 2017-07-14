@@ -51,7 +51,7 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_gravity="center_horizontal"
-                            android:src="@mipmap/home_top"
+                            android:src="@drawable/home_top"
                             android:tint="@android:color/transparent" />
 
                         <ImageView
@@ -59,7 +59,7 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_gravity="center_horizontal"
-                            android:src="@mipmap/home"
+                            android:src="@drawable/home"
                             android:tint="@android:color/transparent" />
                     </FrameLayout>
 
@@ -89,7 +89,7 @@
                             android:layout_width="32dp"
                             android:layout_height="24dp"
                             android:layout_gravity="center_horizontal"
-                            android:src="@mipmap/other_top"
+                            android:src="@drawable/other_top"
                             android:tint="@android:color/transparent" />
 
                         <ImageView
@@ -97,14 +97,14 @@
                             android:layout_width="32dp"
                             android:layout_height="24dp"
                             android:layout_gravity="center_horizontal"
-                            android:src="@mipmap/other" />
+                            android:src="@drawable/other" />
 
 
                         <ImageView
                             android:id="@+id/image2_white"
                             android:layout_width="32dp"
                             android:layout_height="24dp"
-                            android:src="@mipmap/other_white"
+                            android:src="@drawable/other_white"
                             android:tint="@android:color/white"/>
 
                     </FrameLayout>
@@ -137,7 +137,7 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_gravity="center_horizontal"
-                            android:src="@mipmap/collect_top"
+                            android:src="@drawable/collect_top"
                             android:tint="@android:color/transparent" />
 
                         />
@@ -147,7 +147,7 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_gravity="center_horizontal"
-                            android:src="@mipmap/collect" />
+                            android:src="@drawable/collect" />
 
                         <ImageView
                             android:id="@+id/image3_white"
@@ -184,7 +184,7 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_gravity="center_horizontal"
-                            android:src="@mipmap/own_top"
+                            android:src="@drawable/own_top"
                             android:tint="@android:color/transparent" />
 
                         />
@@ -194,7 +194,7 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_gravity="center_horizontal"
-                            android:src="@mipmap/own" />
+                            android:src="@drawable/own" />
 
                         <ImageView
                             android:id="@+id/image4_white"

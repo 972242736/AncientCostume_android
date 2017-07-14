@@ -153,7 +153,7 @@ public class UserFragment extends Fragment implements IHomeView<String> {
 //                startActivityForResult(Intent.createChooser(intent1,"选择照片"),2);
                 break;
             case R.id.lyt_test:
-                Intent intent2 = new Intent(getActivity(), ReleaseActivity.class);
+                Intent intent2 = new Intent(getActivity(), ReleaseFragment.class);
                 startActivity(intent2);
 //                startActivityForResult(Intent.createChooser(intent1,"选择照片"),2);
                 break;

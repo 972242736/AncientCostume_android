@@ -16,7 +16,7 @@
             android:id="@+id/green"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@mipmap/own_top"
+            android:src="@drawable/own_top"
             android:tint="@color/colorPrimary"
             android:tintMode="src_in"/>
         <ImageView
@@ -24,13 +24,13 @@
             android:id="@+id/transparent"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@mipmap/transparent"/>
+            android:src="@drawable/transparent"/>
         <ImageView
             android:id="@+id/red"
             android:layout_marginLeft="10dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@mipmap/red"/>
+            android:src="@drawable/red"/>
 
     </LinearLayout>
 

@@ -287,7 +287,7 @@ public class CorrugateView extends View {
         canvas.drawPath(mWavePath, mPaint);
         //画头像
         Bitmap bitmap = BitmapFactory.decodeResource(this.getContext()
-                .getResources(), R.mipmap.icon_2017);
+                .getResources(), R.drawable.icon_2017);
         drawImage(canvas, bitmap, (mWidth - imgSize) / 2, (int) getHeigthIcon() - imgSize,
                 imgSize, imgSize, 0, 0, mPaint);
         //当移动的长度大于等于屏幕宽度重置点的坐标
