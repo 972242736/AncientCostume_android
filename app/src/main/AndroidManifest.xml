@@ -38,6 +38,7 @@
         </activity>
         <!--<activity android:name="com.mmf.ancientcostume.MainActivity" />-->
         <activity android:name="com.mmf.ancientcostume.other.zhy.imageloader.SelPhotoActivity" />
+        <activity android:name="com.mmf.ancientcostume.activity.ImagePreviewActivity" />
         <!--<activity android:name="com.mmf.ancientcostume.fragment.user.ReleaseActivityity" />-->
         <!-- 百度定位开始 -->
         <service

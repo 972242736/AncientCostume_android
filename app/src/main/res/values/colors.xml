@@ -21,7 +21,6 @@
     <color name="T4">#666666</color>
     <color name="T5">#333333</color>
 
-
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
@@ -32,4 +31,5 @@
     <color name="top_red">#FB3D53</color>
     <color name="app_background">#E6E6E6</color>
     <color name="line_color">#E6E6E6</color>
+    <color name="bar_color">#FF4081</color>
 </resources>

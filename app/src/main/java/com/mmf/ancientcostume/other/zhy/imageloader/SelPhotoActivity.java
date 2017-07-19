@@ -32,6 +32,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
@@ -49,6 +50,7 @@ public class SelPhotoActivity extends Activity implements ListImageDirPopupWindo
      * 存储文件夹中的图片数量
      */
     private int mPicsSize;
+    private boolean isFirst = true;
     /**
      * 图片数量最多的文件夹
      */
@@ -101,6 +103,7 @@ public class SelPhotoActivity extends Activity implements ListImageDirPopupWindo
         }
 
         mImgs = Arrays.asList(mImgDir.list());
+        Collections.reverse(mImgs);
         /**
          * 可以看到文件夹的路径和图片的路径分开保存，极大的减少了内存的消耗；
          */
@@ -207,7 +210,7 @@ public class SelPhotoActivity extends Activity implements ListImageDirPopupWindo
                         imageFloder.setFirstImagePath(path);
                     }
 
-                    int picSize = parentFile.list( new FilenameFilter() {
+                    int picSize = parentFile.list(new FilenameFilter() {
                         @Override
                         public boolean accept(File dir, String filename) {
                             if (filename.endsWith(".jpg")
@@ -222,10 +225,14 @@ public class SelPhotoActivity extends Activity implements ListImageDirPopupWindo
                     imageFloder.setCount(picSize);
                     mImageFloders.add(imageFloder);
 
-                    if (picSize > mPicsSize) {
-                        mPicsSize = picSize;
+//                    if (picSize > mPicsSize) {
+//                        mPicsSize = picSize;
+//                        mImgDir = parentFile;
+//                    }
+                    if (dirPath.contains("DCIM/Camera")) {
                         mImgDir = parentFile;
                     }
+
                 }
                 mCursor.close();
 
@@ -300,7 +307,7 @@ public class SelPhotoActivity extends Activity implements ListImageDirPopupWindo
     @OnClick(R.id.tv_sure)
     public void onViewClicked() {
         Intent mIntent = new Intent();
-        mIntent.putExtra("imgUrls",mAdapter.mSelectedImage.toString());
+        mIntent.putExtra("imgUrls", mAdapter.mSelectedImage.toString());
         // 设置结果，并进行传送
         this.setResult(1, mIntent);
         finish();
