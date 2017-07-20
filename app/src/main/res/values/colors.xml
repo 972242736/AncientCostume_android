@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="background_tab_pressed">#6633B5E5</color>
+    <!--<color name="background_tab_pressed">#66CCFFFF</color>-->
     <color name="white">#ffffff</color>
     
     <color name="O1">#FF5C00</color>
@@ -23,7 +24,8 @@
 
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <!--<color name="colorAccent">#fa568e</color>-->
+    <color name="colorAccent">#FFCCCC</color>
     <color name="gray">#999999</color>
     <color name="green">#45c01a</color>
 
@@ -31,5 +33,6 @@
     <color name="top_red">#FB3D53</color>
     <color name="app_background">#E6E6E6</color>
     <color name="line_color">#E6E6E6</color>
-    <color name="bar_color">#FF4081</color>
+    <!--<color name="bar_color">#fa568e</color>-->
+    <color name="bar_color">#FFCCCC</color>
 </resources>

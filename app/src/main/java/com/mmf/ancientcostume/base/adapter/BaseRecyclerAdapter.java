@@ -71,4 +71,8 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
             notifyDataSetChanged();
         }
     }
+    public void addItem(int pos,T path) {
+       itemList.add(pos,path);
+        notifyDataSetChanged();
+    }
 }

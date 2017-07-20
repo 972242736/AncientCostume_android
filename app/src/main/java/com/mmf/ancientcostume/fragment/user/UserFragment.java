@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.mmf.ancientcostume.R;
+import com.mmf.ancientcostume.common.utils.ClippingPicture;
 import com.mmf.ancientcostume.other.zhy.imageloader.SelPhotoActivity;
 import com.mmf.ancientcostume.presenter.imp.user.UserPresenterImp;
 import com.mmf.ancientcostume.view.home.IHomeView;
@@ -58,7 +60,6 @@ public class UserFragment extends Fragment implements IHomeView<String> {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_user, null);
         ButterKnife.bind(this, view);
-
         return view;
     }
 
@@ -72,70 +73,49 @@ public class UserFragment extends Fragment implements IHomeView<String> {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         String imgUrls = data.getStringExtra("imgUrls");
-        String[] tempArray = imgUrls.substring(1, imgUrls.length() - 1).split(",");
-        List<String> pathList = Arrays.asList(tempArray);
-        Picasso.with(getActivity()).load(getImageContentUri(getActivity(), new File(pathList.get(0)))).into(ivTest);
-        List<Uri> listUri = new ArrayList<>();
-        switch (requestCode) {
-            case 1:
-                Map<String,MultipartBody.Part> bodyMap = new HashMap<>();
-                if (pathList.size() > 0) {
-                    for (int i = 0; i < pathList.size(); i++) {
-                        File file = new File(pathList.get(i).trim());
-                        RequestBody requestFile =
-                                RequestBody.create(MediaType.parse("multipart/form-data"), file);
-                        MultipartBody.Part body =
-                                MultipartBody.Part.createFormData("image", file.getName(), requestFile);
-                        bodyMap.put("1",body);
+        if(!TextUtils.isEmpty(imgUrls)){
+            String[] tempArray = imgUrls.substring(1, imgUrls.length() - 1).split(",");
+            List<String> pathList = Arrays.asList(tempArray);
+            Picasso.with(getActivity()).load(ClippingPicture.getImageContentUri(getActivity(), new File(pathList.get(0)))).into(ivTest);
+            List<Uri> listUri = new ArrayList<>();
+            switch (requestCode) {
+                case 1:
+                    Map<String,MultipartBody.Part> bodyMap = new HashMap<>();
+                    if (pathList.size() > 0) {
+                        for (int i = 0; i < pathList.size(); i++) {
+                            File file = new File(pathList.get(i).trim());
+                            RequestBody requestFile =
+                                    RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                            MultipartBody.Part body =
+                                    MultipartBody.Part.createFormData("image", file.getName(), requestFile);
+                            bodyMap.put("1",body);
+                        }
                     }
-                }
-                UserPresenterImp presenter = new UserPresenterImp(this, getContext());
-                presenter.uploadPhoto(bodyMap);
-                break;
-            case 2:
-                Map<String, RequestBody> bodyMap1 = new HashMap<String, RequestBody>();
-                if (pathList.size() > 0) {
-                    for (int i = 0; i < pathList.size(); i++) {
-                        File file = new File(pathList.get(i).trim());
-                        bodyMap1.put("file" + i + "\"; filename=\"" + file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                    UserPresenterImp presenter = new UserPresenterImp(this, getContext());
+                    presenter.uploadPhoto(bodyMap);
+                    break;
+                case 2:
+                    Map<String, RequestBody> bodyMap1 = new HashMap<String, RequestBody>();
+                    if (pathList.size() > 0) {
+                        for (int i = 0; i < pathList.size(); i++) {
+                            File file = new File(pathList.get(i).trim());
+                            bodyMap1.put("file" + i + "\"; filename=\"" + file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                        }
                     }
-                }
-                UserPresenterImp presenter1 = new UserPresenterImp(this, getContext());
-                presenter1.uploadPhoto1(bodyMap1);
-                break;
-            default:
-                break;
+                    UserPresenterImp presenter1 = new UserPresenterImp(this, getContext());
+                    presenter1.uploadPhoto1(bodyMap1);
+                    break;
+                default:
+                    break;
+            }
         }
-//        for (String tempPath : pathList) {
-//            listUri.add(getImageContentUri(getActivity(), new File(tempPath)));
-//        }
+
 
     }
 
     @Override
     public void setList(List<String> list) {
 
-    }
-
-    public static Uri getImageContentUri(Context context, File imageFile) {
-//        String filePath = imageFile;
-        String filePath = imageFile.getAbsolutePath();
-        Cursor cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                new String[]{MediaStore.Images.Media._ID}, MediaStore.Images.Media.DATA + "=? ",
-                new String[]{filePath}, null);
-        if (cursor != null && cursor.moveToFirst()) {
-            int id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
-            Uri baseUri = Uri.parse("content://media/external/images/media");
-            return Uri.withAppendedPath(baseUri, "" + id);
-        } else {
-//            if (imageFile.exists()) {
-//                ContentValues values = new ContentValues();
-//                values.put(MediaStore.Images.Media.DATA, filePath);
-//                return context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-//            } else {
-            return null;
-//            }
-        }
     }
 
 

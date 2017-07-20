@@ -29,6 +29,7 @@ import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 
 /**
  * Created by MMF on 2017-07-13.
+ * 添加发布信息界面
  */
 
 public class ReleaseFragment extends Fragment {
@@ -48,6 +49,7 @@ public class ReleaseFragment extends Fragment {
     @BindView(R.id.rv_introduce_img)
     RecyclerView rvIntroduceImg;
     private View view;
+    private List<String> pathList;
 
 
     @Nullable
@@ -55,7 +57,6 @@ public class ReleaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_release_info, null);
         ButterKnife.bind(this, view);
-        tvSel.setText("TEST");
         return view;
     }
 
@@ -68,15 +69,20 @@ public class ReleaseFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        //获取选择的图片的真实路劲
         String imgUrls = data.getStringExtra("imgUrls");
         String[] tempArray = imgUrls.substring(1, imgUrls.length() - 1).split(",");
-        List<String> pathList = Arrays.asList(tempArray);
+        pathList = Arrays.asList(tempArray);
+        //设置显示的适配器
         final ReleaseInfoImageAdapter adapter = new ReleaseInfoImageAdapter(getActivity());
         adapter.setItems(pathList);
+        //将RecyclerView设置成gridview的样式 每行显示4个
         GridLayoutManager mgr = new GridLayoutManager(getActivity(), 4);
         rvPreviewImg.setLayoutManager(mgr);
         int space = DipUtil.dip2px(getActivity(), 2);
+        //设置RecyclerView每个item的间距
         rvPreviewImg.addItemDecoration(new SpaceItemDecoration(space, 4));
+        //设置RecyclerView的滑动监听（感觉还是很卡，优化还不行）
         rvPreviewImg.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -90,7 +96,6 @@ public class ReleaseFragment extends Fragment {
             }
         });
         rvPreviewImg.setAdapter(adapter);
-
     }
 
 }

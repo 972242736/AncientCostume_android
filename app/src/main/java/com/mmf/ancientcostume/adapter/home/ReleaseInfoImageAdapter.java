@@ -2,42 +2,36 @@ package com.mmf.ancientcostume.adapter.home;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.mmf.ancientcostume.R;
 import com.mmf.ancientcostume.activity.ImagePreviewActivity;
 import com.mmf.ancientcostume.base.adapter.BaseRecyclerAdapter;
 import com.mmf.ancientcostume.common.utils.ClippingPicture;
 import com.mmf.ancientcostume.common.utils.DipUtil;
-import com.mmf.ancientcostume.model.LawyerInfo;
+import com.mmf.ancientcostume.widget.IImagePreview;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static android.R.attr.name;
-import static android.support.v7.appcompat.R.id.image;
-
 /**
  * Created by MMF
  * date 2017/07/13
- * Description:
+ * Description:发布信息适配器
  */
 public class ReleaseInfoImageAdapter extends BaseRecyclerAdapter<String> {
     Picasso picasso;
     private int width;
-    private int padding;
+//    private int padding;
     protected boolean isScrolling = false;
     public void setScrolling(boolean scrolling) {
         isScrolling = scrolling;
@@ -59,6 +53,7 @@ public class ReleaseInfoImageAdapter extends BaseRecyclerAdapter<String> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
+        //设置图片显示的宽高
         ViewGroup.MarginLayoutParams margin9 = new ViewGroup.MarginLayoutParams(
                 viewHolder.ivRelease.getLayoutParams());
 //        margin9.setMargins(padding, padding, padding, padding);
@@ -75,21 +70,36 @@ public class ReleaseInfoImageAdapter extends BaseRecyclerAdapter<String> {
         } else {
             viewHolder.ivRelease.setImageResource(R.drawable.pictures_no);
         }
-
+        //设置删除的监听
         viewHolder.ivDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 removeItem(position);
             }
         });
+        //点击图片进入图片预览
         viewHolder.ivRelease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, ImagePreviewActivity.class);
+                ImagePreviewActivity activity = new ImagePreviewActivity();
+                //预览操作图片的监听
+                activity.setIPreview(new IImagePreview() {
+                    @Override
+                    public void delete(int position,String path) {
+                        removeItem(position);
+                    }
+
+                    @Override
+                    public void select(int position,String path) {
+//                        addItem(position,path);
+                    }
+                });
+                Intent intent = new Intent(context, activity.getClass());
                 intent.putExtra("type", "1");
                 intent.putExtra("selPosition", position);
                 intent.putStringArrayListExtra("imgPath", (ArrayList<String>) itemList);
                 context.startActivity(intent);
+
             }
         });
     }

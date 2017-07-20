@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.mmf.ancientcostume.R;
+import com.mmf.ancientcostume.activity.ImagePreviewActivity;
 import com.mmf.ancientcostume.other.zhy.bean.ImageFloder;
 
 import java.io.File;
@@ -107,13 +108,27 @@ public class SelPhotoActivity extends Activity implements ListImageDirPopupWindo
         /**
          * 可以看到文件夹的路径和图片的路径分开保存，极大的减少了内存的消耗；
          */
-        mAdapter = new MyAdapter(getApplicationContext(), mImgs,
-                R.layout.grid_item, mImgDir.getAbsolutePath());
-        mGirdView.setAdapter(mAdapter);
+        setAdapter();
         mImageCount.setText(totalCount + "张");
     }
 
-    ;
+    private void setAdapter(){
+        mAdapter = new MyAdapter(getApplicationContext(), mImgs,
+                R.layout.grid_item, mImgDir.getAbsolutePath());
+        mGirdView.setAdapter(mAdapter);
+        mAdapter.setjPAListener(new MyAdapter.JumpPreviewActivityListener() {
+            @Override
+            public void jump(int position, List<String> dirAllPath) {
+                ImagePreviewActivity activity = new ImagePreviewActivity();
+                Intent intent = new Intent(SelPhotoActivity.this, activity.getClass());
+                intent.putExtra("type", "2");
+                intent.putExtra("selPosition", position);
+                intent.putExtra("mSelImage", mAdapter.mSelectedImage.toString());
+                intent.putStringArrayListExtra("imgPath", (ArrayList<String>) dirAllPath);
+                startActivityForResult(intent,1);
+            }
+        });
+    }
 
     /**
      * 初始化展示文件夹的popupWindw
@@ -294,9 +309,10 @@ public class SelPhotoActivity extends Activity implements ListImageDirPopupWindo
         /**
          * 可以看到文件夹的路径和图片的路径分开保存，极大的减少了内存的消耗；
          */
-        mAdapter = new MyAdapter(getApplicationContext(), mImgs,
-                R.layout.grid_item, mImgDir.getAbsolutePath());
-        mGirdView.setAdapter(mAdapter);
+//        mAdapter = new MyAdapter(getApplicationContext(), mImgs,
+//                R.layout.grid_item, mImgDir.getAbsolutePath());
+//        mGirdView.setAdapter(mAdapter);
+        setAdapter();
         // mAdapter.notifyDataSetChanged();
         mImageCount.setText(floder.getCount() + "张");
         mChooseDir.setText(floder.getName());
@@ -311,5 +327,15 @@ public class SelPhotoActivity extends Activity implements ListImageDirPopupWindo
         // 设置结果，并进行传送
         this.setResult(1, mIntent);
         finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode ==1){
+            List<String> mSelImage = data.getStringArrayListExtra("mSelImage");
+            mAdapter.mSelectedImage = mSelImage;
+            mAdapter.notifyDataSetChanged();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
