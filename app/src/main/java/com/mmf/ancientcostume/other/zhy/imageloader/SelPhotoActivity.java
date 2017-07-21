@@ -59,7 +59,7 @@ public class SelPhotoActivity extends Activity implements ListImageDirPopupWindo
     /**
      * 所有的图片
      */
-    private List<String> mImgs;
+    private List<String> mImgs = new ArrayList<>();
 
     private GridView mGirdView;
     private MyAdapter mAdapter;
@@ -103,8 +103,6 @@ public class SelPhotoActivity extends Activity implements ListImageDirPopupWindo
             return;
         }
 
-        mImgs = Arrays.asList(mImgDir.list());
-        Collections.reverse(mImgs);
         /**
          * 可以看到文件夹的路径和图片的路径分开保存，极大的减少了内存的消耗；
          */
@@ -113,6 +111,19 @@ public class SelPhotoActivity extends Activity implements ListImageDirPopupWindo
     }
 
     private void setAdapter(){
+//       List<String> mImgsTemp = Arrays.asList(mImgDir.list(new FilenameFilter() {
+//            @Override
+//            public boolean accept(File dir, String filename) {
+//                if (filename.endsWith(".jpg") || filename.endsWith(".png")
+//                        || filename.endsWith(".jpeg"))
+//                    return true;
+//                return false;
+//            }
+//        }));
+        List<String> mImgsTemp = Arrays.asList(mImgDir.list());
+        for(int i = mImgsTemp.size() - 1;i >= 0;i--){
+            mImgs.add(mImgsTemp.get(i));
+        }
         mAdapter = new MyAdapter(getApplicationContext(), mImgs,
                 R.layout.grid_item, mImgDir.getAbsolutePath());
         mGirdView.setAdapter(mAdapter);
@@ -295,17 +306,7 @@ public class SelPhotoActivity extends Activity implements ListImageDirPopupWindo
 
     @Override
     public void selected(ImageFloder floder) {
-
         mImgDir = new File(floder.getDir());
-        mImgs = Arrays.asList(mImgDir.list(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String filename) {
-                if (filename.endsWith(".jpg") || filename.endsWith(".png")
-                        || filename.endsWith(".jpeg"))
-                    return true;
-                return false;
-            }
-        }));
         /**
          * 可以看到文件夹的路径和图片的路径分开保存，极大的减少了内存的消耗；
          */

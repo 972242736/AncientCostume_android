@@ -65,11 +65,11 @@ public class ImagePreviewActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         setContentView(R.layout.activity_image_preview);
         ButterKnife.bind(this);
         rlPreview.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
-//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         //获取数据
         getInitData();
     }
@@ -155,6 +155,7 @@ public class ImagePreviewActivity extends Activity {
         @Override
         public View instantiateItem(ViewGroup container, final int position) {
             showPosition = position;
+            tvSelNum.setText(position + "/" + listUri.size());
             View photoView = View.inflate(ImagePreviewActivity.this, R.layout.adapter_image_preview, null);
             ImageView ivImagePreview = (ImageView) photoView.findViewById(R.id.iv_image_preview);
             final LinearLayout lytBottom = (LinearLayout) photoView.findViewById(R.id.lyt_bottom);
@@ -190,7 +191,7 @@ public class ImagePreviewActivity extends Activity {
                         lytBar.startAnimation(ViewUtil.viewShowActionTop());
                         lytBar.setVisibility(View.VISIBLE);
 //                        rlPreview.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-                        rlPreview.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+//                        rlPreview.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
                         if (!TextUtils.isEmpty(type) && type.equals("2")) {
                             lytBottom.startAnimation(ViewUtil.viewShowActionBottom());
                             lytBottom.setVisibility(View.VISIBLE);
@@ -198,8 +199,8 @@ public class ImagePreviewActivity extends Activity {
                     } else {
                         lytBar.startAnimation(ViewUtil.viewHiddenActionTop());
                         lytBar.setVisibility(View.GONE);
-//                        rlPreview.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
-                        rlPreview.setSystemUiVisibility(View.SYSTEM_UI_LAYOUT_FLAGS);
+//                        rlPreview.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+//                        rlPreview.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
                         if (!TextUtils.isEmpty(type) && type.equals("2")) {
                             lytBottom.startAnimation(ViewUtil.viewHiddenActionBottom());
                             lytBottom.setVisibility(View.GONE);
@@ -207,7 +208,7 @@ public class ImagePreviewActivity extends Activity {
                     }
                 }
             });
-            tvSelNum.setText(position + "/" + listUri.size());
+
             container.addView(photoView, ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT);
             return photoView;

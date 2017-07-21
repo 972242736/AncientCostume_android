@@ -13,6 +13,7 @@
         android:id="@+id/lyt_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/public_space_value_48"
+        android:layout_marginTop="@dimen/public_space_value_24"
         android:background="@color/background_tab_pressed"
         android:gravity="center_vertical"
         android:orientation="horizontal">
