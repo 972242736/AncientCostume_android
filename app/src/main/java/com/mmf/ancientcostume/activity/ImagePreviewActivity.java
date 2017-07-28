@@ -9,7 +9,6 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -53,7 +52,8 @@ public class ImagePreviewActivity extends Activity {
     @BindView(R.id.rl_preview)
     RelativeLayout rlPreview;
     private List<String> pathList;              //预览的所有图片的真实路径
-    private List<String> mSelImage = new ArrayList<>();    //已经选择的图片路径
+//    private List<String> mSelImage = new ArrayList<>();    //已经选择的图片路径
+    private List<String> imgUrls = new ArrayList<>();    //已经选择的图片路径
     private List<Boolean> isSelImg = new ArrayList<>();    //是否选择图片，在选择图片时预览用到
     private String type;                        // 1：已选好的照片预览 2：相册进来预览
     private int selPosition;                  //点击进入预览界面的图片位置
@@ -61,6 +61,7 @@ public class ImagePreviewActivity extends Activity {
     private boolean isShowBar = true;        //是否显示头部的bar
     private int showPosition;                 //当前显示的图片的位置
     private IImagePreview iPreview;            //对图片操作的监听
+    private SamplePagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,15 +79,7 @@ public class ImagePreviewActivity extends Activity {
         type = getIntent().getStringExtra("type");
         selPosition = getIntent().getIntExtra("selPosition", 0);
         pathList = getIntent().getStringArrayListExtra("imgPath");
-//         = getIntent().getStringArrayListExtra("mSelImage");
-        String imgUrls = getIntent().getStringExtra("mSelImage");
-        String[] tempArray = imgUrls.substring(1, imgUrls.length() - 1).split(",");
-        List<String> tempSelImage = Arrays.asList(tempArray);
-        for (String item : tempSelImage) {
-            if (!TextUtils.isEmpty(item)) {
-                mSelImage.add(item.trim());
-            }
-        }
+       imgUrls = getIntent().getStringArrayListExtra("imgUrls");
         listUri = new ArrayList<>();
         for (String item : pathList) {
             listUri.add(ClippingPicture.getImageContentUri(this, new File(item.trim())));
@@ -102,7 +95,7 @@ public class ImagePreviewActivity extends Activity {
         }
         for (String temp : pathList) {
             // 已经选择过该图片
-            if (mSelImage.contains(temp)) {
+            if (imgUrls != null &&imgUrls.contains(temp)) {
                 isSelImg.add(true);
             }
             // 未选择该图片
@@ -111,24 +104,45 @@ public class ImagePreviewActivity extends Activity {
             }
 
         }
-        pvImagePreview.setAdapter(new SamplePagerAdapter());
+        adapter = new SamplePagerAdapter();
+        pvImagePreview.setAdapter(adapter);
         pvImagePreview.setCurrentItem(selPosition);
+        tvSelNum.setText(selPosition+1 + "/" + listUri.size());
+        pvImagePreview.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int position) {
+                // position是当前选中的页面的Position
+                showPosition = position;
+                tvSelNum.setText(position + 1 + "/" + listUri.size());
+            }
+            @Override
+            public void onPageScrolled(int position, float arg1, int arg2) {
+                // position :当前页面，及你点击滑动的页面；arg1:当前页面偏移的百分比；arg2:当前页面偏移的像素位置
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
+                //arg0 ==1的时表示正在滑动，arg0==2的时表示滑动完毕了，arg0==0的时表示什么都没做。
+
+            }
+        });
     }
 
     @OnClick({R.id.iv_back, R.id.tv_del, R.id.tv_complete})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.iv_back:
-
-                break;
             case R.id.tv_del:
 //                iPreview.delete(showPosition,pathList.get(showPosition));
-                mSelImage.remove(pathList.get(showPosition));
+                imgUrls.remove(showPosition);
+                listUri.remove(showPosition);
+                adapter.notifyDataSetChanged();
                 break;
+            case R.id.iv_back:
             case R.id.tv_complete:
 //                iPreview.select(showPosition,pathList.get(showPosition));
                 Intent mIntent = new Intent();
-                mIntent.putStringArrayListExtra("mSelImage", (ArrayList<String>) mSelImage);
+                mIntent.putStringArrayListExtra("imgUrls",(ArrayList<String>)imgUrls);
                 // 设置结果，并进行传送
                 this.setResult(1, mIntent);
                 finish();
@@ -154,8 +168,6 @@ public class ImagePreviewActivity extends Activity {
 
         @Override
         public View instantiateItem(ViewGroup container, final int position) {
-            showPosition = position;
-            tvSelNum.setText(position + "/" + listUri.size());
             View photoView = View.inflate(ImagePreviewActivity.this, R.layout.adapter_image_preview, null);
             ImageView ivImagePreview = (ImageView) photoView.findViewById(R.id.iv_image_preview);
             final LinearLayout lytBottom = (LinearLayout) photoView.findViewById(R.id.lyt_bottom);
@@ -173,11 +185,9 @@ public class ImagePreviewActivity extends Activity {
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     isSelImg.set(position, b);
                     if (b) {
-//                        iPreview.select(showPosition,pathList.get(position));
-                        mSelImage.add(pathList.get(position));
+                        imgUrls.add(pathList.get(position));
                     } else {
-                        mSelImage.remove(pathList.get(position));
-//                        iPreview.delete(showPosition,pathList.get(position));
+                        imgUrls.remove(pathList.get(position));
                     }
                 }
             });
@@ -199,8 +209,6 @@ public class ImagePreviewActivity extends Activity {
                     } else {
                         lytBar.startAnimation(ViewUtil.viewHiddenActionTop());
                         lytBar.setVisibility(View.GONE);
-//                        rlPreview.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-//                        rlPreview.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
                         if (!TextUtils.isEmpty(type) && type.equals("2")) {
                             lytBottom.startAnimation(ViewUtil.viewHiddenActionBottom());
                             lytBottom.setVisibility(View.GONE);

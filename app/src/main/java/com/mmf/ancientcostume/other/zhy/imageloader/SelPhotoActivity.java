@@ -130,11 +130,14 @@ public class SelPhotoActivity extends Activity implements ListImageDirPopupWindo
         mAdapter.setjPAListener(new MyAdapter.JumpPreviewActivityListener() {
             @Override
             public void jump(int position, List<String> dirAllPath) {
-                ImagePreviewActivity activity = new ImagePreviewActivity();
-                Intent intent = new Intent(SelPhotoActivity.this, activity.getClass());
+                Intent intent = new Intent(SelPhotoActivity.this, ImagePreviewActivity.class);
                 intent.putExtra("type", "2");
                 intent.putExtra("selPosition", position);
-                intent.putExtra("mSelImage", mAdapter.mSelectedImage.toString());
+                ArrayList<String> imgUrls = new ArrayList<>();
+                for(String item:mAdapter.mSelectedImage){
+                    imgUrls.add(item);
+                }
+                intent.putStringArrayListExtra("imgUrls", imgUrls);
                 intent.putStringArrayListExtra("imgPath", (ArrayList<String>) dirAllPath);
                 startActivityForResult(intent,1);
             }
@@ -280,9 +283,7 @@ public class SelPhotoActivity extends Activity implements ListImageDirPopupWindo
         mGirdView = (GridView) findViewById(R.id.id_gridView);
         mChooseDir = (TextView) findViewById(R.id.id_choose_dir);
         mImageCount = (TextView) findViewById(R.id.id_total_count);
-
         mBottomLy = (RelativeLayout) findViewById(R.id.id_bottom_ly);
-
     }
 
     private void initEvent() {
@@ -324,7 +325,11 @@ public class SelPhotoActivity extends Activity implements ListImageDirPopupWindo
     @OnClick(R.id.tv_sure)
     public void onViewClicked() {
         Intent mIntent = new Intent();
-        mIntent.putExtra("imgUrls", mAdapter.mSelectedImage.toString());
+        ArrayList<String> imgUrls = new ArrayList<>();
+        for(String item:mAdapter.mSelectedImage){
+            imgUrls.add(item);
+        }
+        mIntent.putStringArrayListExtra("imgUrls", imgUrls);
         // 设置结果，并进行传送
         this.setResult(1, mIntent);
         finish();
@@ -333,8 +338,8 @@ public class SelPhotoActivity extends Activity implements ListImageDirPopupWindo
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode ==1){
-            List<String> mSelImage = data.getStringArrayListExtra("mSelImage");
-            mAdapter.mSelectedImage = mSelImage;
+            List<String> imgUrls = data.getStringArrayListExtra("imgUrls");
+            mAdapter.mSelectedImage = imgUrls;
             mAdapter.notifyDataSetChanged();
         }
         super.onActivityResult(requestCode, resultCode, data);

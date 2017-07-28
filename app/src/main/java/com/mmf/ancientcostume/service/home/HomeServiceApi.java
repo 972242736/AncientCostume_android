@@ -13,6 +13,8 @@ import okhttp3.RequestBody;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
 import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
@@ -33,5 +35,8 @@ public interface HomeServiceApi {
 
     @GET("user/list1")
     Observable<Response<List<User>>> list(@QueryMap Map<String, Object> params);
+    @Multipart
+    @POST("file/releaseInfo")
+    Observable<Response<String>> releaseInfo(@QueryMap Map<String, RequestBody> bodyMap,@PartMap Map<String, Object> info);
 
 }

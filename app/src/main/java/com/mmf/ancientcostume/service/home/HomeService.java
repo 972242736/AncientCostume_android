@@ -28,10 +28,6 @@ import static android.support.v7.widget.StaggeredGridLayoutManager.TAG;
 public class HomeService extends RetrofitUtil {
     private static HomeServiceApi homeService;
 
-    public HomeService(IPresenter presenter) {
-        this.presenter = presenter;
-    }
-
     public static HomeServiceApi getService() {
         if (homeService == null) {
             homeService = getRetrofit(SecretConstant.API_HOST).create(HomeServiceApi.class);
@@ -54,6 +50,10 @@ public class HomeService extends RetrofitUtil {
 //        success(lawyerInfoList);
 //        return getService().getInfo("nQS647KWkRaA8LkIXvCKwfuIcrbl9sHC", "157287", "3C:B5:09:43:AB:5C:FB:F1:A1:B8:DB:6A:CD:F2:6D:6D:76:74:70:26;com.mmf.framework", loc)
 //                .compose(this.<List<PositionInfo>>applySchedulers());
+    }
+    public Observable<String>  releaseInfo(Map<String, RequestBody> bodyMap,Map<String, Object> info) {
+        return getService().releaseInfo(bodyMap,info)
+                .compose(this.<String>applySchedulers());
     }
 
 }

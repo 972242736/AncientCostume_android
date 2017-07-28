@@ -35,4 +35,6 @@
     <color name="line_color">#E6E6E6</color>
     <!--<color name="bar_color">#fa568e</color>-->
     <color name="bar_color">#FFCCCC</color>
+    <color name="tv_click">#e7b7b7</color>
+    <color name="click_color">#a9999999</color>
 </resources>

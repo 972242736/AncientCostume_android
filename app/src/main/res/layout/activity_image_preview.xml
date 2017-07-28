@@ -31,21 +31,13 @@
             android:layout_weight="1"/>
         <TextView
             android:id="@+id/tv_del"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:textColor="@color/white"
+           style="@style/tv_width_wrap"
             android:text="删除"
-            android:visibility="gone"
-            android:textSize="@dimen/public_space_value_12"/>
+            android:visibility="gone"/>
         <TextView
             android:id="@+id/tv_complete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:textColor="@color/white"
+            style="@style/tv_width_wrap"
             android:text="完成"
-            android:visibility="gone"
-            android:textSize="@dimen/public_space_value_12"/>
+            android:visibility="gone"/>
     </LinearLayout>
 </RelativeLayout>

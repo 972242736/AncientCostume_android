@@ -14,11 +14,13 @@ import com.mmf.ancientcostume.activity.ImagePreviewActivity;
 import com.mmf.ancientcostume.base.adapter.BaseRecyclerAdapter;
 import com.mmf.ancientcostume.common.utils.ClippingPicture;
 import com.mmf.ancientcostume.common.utils.DipUtil;
+import com.mmf.ancientcostume.other.zhy.imageloader.MyAdapter;
 import com.mmf.ancientcostume.widget.IImagePreview;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,11 +33,13 @@ import butterknife.ButterKnife;
 public class ReleaseInfoImageAdapter extends BaseRecyclerAdapter<String> {
     Picasso picasso;
     private int width;
-//    private int padding;
+    //    private int padding;
     protected boolean isScrolling = false;
+    private MyAdapter.JumpPreviewActivityListener jPAListener;
     public void setScrolling(boolean scrolling) {
         isScrolling = scrolling;
     }
+
     public ReleaseInfoImageAdapter(Context context) {
         super(context);
         picasso = Picasso.with(context);
@@ -81,24 +85,7 @@ public class ReleaseInfoImageAdapter extends BaseRecyclerAdapter<String> {
         viewHolder.ivRelease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ImagePreviewActivity activity = new ImagePreviewActivity();
-                //预览操作图片的监听
-                activity.setIPreview(new IImagePreview() {
-                    @Override
-                    public void delete(int position,String path) {
-                        removeItem(position);
-                    }
-
-                    @Override
-                    public void select(int position,String path) {
-//                        addItem(position,path);
-                    }
-                });
-                Intent intent = new Intent(context, activity.getClass());
-                intent.putExtra("type", "1");
-                intent.putExtra("selPosition", position);
-                intent.putStringArrayListExtra("imgPath", (ArrayList<String>) itemList);
-                context.startActivity(intent);
+                    jPAListener.jump(position,itemList);
 
             }
         });
@@ -114,6 +101,13 @@ public class ReleaseInfoImageAdapter extends BaseRecyclerAdapter<String> {
             super(view);
             ButterKnife.bind(this, view);
         }
+    }
+    public interface JumpPreviewActivityListener{
+        void jump(int position,List<String> dirAllPath);
+    }
+
+    public void setjPAListener(MyAdapter.JumpPreviewActivityListener jPAListener) {
+        this.jPAListener = jPAListener;
     }
 
 }

@@ -13,17 +13,28 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.mmf.ancientcostume.R;
+import com.mmf.ancientcostume.activity.ImagePreviewActivity;
 import com.mmf.ancientcostume.adapter.home.ReleaseInfoImageAdapter;
+import com.mmf.ancientcostume.base.presenter.BasePresenter;
 import com.mmf.ancientcostume.common.utils.DipUtil;
+import com.mmf.ancientcostume.other.zhy.imageloader.MyAdapter;
 import com.mmf.ancientcostume.other.zhy.imageloader.SelPhotoActivity;
+import com.mmf.ancientcostume.presenter.imp.release.ReleasePresenterImp;
+import com.mmf.ancientcostume.presenter.imp.user.UserPresenterImp;
+import com.mmf.ancientcostume.view.home.IHomeView;
 import com.mmf.ancientcostume.widget.SpaceItemDecoration;
 
-import java.util.Arrays;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 
@@ -32,7 +43,7 @@ import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
  * 添加发布信息界面
  */
 
-public class ReleaseFragment extends Fragment {
+public class ReleaseFragment extends Fragment{
 
     @BindView(R.id.tv_sel)
     TextView tvSel;
@@ -48,8 +59,12 @@ public class ReleaseFragment extends Fragment {
     EditText edDeposit;
     @BindView(R.id.rv_introduce_img)
     RecyclerView rvIntroduceImg;
+    @BindView(R.id.tv_release)
+    TextView tvRelease;
     private View view;
-    private List<String> pathList;
+    private List<String> imgUrls = new ArrayList<>();
+    private ReleaseInfoImageAdapter adapter;
+    private ReleasePresenterImp presenter;
 
 
     @Nullable
@@ -57,25 +72,71 @@ public class ReleaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_release_info, null);
         ButterKnife.bind(this, view);
+        presenter = new ReleasePresenterImp(getActivity());
+        setAdapter();
         return view;
     }
 
-    @OnClick(R.id.tv_sel)
-    public void onViewClicked() {
-        Intent intent = new Intent(getActivity(), SelPhotoActivity.class);
-        startActivityForResult(intent, 1);
+    @OnClick({R.id.tv_sel, R.id.tv_release})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_sel:
+                Intent intent = new Intent(getActivity(), SelPhotoActivity.class);
+                startActivityForResult(intent, 1);
+                break;
+            case R.id.tv_release:
+                if (presenter.check(getData())) {
+                    presenter.releaseInfo(getImgRequestBody(), getData());
+                }
+                break;
+        }
+    }
+
+    /**
+     * 获取发布的界面信息
+     *
+     * @return
+     */
+    private Map<String, Object> getData() {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("title", etTitle.getText().toString());
+        map.put("rescribe", etDescribe.getText().toString());
+        map.put("rental", edRental.getText().toString());
+        map.put("deposit", edDeposit.getText().toString());
+        return map;
+    }
+
+    /**
+     * 获取发布的图片信息
+     *
+     * @return
+     */
+    private Map<String, RequestBody> getImgRequestBody() {
+        Map<String, RequestBody> bodyMap = new HashMap<>();
+        if (imgUrls.size() > 0) {
+            for (int i = 0; i < imgUrls.size(); i++) {
+                File file = new File(imgUrls.get(i).trim());
+                bodyMap.put("file" + i + "\"; filename=\"" + file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+            }
+        }
+        return bodyMap;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //获取选择的图片的真实路劲
-        String imgUrls = data.getStringExtra("imgUrls");
-        String[] tempArray = imgUrls.substring(1, imgUrls.length() - 1).split(",");
-        pathList = Arrays.asList(tempArray);
+        imgUrls = data.getStringArrayListExtra("imgUrls");
+        if (resultCode == 1) {
+            adapter.setItems(imgUrls);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    private void setAdapter() {
         //设置显示的适配器
-        final ReleaseInfoImageAdapter adapter = new ReleaseInfoImageAdapter(getActivity());
-        adapter.setItems(pathList);
+        adapter = new ReleaseInfoImageAdapter(getActivity());
+        adapter.setItems(imgUrls);
         //将RecyclerView设置成gridview的样式 每行显示4个
         GridLayoutManager mgr = new GridLayoutManager(getActivity(), 4);
         rvPreviewImg.setLayoutManager(mgr);
@@ -96,6 +157,16 @@ public class ReleaseFragment extends Fragment {
             }
         });
         rvPreviewImg.setAdapter(adapter);
+        adapter.setjPAListener(new MyAdapter.JumpPreviewActivityListener() {
+            @Override
+            public void jump(int position, List<String> itemList) {
+                Intent intent = new Intent(getActivity(), ImagePreviewActivity.class);
+                intent.putExtra("type", "1");
+                intent.putExtra("selPosition", position);
+                intent.putStringArrayListExtra("imgUrls", (ArrayList<String>) imgUrls);
+                intent.putStringArrayListExtra("imgPath", (ArrayList<String>) itemList);
+                startActivityForResult(intent, 1);
+            }
+        });
     }
-
 }
