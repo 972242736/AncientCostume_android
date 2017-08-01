@@ -9,6 +9,7 @@
         android:layout_height="match_parent" />
 
     <LinearLayout
+        android:id="@+id/lly_point"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -16,32 +17,32 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/iv_point1"
-            android:layout_width="8dp"
-            android:layout_height="8dp"
-            android:src="@drawable/sel_point" />
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_point1"-->
+            <!--android:layout_width="8dp"-->
+            <!--android:layout_height="8dp"-->
+            <!--android:src="@drawable/sel_point" />-->
 
-        <ImageView
-            android:id="@+id/iv_point2"
-            android:layout_width="8dp"
-            android:layout_height="8dp"
-            android:layout_marginLeft="16dp"
-            android:src="@drawable/point" />
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_point2"-->
+            <!--android:layout_width="8dp"-->
+            <!--android:layout_height="8dp"-->
+            <!--android:layout_marginLeft="16dp"-->
+            <!--android:src="@drawable/point" />-->
 
-        <ImageView
-            android:id="@+id/iv_point3"
-            android:layout_width="8dp"
-            android:layout_height="8dp"
-            android:layout_marginLeft="16dp"
-            android:src="@drawable/point" />
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_point3"-->
+            <!--android:layout_width="8dp"-->
+            <!--android:layout_height="8dp"-->
+            <!--android:layout_marginLeft="16dp"-->
+            <!--android:src="@drawable/point" />-->
 
-        <ImageView
-            android:id="@+id/iv_point4"
-            android:layout_width="8dp"
-            android:layout_height="8dp"
-            android:layout_marginLeft="16dp"
-            android:src="@drawable/point" />
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_point4"-->
+            <!--android:layout_width="8dp"-->
+            <!--android:layout_height="8dp"-->
+            <!--android:layout_marginLeft="16dp"-->
+            <!--android:src="@drawable/point" />-->
     </LinearLayout>
 
     <Button

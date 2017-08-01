@@ -32,7 +32,6 @@ public interface HomeServiceApi {
     Observable<Response<List<PositionInfo>>> getInfo(@Query("ak") String s2,@Query("geotable_id")  String s, @Query("mcode") String s1,@Query("location") String loc);
     @GET("user/list")
     Observable<Response<List<User>>> list(@Query("name")String name);
-
     @GET("user/list1")
     Observable<Response<List<User>>> list(@QueryMap Map<String, Object> params);
     @Multipart

@@ -1,12 +1,17 @@
 package com.mmf.ancientcostume;
 
+import android.app.Activity;
 import android.app.Application;
+import android.os.Bundle;
 
 import com.baidu.location.BDLocation;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.model.LatLng;
 import com.mmf.ancientcostume.baidu.BaiduFragment;
 import com.mmf.ancientcostume.baidu.LBSLocation;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by MMF
@@ -18,6 +23,10 @@ public class MyApplication extends Application {
     // 定位结果
     public BDLocation currlocation = null;
     private BaiduFragment baiduFragment;
+
+    //监控所有activity使用
+    private List<Activity> activities = new ArrayList<>();
+    private int numOfActivitys = 0;
 
     @Override
     public void onCreate() {
@@ -49,5 +58,48 @@ public class MyApplication extends Application {
             baiduFragment.setCity(new LatLng(currlocation.getLatitude(), currlocation.getLongitude()));
         this.currlocation = currlocation;
     }
+
+    /**
+     * 监测所有Activity状态
+     */
+    private ActivityLifecycleCallbacks TYActivityLifecycleCallback = new ActivityLifecycleCallbacks() {
+
+        @Override
+        public void onActivityCreated(Activity activity, Bundle bundle) {
+            numOfActivitys++;
+            activities.add(activity);
+        }
+
+        @Override
+        public void onActivityStarted(Activity activity) {
+
+        }
+
+        @Override
+        public void onActivityResumed(Activity activity) {
+
+        }
+
+        @Override
+        public void onActivityPaused(Activity activity) {
+
+        }
+
+        @Override
+        public void onActivityStopped(Activity activity) {
+
+        }
+
+        @Override
+        public void onActivitySaveInstanceState(Activity activity, Bundle bundle) {
+
+        }
+
+        @Override
+        public void onActivityDestroyed(Activity activity) {
+            numOfActivitys--;
+            activities.remove(activities);
+        }
+    };
 
 }
