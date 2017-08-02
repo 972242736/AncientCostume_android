@@ -28,14 +28,21 @@ import rx.Observable;
 public interface HomeServiceApi {
     @GET("lawyers/city")
     Observable<Response<List<LawyerInfo>>> getLawyer(@Query("dtype") String dtype, @Query("st") int st, @Query("count") int count, @Query("city") String pro, @Query("key") String key);
+
     @GET("geosearch/v3/nearby")
-    Observable<Response<List<PositionInfo>>> getInfo(@Query("ak") String s2,@Query("geotable_id")  String s, @Query("mcode") String s1,@Query("location") String loc);
+    Observable<Response<List<PositionInfo>>> getInfo(@Query("ak") String s2, @Query("geotable_id") String s, @Query("mcode") String s1, @Query("location") String loc);
+
     @GET("user/list")
-    Observable<Response<List<User>>> list(@Query("name")String name);
+    Observable<Response<List<User>>> list(@Query("name") String name);
+
     @GET("user/list1")
     Observable<Response<List<User>>> list(@QueryMap Map<String, Object> params);
+
     @Multipart
     @POST("file/releaseInfo")
-    Observable<Response<String>> releaseInfo(@QueryMap Map<String, RequestBody> bodyMap,@PartMap Map<String, Object> info);
+    Observable<Response<String>> releaseInfo(@QueryMap Map<String, Object> info, @PartMap Map<String, RequestBody> bodyMap);
+
+    @GET("file/getDetail")
+    Observable<Response<List<User>>> getDetail(@Query("id") int id);
 
 }

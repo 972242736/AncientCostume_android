@@ -100,7 +100,7 @@ public class ReleaseFragment extends Fragment{
     private Map<String, Object> getData() {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("title", etTitle.getText().toString());
-        map.put("rescribe", etDescribe.getText().toString());
+        map.put("describe", etDescribe.getText().toString());
         map.put("rental", edRental.getText().toString());
         map.put("deposit", edDeposit.getText().toString());
         return map;
@@ -112,7 +112,7 @@ public class ReleaseFragment extends Fragment{
      * @return
      */
     private Map<String, RequestBody> getImgRequestBody() {
-        Map<String, RequestBody> bodyMap = new HashMap<>();
+        Map<String, RequestBody> bodyMap = new HashMap<String, RequestBody>();
         if (imgUrls.size() > 0) {
             for (int i = 0; i < imgUrls.size(); i++) {
                 File file = new File(imgUrls.get(i).trim());

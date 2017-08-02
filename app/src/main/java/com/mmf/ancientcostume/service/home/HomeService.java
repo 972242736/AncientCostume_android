@@ -52,7 +52,7 @@ public class HomeService extends RetrofitUtil {
 //                .compose(this.<List<PositionInfo>>applySchedulers());
     }
     public Observable<String>  releaseInfo(Map<String, RequestBody> bodyMap,Map<String, Object> info) {
-        return getService().releaseInfo(bodyMap,info)
+        return getService().releaseInfo(info,bodyMap)
                 .compose(this.<String>applySchedulers());
     }
 

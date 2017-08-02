@@ -48,6 +48,7 @@ public class BasePresenter {
 
             @Override
             public void onError(Throwable e) {
+                hideLoadingDialog();
                 if (e instanceof RetrofitUtil.APIException) {
                     RetrofitUtil.APIException exception = (RetrofitUtil.APIException) e;
                     showToast(exception.message);
@@ -63,6 +64,7 @@ public class BasePresenter {
             @Override
             public void onNext(T t) {
                 if (!mCompositeSubscription.isUnsubscribed()) {
+                    hideLoadingDialog();
                     onNext.call(t);
                 }
             }

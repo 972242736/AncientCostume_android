@@ -39,25 +39,31 @@ public class DetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         unbinder = ButterKnife.bind(this);
-        DipUtil.setLinearLayout(DipUtil.getWidth(this),DipUtil.getWidth(this),svDetail);    //设置viewpager的宽高
+        DipUtil.setLinearLayout(DipUtil.getWidth(this), DipUtil.getWidth(this), svDetail);    //设置viewpager的宽高
         setSvListener();    //设置ScrollView的滑动监听
     }
 
     /**
      * 设置ScrollView的滑动监听
      */
-    private void setSvListener(){
+    private void setSvListener() {
         svDetail.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View view, int i, int i1, int i2, int i3) {
                 if (i > SCROLL_HEIGHT) {
                     llyChangeBar.setAlpha(1.0F);
                     llyOriginallyBar.setAlpha(0F);
+                    llyChangeBar.setVisibility(View.VISIBLE);
+                    llyOriginallyBar.setVisibility(View.GONE);
                 } else {
                     if (i1 == 0) {
                         llyChangeBar.setAlpha(0F);
                         llyOriginallyBar.setAlpha(1.0F);
+                        llyChangeBar.setVisibility(View.GONE);
+                        llyOriginallyBar.setVisibility(View.VISIBLE);
                     } else {
+                        llyChangeBar.setVisibility(View.VISIBLE);
+                        llyOriginallyBar.setVisibility(View.VISIBLE);
                         float alpha = i1 / SCROLL_HEIGHT;
                         llyChangeBar.setAlpha(alpha);
                         llyOriginallyBar.setAlpha(1 - alpha);
@@ -71,10 +77,10 @@ public class DetailActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
-                Toast.makeText(this,"q123",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "q123", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.tv_change_title:
-                Toast.makeText(this,"ERTT",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "ERTT", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

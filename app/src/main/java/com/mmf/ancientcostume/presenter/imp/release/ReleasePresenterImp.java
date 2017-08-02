@@ -33,8 +33,8 @@ public class ReleasePresenterImp extends BasePresenter {
             showToast("title");
             return false;
         }
-        if (TextUtils.isEmpty(info.get("rescribe").toString())) {
-            showToast("rescribe");
+        if (TextUtils.isEmpty(info.get("describe").toString())) {
+            showToast("describe");
             return false;
         }
         if (TextUtils.isEmpty(info.get("rental").toString())) {
@@ -54,8 +54,7 @@ public class ReleasePresenterImp extends BasePresenter {
                 mHomeService.releaseInfo(bodyMap, info).doOnNext(new Action1<String>() {
                     @Override
                     public void call(String remindDTOs) {
-
-
+                        showToast(remindDTOs);
                     }
                 }).subscribe(newSubscriber(new Action1<String>() {
                     @Override

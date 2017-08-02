@@ -1,14 +1,10 @@
 package com.mmf.ancientcostume.fragment.user;
 
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +13,7 @@ import android.widget.LinearLayout;
 
 import com.mmf.ancientcostume.R;
 import com.mmf.ancientcostume.common.utils.ClippingPicture;
+import com.mmf.ancientcostume.common.utils.ListUtils;
 import com.mmf.ancientcostume.other.zhy.imageloader.SelPhotoActivity;
 import com.mmf.ancientcostume.presenter.imp.user.UserPresenterImp;
 import com.mmf.ancientcostume.view.home.IHomeView;
@@ -24,7 +21,6 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +39,7 @@ import okhttp3.RequestBody;
  */
 public class UserFragment extends Fragment implements IHomeView<String> {
 
-    //    @BindView(R.id.cv_waves)
+//    @BindView(R.id.cv_waves)
 //    CorrugateView cvWaves;
     @BindView(R.id.iv_test)
     ImageView ivTest;
@@ -72,23 +68,21 @@ public class UserFragment extends Fragment implements IHomeView<String> {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        String imgUrls = data.getStringExtra("imgUrls");
-        if(!TextUtils.isEmpty(imgUrls)){
-            String[] tempArray = imgUrls.substring(1, imgUrls.length() - 1).split(",");
-            List<String> pathList = Arrays.asList(tempArray);
-            Picasso.with(getActivity()).load(ClippingPicture.getImageContentUri(getActivity(), new File(pathList.get(0)))).into(ivTest);
+        List<String> imgUrls = data.getStringArrayListExtra("imgUrls");
+        if (!ListUtils.isEmpty(imgUrls)) {
+            Picasso.with(getActivity()).load(ClippingPicture.getImageContentUri(getActivity(), new File(imgUrls.get(0)))).into(ivTest);
             List<Uri> listUri = new ArrayList<>();
             switch (requestCode) {
                 case 1:
-                    Map<String,MultipartBody.Part> bodyMap = new HashMap<>();
-                    if (pathList.size() > 0) {
-                        for (int i = 0; i < pathList.size(); i++) {
-                            File file = new File(pathList.get(i).trim());
+                    Map<String, MultipartBody.Part> bodyMap = new HashMap<>();
+                    if (imgUrls.size() > 0) {
+                        for (int i = 0; i < imgUrls.size(); i++) {
+                            File file = new File(imgUrls.get(i).trim());
                             RequestBody requestFile =
                                     RequestBody.create(MediaType.parse("multipart/form-data"), file);
                             MultipartBody.Part body =
                                     MultipartBody.Part.createFormData("image", file.getName(), requestFile);
-                            bodyMap.put("1",body);
+                            bodyMap.put("1", body);
                         }
                     }
                     UserPresenterImp presenter = new UserPresenterImp(this, getContext());
@@ -96,9 +90,9 @@ public class UserFragment extends Fragment implements IHomeView<String> {
                     break;
                 case 2:
                     Map<String, RequestBody> bodyMap1 = new HashMap<String, RequestBody>();
-                    if (pathList.size() > 0) {
-                        for (int i = 0; i < pathList.size(); i++) {
-                            File file = new File(pathList.get(i).trim());
+                    if (imgUrls.size() > 0) {
+                        for (int i = 0; i < imgUrls.size(); i++) {
+                            File file = new File(imgUrls.get(i).trim());
                             bodyMap1.put("file" + i + "\"; filename=\"" + file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
                         }
                     }
@@ -119,7 +113,7 @@ public class UserFragment extends Fragment implements IHomeView<String> {
     }
 
 
-    @OnClick({R.id.lyt_selPhoto, R.id.lyt_selPhoto1,R.id.lyt_test})
+    @OnClick({R.id.lyt_selPhoto, R.id.lyt_selPhoto1, R.id.lyt_test})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.lyt_selPhoto:
