@@ -15,13 +15,10 @@ import android.widget.TextView;
 import com.mmf.ancientcostume.R;
 import com.mmf.ancientcostume.activity.ImagePreviewActivity;
 import com.mmf.ancientcostume.adapter.home.ReleaseInfoImageAdapter;
-import com.mmf.ancientcostume.base.presenter.BasePresenter;
 import com.mmf.ancientcostume.common.utils.DipUtil;
 import com.mmf.ancientcostume.other.zhy.imageloader.MyAdapter;
 import com.mmf.ancientcostume.other.zhy.imageloader.SelPhotoActivity;
 import com.mmf.ancientcostume.presenter.imp.release.ReleasePresenterImp;
-import com.mmf.ancientcostume.presenter.imp.user.UserPresenterImp;
-import com.mmf.ancientcostume.view.home.IHomeView;
 import com.mmf.ancientcostume.widget.SpaceItemDecoration;
 
 import java.io.File;

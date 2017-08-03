@@ -2,6 +2,7 @@ package com.mmf.ancientcostume.service.home;
 
 import com.mmf.ancientcostume.baidu.bean.PositionInfo;
 import com.mmf.ancientcostume.common.utils.service.Response;
+import com.mmf.ancientcostume.model.GoodsDetailAndImg;
 import com.mmf.ancientcostume.model.LawyerInfo;
 import com.mmf.ancientcostume.model.User;
 
@@ -43,6 +44,6 @@ public interface HomeServiceApi {
     Observable<Response<String>> releaseInfo(@QueryMap Map<String, Object> info, @PartMap Map<String, RequestBody> bodyMap);
 
     @GET("file/getDetail")
-    Observable<Response<List<User>>> getDetail(@Query("id") int id);
+    Observable<Response<GoodsDetailAndImg>> getDetail(@Query("id") int id);
 
 }

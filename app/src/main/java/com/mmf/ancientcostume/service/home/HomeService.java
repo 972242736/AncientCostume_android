@@ -5,6 +5,7 @@ import android.util.Log;
 import com.mmf.ancientcostume.baidu.bean.PositionInfo;
 import com.mmf.ancientcostume.common.utils.service.RetrofitUtil;
 import com.mmf.ancientcostume.common.utils.service.SecretConstant;
+import com.mmf.ancientcostume.model.GoodsDetailAndImg;
 import com.mmf.ancientcostume.model.LawyerInfo;
 import com.mmf.ancientcostume.model.User;
 import com.mmf.ancientcostume.presenter.IPresenter;
@@ -54,6 +55,10 @@ public class HomeService extends RetrofitUtil {
     public Observable<String>  releaseInfo(Map<String, RequestBody> bodyMap,Map<String, Object> info) {
         return getService().releaseInfo(info,bodyMap)
                 .compose(this.<String>applySchedulers());
+    }
+    public Observable<GoodsDetailAndImg>  getDetail(int id) {
+        return getService().getDetail(id)
+                .compose(this.<GoodsDetailAndImg>applySchedulers());
     }
 
 }

@@ -12,7 +12,9 @@ import android.widget.Toast;
 
 import com.mmf.ancientcostume.R;
 import com.mmf.ancientcostume.base.activity.BaseActivity;
+import com.mmf.ancientcostume.base.presenter.BasePresenter;
 import com.mmf.ancientcostume.common.utils.DipUtil;
+import com.mmf.ancientcostume.presenter.imp.detail.DetailPresenterImp;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,14 +35,20 @@ public class DetailActivity extends BaseActivity {
     @BindView(R.id.tv_change_title)
     TextView tvChangeTitle;
 
+    private DetailPresenterImp presenter;
+    private int id;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         unbinder = ButterKnife.bind(this);
+        id = getIntent().getIntExtra("id",1);
+        presenter = new DetailPresenterImp(this);
         DipUtil.setLinearLayout(DipUtil.getWidth(this), DipUtil.getWidth(this), svDetail);    //设置viewpager的宽高
         setSvListener();    //设置ScrollView的滑动监听
+        presenter.getDetail(id);
     }
 
     /**
