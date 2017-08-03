@@ -43,8 +43,9 @@ import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
  * 添加发布信息界面
  */
 
-public class ReleaseFragment extends Fragment{
-
+public class ReleaseFragment extends Fragment {
+    private int TOP_TYPE = 1;
+    private int BOTTOM_TYPE = 2;
     @BindView(R.id.tv_sel)
     TextView tvSel;
     @BindView(R.id.rv_preview_img)
@@ -86,7 +87,7 @@ public class ReleaseFragment extends Fragment{
                 break;
             case R.id.tv_release:
                 if (presenter.check(getData())) {
-                    presenter.releaseInfo(getImgRequestBody(), getData());
+                    presenter.releaseInfo(getImgRequestBody(imgUrls, TOP_TYPE), getData());
                 }
                 break;
         }
@@ -111,12 +112,17 @@ public class ReleaseFragment extends Fragment{
      *
      * @return
      */
-    private Map<String, RequestBody> getImgRequestBody() {
+    private Map<String, RequestBody> getImgRequestBody(List<String> path, int type) {
         Map<String, RequestBody> bodyMap = new HashMap<String, RequestBody>();
-        if (imgUrls.size() > 0) {
-            for (int i = 0; i < imgUrls.size(); i++) {
-                File file = new File(imgUrls.get(i).trim());
-                bodyMap.put("file" + i + "\"; filename=\"" + file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+        if (path.size() > 0) {
+            for (int i = 0; i < path.size(); i++) {
+                File file = new File(path.get(i).trim());
+                //如果是顶部的添加图片那么设置第一张为封面的图片
+                if (type == TOP_TYPE && i == 0) {
+                    bodyMap.put("0" + "\"; filename=\"" + file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                } else {
+                    bodyMap.put(type + "\"; filename=\"" + file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                }
             }
         }
         return bodyMap;

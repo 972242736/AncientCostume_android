@@ -23,7 +23,7 @@ import butterknife.OnClick;
  */
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class DetailActivity extends BaseActivity {
-    private float SCROLL_HEIGHT = 500f;
+    private float SCROLL_HEIGHT = DipUtil.getWidth(this);
     @BindView(R.id.vp_top_img)
     ViewPager vpTopImg;
     @BindView(R.id.sv_detail)
