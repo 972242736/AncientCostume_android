@@ -5,16 +5,24 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mmf.ancientcostume.R;
+import com.mmf.ancientcostume.adapter.ViewPImgAdapter;
 import com.mmf.ancientcostume.base.activity.BaseActivity;
-import com.mmf.ancientcostume.base.presenter.BasePresenter;
 import com.mmf.ancientcostume.common.utils.DipUtil;
+import com.mmf.ancientcostume.model.GoodsDetail;
+import com.mmf.ancientcostume.model.GoodsDetailAndImg;
+import com.mmf.ancientcostume.model.GoodsImg;
 import com.mmf.ancientcostume.presenter.imp.detail.DetailPresenterImp;
+import com.mmf.ancientcostume.view.home.IDetailView;
+import com.mmf.ancientcostume.widget.PointView;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,7 +32,9 @@ import butterknife.OnClick;
  * Created by MMF on 2017-07-31.
  */
 @RequiresApi(api = Build.VERSION_CODES.M)
-public class DetailActivity extends BaseActivity {
+public class DetailActivity extends BaseActivity implements IDetailView {
+    @BindView(R.id.lly_point)
+    LinearLayout llyPoint;
     private float SCROLL_HEIGHT = DipUtil.getWidth(this);
     @BindView(R.id.vp_top_img)
     ViewPager vpTopImg;
@@ -44,10 +54,11 @@ public class DetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         unbinder = ButterKnife.bind(this);
-        id = getIntent().getIntExtra("id",1);
-        presenter = new DetailPresenterImp(this);
+        id = getIntent().getIntExtra("id", 1);
         DipUtil.setLinearLayout(DipUtil.getWidth(this), DipUtil.getWidth(this), svDetail);    //设置viewpager的宽高
         setSvListener();    //设置ScrollView的滑动监听
+        setVpListener();
+        presenter = new DetailPresenterImp(this, this);
         presenter.getDetail(id);
     }
 
@@ -92,4 +103,48 @@ public class DetailActivity extends BaseActivity {
                 break;
         }
     }
+
+    @Override
+    public void onSuccess(Object object) {
+        GoodsDetailAndImg goodsDetailAndImg = (GoodsDetailAndImg) object;
+        List<GoodsImg> goodsImgList = goodsDetailAndImg.getGoodsImgList();
+        ViewPImgAdapter adapter = new ViewPImgAdapter(this, goodsImgList, 1);
+        vpTopImg.setAdapter(adapter);
+        //底下点点的图片
+        PointView.setPoint(this, llyPoint, goodsImgList.size());
+        GoodsDetail goodsDetail = goodsDetailAndImg.getGoodsDetail();
+    }
+
+    /**
+     * 设置ViewPager的监听
+     */
+    private void setVpListener() {
+        vpTopImg.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                setSelection(position);
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+    /**
+     * 修改point的图片
+     *
+     * @param position
+     */
+    private void setSelection(int position) {
+        PointView.resetPoint(llyPoint);
+        ((ImageView) llyPoint.getChildAt(position)).setImageResource(R.drawable.sel_point);
+    }
+
 }

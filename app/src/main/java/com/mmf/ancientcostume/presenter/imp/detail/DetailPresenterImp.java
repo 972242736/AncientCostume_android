@@ -7,6 +7,7 @@ import android.util.Log;
 import com.mmf.ancientcostume.base.presenter.BasePresenter;
 import com.mmf.ancientcostume.model.GoodsDetailAndImg;
 import com.mmf.ancientcostume.service.home.HomeService;
+import com.mmf.ancientcostume.view.home.IDetailView;
 
 import java.util.Map;
 
@@ -18,14 +19,14 @@ import rx.functions.Action1;
  * Created by MMF on 2017-08-03.
  */
 
-public class DetailPresenterImp extends BasePresenter {
+public class DetailPresenterImp extends BasePresenter  {
     private HomeService mHomeService;
-//    private IHomeView view;
+    private IDetailView view;
 
-    public DetailPresenterImp(Context context) {
+    public DetailPresenterImp(Context context,IDetailView view) {
         this.context = context;
         mHomeService = new HomeService();
-//        this.view = view;
+        this.view = view;
     }
 
 
@@ -35,7 +36,7 @@ public class DetailPresenterImp extends BasePresenter {
                 mHomeService.getDetail(id).doOnNext(new Action1<GoodsDetailAndImg>() {
                     @Override
                     public void call(GoodsDetailAndImg remindDTOs) {
-
+                        view.onSuccess(remindDTOs);
                     }
                 }).subscribe(newSubscriber(new Action1<GoodsDetailAndImg>() {
                     @Override
@@ -44,4 +45,5 @@ public class DetailPresenterImp extends BasePresenter {
                 }));
         mCompositeSubscription.add(subscription);
     }
+
 }
