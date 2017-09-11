@@ -68,4 +68,5 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         Toast.makeText(getActivity(),list.toString(),Toast.LENGTH_SHORT).show();
 //        adapter.setItems(list);
     }
+
 }

@@ -74,7 +74,7 @@ public class UserPresenterImp extends BasePresenter implements IPresenter<Object
         }).subscribe(newSubscriber(new Action1<List<String>>() {
             @Override
             public void call(List<String> remindDTOs) {
-                Log.i(TAG, "getNotification---" + remindDTOs.toString());
+                Log.i(TAG, "getNotification---22" + remindDTOs.toString());
             }
         }));
         mCompositeSubscription.add(subscription);

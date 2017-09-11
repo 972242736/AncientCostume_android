@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,10 +33,9 @@ import butterknife.OnClick;
  * Created by MMF on 2017-07-31.
  */
 @RequiresApi(api = Build.VERSION_CODES.M)
-public class DetailActivity extends BaseActivity implements IDetailView {
+public class DetailActivity extends BaseActivity implements IDetailView, SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.lly_point)
     LinearLayout llyPoint;
-    private float SCROLL_HEIGHT = DipUtil.getWidth(this);
     @BindView(R.id.vp_top_img)
     ViewPager vpTopImg;
     @BindView(R.id.sv_detail)
@@ -44,8 +44,11 @@ public class DetailActivity extends BaseActivity implements IDetailView {
     LinearLayout llyChangeBar;
     @BindView(R.id.tv_change_title)
     TextView tvChangeTitle;
+    @BindView(R.id.srl_refresh)
+    SwipeRefreshLayout srlRefresh;
 
     private DetailPresenterImp presenter;
+    private float SCROLL_HEIGHT;
     private int id;
 
 
@@ -54,11 +57,26 @@ public class DetailActivity extends BaseActivity implements IDetailView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         unbinder = ButterKnife.bind(this);
-        id = getIntent().getIntExtra("id", 1);
-        DipUtil.setLinearLayout(DipUtil.getWidth(this), DipUtil.getWidth(this), svDetail);    //设置viewpager的宽高
+        init();             //初始化数据
         setSvListener();    //设置ScrollView的滑动监听
         setVpListener();
         presenter = new DetailPresenterImp(this, this);
+        presenter.getDetail(id);
+    }
+
+    private void init() {
+        id = getIntent().getIntExtra("id", 1);
+        SCROLL_HEIGHT = DipUtil.getWidth(this);
+        DipUtil.setLinearLayout(DipUtil.getWidth(this), DipUtil.getWidth(this), svDetail);    //设置viewpager的宽高
+        srlRefresh.setOnRefreshListener(this);
+    }
+
+    /**
+     * 刷新的监听
+     */
+    @Override
+    public void onRefresh() {
+        srlRefresh.setRefreshing(true);
         presenter.getDetail(id);
     }
 
@@ -106,6 +124,7 @@ public class DetailActivity extends BaseActivity implements IDetailView {
 
     @Override
     public void onSuccess(Object object) {
+        srlRefresh.setRefreshing(false);
         GoodsDetailAndImg goodsDetailAndImg = (GoodsDetailAndImg) object;
         List<GoodsImg> goodsImgList = goodsDetailAndImg.getGoodsImgList();
         ViewPImgAdapter adapter = new ViewPImgAdapter(this, goodsImgList, 1);
@@ -146,5 +165,4 @@ public class DetailActivity extends BaseActivity implements IDetailView {
         PointView.resetPoint(llyPoint);
         ((ImageView) llyPoint.getChildAt(position)).setImageResource(R.drawable.sel_point);
     }
-
 }

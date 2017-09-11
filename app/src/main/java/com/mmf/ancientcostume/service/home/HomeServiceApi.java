@@ -44,6 +44,6 @@ public interface HomeServiceApi {
     Observable<Response<String>> releaseInfo(@QueryMap Map<String, Object> info, @PartMap Map<String, RequestBody> bodyMap);
 
     @GET("file/getDetail")
-    Observable<Response<GoodsDetailAndImg>> getDetail(@Query("id") int id);
+    Observable<Response<GoodsDetailAndImg>> getDetail(@Query("id") int id,@Query("type") int type);
 
 }

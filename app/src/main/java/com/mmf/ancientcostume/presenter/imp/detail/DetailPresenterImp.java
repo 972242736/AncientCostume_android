@@ -38,9 +38,10 @@ public class DetailPresenterImp extends BasePresenter  {
                     public void call(GoodsDetailAndImg remindDTOs) {
                         view.onSuccess(remindDTOs);
                     }
-                }).subscribe(newSubscriber(new Action1<GoodsDetailAndImg>() {
+                }).subscribe(newSubscriber(new Action1<String>() {
                     @Override
-                    public void call(GoodsDetailAndImg remindDTOs) {
+                    public void call(String remindDTOs) {
+                        Log.e("********test","111111");
                     }
                 }));
         mCompositeSubscription.add(subscription);

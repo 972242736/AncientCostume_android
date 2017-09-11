@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.mmf.ancientcostume.common.utils.ClippingPicture;
 import com.mmf.ancientcostume.common.utils.DipUtil;
+import com.mmf.ancientcostume.common.utils.service.SecretConstant;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -49,7 +50,7 @@ public class ViewPImgAdapter<T> extends PagerAdapter {
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         }else{
             DipUtil.setRelativeLayout(DipUtil.getWidth(context),DipUtil.getWidth(context),imageView);
-            picasso.load((String)list.get(position))
+            picasso.load(SecretConstant.API_HOST+"/upload/"+(String)list.get(position))
                     .noFade()
                     .into(imageView);
         }

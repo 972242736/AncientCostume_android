@@ -7,6 +7,6 @@ import java.util.List;
  * date 2016/9/26
  * Description:
  */
-public interface IHomeView<T> extends BaseView{
+public interface IHomeView<T> {
     void setList(List<T> list);
 }

@@ -42,7 +42,7 @@ public class HomePresenterImp extends BasePresenter {
                 .subscribe(newSubscriber(new Action1<List<User>>() {
                     @Override
                     public void call(List<User> remindDTOs) {
-                        Log.i(TAG, "getNotification---" + remindDTOs.toString());
+                        Log.i(TAG, "getNotification---11" + remindDTOs.toString());
                     }
                 }));
         mCompositeSubscription.add(subscription);
