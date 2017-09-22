@@ -52,8 +52,8 @@ public class HomeService extends RetrofitUtil {
 //        return getService().getInfo("nQS647KWkRaA8LkIXvCKwfuIcrbl9sHC", "157287", "3C:B5:09:43:AB:5C:FB:F1:A1:B8:DB:6A:CD:F2:6D:6D:76:74:70:26;com.mmf.framework", loc)
 //                .compose(this.<List<PositionInfo>>applySchedulers());
     }
-    public Observable<String>  releaseInfo(Map<String, RequestBody> bodyMap,Map<String, Object> info) {
-        return getService().releaseInfo(info,bodyMap)
+    public Observable<String>  insertDetail(Map<String, RequestBody> bodyMap,Map<String, Object> info) {
+        return getService().insertDetail(info,bodyMap)
                 .compose(this.<String>applySchedulers());
     }
     public Observable<GoodsDetailAndImg>  getDetail(int id) {

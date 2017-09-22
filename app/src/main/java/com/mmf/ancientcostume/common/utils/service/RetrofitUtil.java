@@ -46,14 +46,14 @@ public class RetrofitUtil {
             //网络缓存路径文件
             // File httpCacheDirectory = new File(BaseApplication.getInstance().getExternalCacheDir(), "responses");
             //通过拦截器设置缓存，暂未实现
-            //CacheInterceptor cacheInterceptor = new CacheInterceptor();
+//            CacheInterceptor cacheInterceptor = new CacheInterceptor();
             OkHttpClient client = new OkHttpClient.Builder()
                     //设置缓存
                     // .cache(new Cache(httpCacheDirectory, 10 * 1024 * 1024))
                     //log请求参数
                     .addInterceptor(interceptor)
                     //网络请求缓存，未实现
-                    // .addInterceptor(cacheInterceptor)
+//                     .addInterceptor(cacheInterceptor)
                     .build();
             retrofit = new Retrofit.Builder()
                     .client(client)

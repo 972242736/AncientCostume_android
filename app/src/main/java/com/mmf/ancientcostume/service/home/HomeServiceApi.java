@@ -40,10 +40,10 @@ public interface HomeServiceApi {
     Observable<Response<List<User>>> list(@QueryMap Map<String, Object> params);
 
     @Multipart
-    @POST("file/releaseInfo")
-    Observable<Response<String>> releaseInfo(@QueryMap Map<String, Object> info, @PartMap Map<String, RequestBody> bodyMap);
+    @POST("goods/insertDetail")
+    Observable<Response<String>> insertDetail(@QueryMap Map<String, Object> info, @PartMap Map<String, RequestBody> bodyMap);
 
-    @GET("file/getDetail")
+    @GET("goods/getDetail")
     Observable<Response<GoodsDetailAndImg>> getDetail(@Query("id") int id,@Query("type") int type);
 
 }

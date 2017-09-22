@@ -84,7 +84,7 @@ public class ReleaseFragment extends Fragment {
                 break;
             case R.id.tv_release:
                 if (presenter.check(getData())) {
-                    presenter.releaseInfo(getImgRequestBody(imgUrls, TOP_TYPE), getData());
+                    presenter.insertDetail(getImgRequestBody(imgUrls, TOP_TYPE), getData());
                 }
                 break;
         }

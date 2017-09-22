@@ -48,10 +48,10 @@ public class ReleasePresenterImp extends BasePresenter {
         return true;
     }
 
-    public void releaseInfo(Map<String, RequestBody> bodyMap, Map<String, Object> info) {
+    public void insertDetail(Map<String, RequestBody> bodyMap, Map<String, Object> info) {
         showLoadingDialog();
         Subscription subscription =
-                mHomeService.releaseInfo(bodyMap, info).doOnNext(new Action1<String>() {
+                mHomeService.insertDetail(bodyMap, info).doOnNext(new Action1<String>() {
                     @Override
                     public void call(String remindDTOs) {
                         showToast(remindDTOs);
