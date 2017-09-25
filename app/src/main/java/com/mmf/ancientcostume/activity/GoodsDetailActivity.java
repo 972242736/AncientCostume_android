@@ -19,7 +19,7 @@ import com.mmf.ancientcostume.common.utils.DipUtil;
 import com.mmf.ancientcostume.model.GoodsDetail;
 import com.mmf.ancientcostume.model.GoodsDetailAndImg;
 import com.mmf.ancientcostume.model.GoodsImg;
-import com.mmf.ancientcostume.presenter.imp.detail.DetailPresenterImp;
+import com.mmf.ancientcostume.presenter.imp.detail.GoodsDetailPresenterImp;
 import com.mmf.ancientcostume.view.home.IDetailView;
 import com.mmf.ancientcostume.widget.PointView;
 
@@ -33,7 +33,7 @@ import butterknife.OnClick;
  * Created by MMF on 2017-07-31.
  */
 @RequiresApi(api = Build.VERSION_CODES.M)
-public class DetailActivity extends BaseActivity implements IDetailView, SwipeRefreshLayout.OnRefreshListener {
+public class GoodsDetailActivity extends BaseActivity implements IDetailView, SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.lly_point)
     LinearLayout llyPoint;
     @BindView(R.id.vp_top_img)
@@ -47,7 +47,7 @@ public class DetailActivity extends BaseActivity implements IDetailView, SwipeRe
     @BindView(R.id.srl_refresh)
     SwipeRefreshLayout srlRefresh;
 
-    private DetailPresenterImp presenter;
+    private GoodsDetailPresenterImp presenter;
     private float SCROLL_HEIGHT;
     private int id;
 
@@ -60,8 +60,8 @@ public class DetailActivity extends BaseActivity implements IDetailView, SwipeRe
         init();             //初始化数据
         setSvListener();    //设置ScrollView的滑动监听
         setVpListener();
-        presenter = new DetailPresenterImp(this, this);
-        presenter.getDetail(id);
+        presenter = new GoodsDetailPresenterImp(this, this);
+        presenter.getGoodsDetail(id);
     }
 
     private void init() {
@@ -77,7 +77,7 @@ public class DetailActivity extends BaseActivity implements IDetailView, SwipeRe
     @Override
     public void onRefresh() {
         srlRefresh.setRefreshing(true);
-        presenter.getDetail(id);
+        presenter.getGoodsDetail(id);
     }
 
     /**

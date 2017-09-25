@@ -19,21 +19,22 @@ import rx.functions.Action1;
  * Created by MMF on 2017-08-03.
  */
 
-public class DetailPresenterImp extends BasePresenter  {
+public class GoodsDetailPresenterImp extends BasePresenter  {
     private HomeService mHomeService;
     private IDetailView view;
 
-    public DetailPresenterImp(Context context,IDetailView view) {
+
+    public GoodsDetailPresenterImp(Context context, IDetailView view) {
         this.context = context;
         mHomeService = new HomeService();
         this.view = view;
     }
 
 
-    public void getDetail(int id) {
+    public void getGoodsDetail(int id) {
         showLoadingDialog();
         Subscription subscription =
-                mHomeService.getDetail(id).doOnNext(new Action1<GoodsDetailAndImg>() {
+                mHomeService.getGoodsDetail(id).doOnNext(new Action1<GoodsDetailAndImg>() {
                     @Override
                     public void call(GoodsDetailAndImg remindDTOs) {
                         view.onSuccess(remindDTOs);

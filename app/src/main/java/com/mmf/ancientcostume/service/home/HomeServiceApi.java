@@ -43,7 +43,7 @@ public interface HomeServiceApi {
     @POST("goods/insertDetail")
     Observable<Response<String>> insertDetail(@QueryMap Map<String, Object> info, @PartMap Map<String, RequestBody> bodyMap);
 
-    @GET("goods/getDetail")
-    Observable<Response<GoodsDetailAndImg>> getDetail(@Query("id") int id,@Query("type") int type);
+    @GET("goods/getGoodsDetail")
+    Observable<Response<GoodsDetailAndImg>> getGoodsDetail(@Query("id") int id,@Query("type") int type);
 
 }

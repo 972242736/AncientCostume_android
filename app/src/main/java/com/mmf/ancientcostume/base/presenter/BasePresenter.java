@@ -10,6 +10,7 @@ import com.mmf.ancientcostume.widget.DialogLoading;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -22,13 +23,12 @@ import rx.subscriptions.CompositeSubscription;
  * date 2016/9/26
  * Description:
  */
-public class BasePresenter {
+public class BasePresenter<T> {
 
     private DialogLoading loading;
     protected Toast mToast = null;
     protected Context context;
     protected final String TAG = "RxJava";
-
     protected CompositeSubscription mCompositeSubscription = new CompositeSubscription();
     protected Subscription subscription;
 

@@ -56,8 +56,8 @@ public class HomeService extends RetrofitUtil {
         return getService().insertDetail(info,bodyMap)
                 .compose(this.<String>applySchedulers());
     }
-    public Observable<GoodsDetailAndImg>  getDetail(int id) {
-        return getService().getDetail(id,2)
+    public Observable<GoodsDetailAndImg>  getGoodsDetail(int id) {
+        return getService().getGoodsDetail(id,2)
                 .compose(this.<GoodsDetailAndImg>applySchedulers());
     }
 
