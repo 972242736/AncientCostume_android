@@ -30,6 +30,7 @@
                     android:id="@+id/et_title"
                     style="@style/Release_edit_style"
                     android:hint="产品标题，热搜词汇等"
+                    android:text="打是多少"
                     android:minHeight="@dimen/public_space_value_48" />
 
                 <View style="@style/Line_horizontal" />
@@ -38,6 +39,7 @@
                     android:id="@+id/et_describe"
                     style="@style/Release_edit_style"
                     android:gravity="top"
+                    android:text="打啊"
                     android:hint="描述下你的商品、活动信息、提示信息等"
                     android:minHeight="80dp" />
 
@@ -57,6 +59,7 @@
                         style="@style/Release_edit_normal_style"
                         android:layout_weight="1"
                         android:hint="￥0.00"
+                        android:text="22"
                         android:inputType="numberDecimal" />
 
                     <View
@@ -73,6 +76,7 @@
                         android:id="@+id/ed_deposit"
                         style="@style/Release_edit_normal_style"
                         android:layout_weight="1"
+                        android:text="33"
                         android:hint="￥0.00"
                         android:inputType="numberDecimal" />
                 </LinearLayout>
@@ -88,6 +92,6 @@
    <TextView
        android:id="@+id/tv_release"
        android:text="发布"
-       style="@style/tv_width_match"/>
+       style="@style/tv_width_match_click"/>
 
 </LinearLayout>

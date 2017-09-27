@@ -97,7 +97,7 @@
         <item name="android:windowExitAnimation">@anim/slide_out</item>
     </style>
 
-    <style name="tv_width_wrap">
+    <style name="tv_width_wrap_click">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">@dimen/public_space_value_16</item>
@@ -105,10 +105,10 @@
         <item name="android:background">@drawable/tv_bar_click_background</item>
         <item name="android:textSize">@dimen/public_textsize_value_12</item>
     </style>
-    <style name="tv_width_match">
+    <style name="tv_width_match_click">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/public_space_value_48</item>
-        <item name="android:padding">@dimen/public_space_value_16</item>
+        <item name="android:padding">@dimen/public_space_value_8</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@drawable/tv_click_background</item>
         <item name="android:textSize">@dimen/public_textsize_value_16</item>

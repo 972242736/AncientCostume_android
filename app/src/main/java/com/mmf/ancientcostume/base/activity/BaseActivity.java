@@ -5,37 +5,32 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mmf.ancientcostume.MainActivity;
 import com.mmf.ancientcostume.R;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
- * Created by MMF on 2017/6/19.
+ * Created by MMF on 2017-09-26.
  */
 
-public class BaseActivity extends FragmentActivity {
-
-    @BindView(R.id.iv_back)
-    protected ImageView ivBack;
-    @BindView(R.id.tv_title)
-    protected TextView tvTitle;
-    @BindView(R.id.iv_right)
-    protected ImageView ivRight;
-    @BindView(R.id.lly_originally_bar)
-    protected RelativeLayout llyOriginallyBar;
-    @BindView(R.id.tv_right)
-    protected TextView tvRight;
+public abstract class BaseActivity extends FragmentActivity {
     protected Unbinder unbinder;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(getLayout());
+        unbinder = ButterKnife.bind(this);
+        init();
+    }
+    public abstract int getLayout();
+
+    public abstract void init();
 
     // 定义一个变量，来标识是否退出
     private static boolean isExit = false;
@@ -47,14 +42,6 @@ public class BaseActivity extends FragmentActivity {
             isExit = false;
         }
     };
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-//        HomeFragment firstFragment = new HomeFragment();
-//        firstFragment.setArguments(getIntent().getExtras());
-//        getSupportFragmentManager().beginTransaction()
-//                .add(R.id.fragment_container, firstFragment).commit();
-    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -64,6 +51,7 @@ public class BaseActivity extends FragmentActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
 
     private void exit() {
         if (getBaseContext() instanceof MainActivity && !isExit) {
@@ -81,16 +69,6 @@ public class BaseActivity extends FragmentActivity {
                 isExit = true;
                 System.exit(0);
             }
-        }
-    }
-
-    @OnClick({R.id.iv_back, R.id.iv_right})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.iv_back:
-                break;
-            case R.id.iv_right:
-                break;
         }
     }
 

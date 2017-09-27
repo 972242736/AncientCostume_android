@@ -1,17 +1,12 @@
-package com.mmf.ancientcostume.presenter.imp.detail;
+package com.mmf.ancientcostume.presenter.imp.goods;
 
-import android.content.Context;
-import android.text.TextUtils;
 import android.util.Log;
 
+import com.mmf.ancientcostume.activity.GoodsDetailActivity;
 import com.mmf.ancientcostume.base.presenter.BasePresenter;
 import com.mmf.ancientcostume.model.GoodsDetailAndImg;
 import com.mmf.ancientcostume.service.home.HomeService;
-import com.mmf.ancientcostume.view.home.IDetailView;
 
-import java.util.Map;
-
-import okhttp3.RequestBody;
 import rx.Subscription;
 import rx.functions.Action1;
 
@@ -19,15 +14,12 @@ import rx.functions.Action1;
  * Created by MMF on 2017-08-03.
  */
 
-public class GoodsDetailPresenterImp extends BasePresenter  {
+public class GoodsDetailPresenterImp extends BasePresenter<GoodsDetailActivity>  {
     private HomeService mHomeService;
-    private IDetailView view;
 
 
-    public GoodsDetailPresenterImp(Context context, IDetailView view) {
-        this.context = context;
+    public GoodsDetailPresenterImp() {
         mHomeService = new HomeService();
-        this.view = view;
     }
 
 

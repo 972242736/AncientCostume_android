@@ -1,7 +1,6 @@
 package com.mmf.ancientcostume.activity;
 
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -14,26 +13,25 @@ import android.widget.Toast;
 
 import com.mmf.ancientcostume.R;
 import com.mmf.ancientcostume.adapter.ViewPImgAdapter;
-import com.mmf.ancientcostume.base.activity.BaseActivity;
+import com.mmf.ancientcostume.base.activity.BaseTitleActivity;
 import com.mmf.ancientcostume.common.utils.DipUtil;
 import com.mmf.ancientcostume.model.GoodsDetail;
 import com.mmf.ancientcostume.model.GoodsDetailAndImg;
 import com.mmf.ancientcostume.model.GoodsImg;
-import com.mmf.ancientcostume.presenter.imp.detail.GoodsDetailPresenterImp;
+import com.mmf.ancientcostume.presenter.imp.goods.GoodsDetailPresenterImp;
 import com.mmf.ancientcostume.view.home.IDetailView;
 import com.mmf.ancientcostume.widget.PointView;
 
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by MMF on 2017-07-31.
  */
 @RequiresApi(api = Build.VERSION_CODES.M)
-public class GoodsDetailActivity extends BaseActivity implements IDetailView, SwipeRefreshLayout.OnRefreshListener {
+public class GoodsDetailActivity extends BaseTitleActivity<GoodsDetailPresenterImp,GoodsDetailActivity> implements IDetailView, SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.lly_point)
     LinearLayout llyPoint;
     @BindView(R.id.vp_top_img)
@@ -46,29 +44,27 @@ public class GoodsDetailActivity extends BaseActivity implements IDetailView, Sw
     TextView tvChangeTitle;
     @BindView(R.id.srl_refresh)
     SwipeRefreshLayout srlRefresh;
-
-    private GoodsDetailPresenterImp presenter;
     private float SCROLL_HEIGHT;
     private int id;
 
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
-        unbinder = ButterKnife.bind(this);
-        init();             //初始化数据
-        setSvListener();    //设置ScrollView的滑动监听
-        setVpListener();
-        presenter = new GoodsDetailPresenterImp(this, this);
-        presenter.getGoodsDetail(id);
+    public int getLayout() {
+        return R.layout.activity_detail;
     }
 
-    private void init() {
+    public void init() {
         id = getIntent().getIntExtra("id", 1);
         SCROLL_HEIGHT = DipUtil.getWidth(this);
         DipUtil.setLinearLayout(DipUtil.getWidth(this), DipUtil.getWidth(this), svDetail);    //设置viewpager的宽高
         srlRefresh.setOnRefreshListener(this);
+        setSvListener();    //设置ScrollView的滑动监听
+        setVpListener();
+    }
+    @Override
+    protected void getData() {
+        presenter.getGoodsDetail(id);
     }
 
     /**
@@ -77,7 +73,7 @@ public class GoodsDetailActivity extends BaseActivity implements IDetailView, Sw
     @Override
     public void onRefresh() {
         srlRefresh.setRefreshing(true);
-        presenter.getGoodsDetail(id);
+        getData();
     }
 
     /**
@@ -121,6 +117,13 @@ public class GoodsDetailActivity extends BaseActivity implements IDetailView, Sw
                 break;
         }
     }
+
+    @Override
+    protected GoodsDetailPresenterImp getPresenter() {
+        return new GoodsDetailPresenterImp();
+    }
+
+
 
     @Override
     public void onSuccess(Object object) {

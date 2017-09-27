@@ -33,6 +33,7 @@
         <!--<activity android:name=".activity.GoodsDetailActivity">-->
         <!--<activity android:name=".WelcomeActivity">-->
         <activity android:name=".MainActivity">
+        <!--<activity android:name=".activity.GoodsListActivity">-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -41,6 +42,7 @@
         <!--<activity android:name="com.mmf.ancientcostume.MainActivity" />-->
         <activity android:name="com.mmf.ancientcostume.other.zhy.imageloader.SelPhotoActivity" />
         <activity android:name="com.mmf.ancientcostume.activity.ImagePreviewActivity" />
+        <activity android:name="com.mmf.ancientcostume.activity.GoodsListActivity" />
         <!--<activity android:name="com.mmf.ancientcostume.fragment.user.ReleaseActivityity" />-->
         <!-- 百度定位开始 -->
         <service

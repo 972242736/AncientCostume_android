@@ -29,12 +29,12 @@
             android:layout_weight="1"/>
         <TextView
             android:id="@+id/tv_del"
-           style="@style/tv_width_wrap"
+           style="@style/tv_width_wrap_click"
             android:text="删除"
             android:visibility="gone"/>
         <TextView
             android:id="@+id/tv_complete"
-            style="@style/tv_width_wrap"
+            style="@style/tv_width_wrap_click"
             android:text="完成"
             android:visibility="gone"/>
     </LinearLayout>

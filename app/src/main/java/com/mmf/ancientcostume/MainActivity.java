@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mmf.ancientcostume.baidu.BaiduFragment;
+import com.mmf.ancientcostume.base.activity.BaseActivity;
 import com.mmf.ancientcostume.fragment.home.HomeFragment;
 import com.mmf.ancientcostume.fragment.user.ReleaseFragment;
 import com.mmf.ancientcostume.fragment.user.UserFragment;
@@ -26,7 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends BaseActivity {
     @BindView(R.id.lyt_own)
     LinearLayout lytOwn;
     @BindView(R.id.lyt_home)
@@ -53,10 +54,12 @@ public class MainActivity extends FragmentActivity {
     private TextView[] mTitleViews;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+    public int getLayout() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    public void init() {
         initColor();
         mViewPager = (ViewPager) findViewById(R.id.pager_view);
         textViews = new ArrayList<>();
@@ -144,8 +147,6 @@ public class MainActivity extends FragmentActivity {
 
             }
         });
-
-
     }
 
 

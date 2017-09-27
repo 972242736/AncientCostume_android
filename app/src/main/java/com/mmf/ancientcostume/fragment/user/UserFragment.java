@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.mmf.ancientcostume.R;
+import com.mmf.ancientcostume.activity.GoodsListActivity;
 import com.mmf.ancientcostume.common.utils.ClippingPicture;
 import com.mmf.ancientcostume.common.utils.ListUtils;
 import com.mmf.ancientcostume.other.zhy.imageloader.SelPhotoActivity;
@@ -127,7 +128,9 @@ public class UserFragment extends Fragment implements IHomeView<String> {
 //                startActivityForResult(Intent.createChooser(intent1,"选择照片"),2);
                 break;
             case R.id.lyt_test:
-                Intent intent2 = new Intent(getActivity(), ReleaseFragment.class);
+//                Intent intent2 = new Intent(getActivity(), ReleaseFragment.class);
+//                startActivity(intent2);
+                Intent intent2 = new Intent(getActivity(), GoodsListActivity.class);
                 startActivity(intent2);
 //                startActivityForResult(Intent.createChooser(intent1,"选择照片"),2);
                 break;

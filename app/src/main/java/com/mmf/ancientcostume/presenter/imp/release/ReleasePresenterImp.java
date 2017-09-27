@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.mmf.ancientcostume.base.presenter.BasePresenter;
+import com.mmf.ancientcostume.fragment.user.ReleaseFragment;
 import com.mmf.ancientcostume.service.home.HomeService;
 import com.mmf.ancientcostume.view.home.IHomeView;
 
@@ -18,14 +19,11 @@ import rx.functions.Action1;
  * Created by MMF on 2017-07-24.
  */
 
-public class ReleasePresenterImp extends BasePresenter {
+public class ReleasePresenterImp extends BasePresenter<ReleaseFragment> {
     private HomeService mHomeService;
-//    private IHomeView view;
 
-    public ReleasePresenterImp(Context context) {
-        this.context = context;
+    public ReleasePresenterImp() {
         mHomeService = new HomeService();
-//        this.view = view;
     }
 
     public boolean check(Map<String, Object> info) {

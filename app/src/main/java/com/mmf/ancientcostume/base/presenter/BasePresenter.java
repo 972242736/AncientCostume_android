@@ -3,11 +3,15 @@ package com.mmf.ancientcostume.base.presenter;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
+import com.baidu.platform.comapi.map.M;
 import com.mmf.ancientcostume.common.utils.service.RetrofitUtil;
+import com.mmf.ancientcostume.view.home.BaseView;
 import com.mmf.ancientcostume.widget.DialogLoading;
 
+import java.lang.ref.WeakReference;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.util.List;
@@ -23,7 +27,7 @@ import rx.subscriptions.CompositeSubscription;
  * date 2016/9/26
  * Description:
  */
-public class BasePresenter<T> {
+public class BasePresenter<T extends BaseView> {
 
     private DialogLoading loading;
     protected Toast mToast = null;
@@ -100,7 +104,34 @@ public class BasePresenter<T> {
         if (loading != null) {
             loading.dismiss();
         }
+    }
 
+
+    private WeakReference<T> weakReference;
+    protected BaseView view;
+
+    public void attach(T t,Context context) {
+        weakReference = new WeakReference<>(t);
+        view =  t;
+        this.context = context;
+    }
+
+    public void deAttach() {
+        if (weakReference != null) {
+            weakReference.clear();
+            weakReference = null;
+        }
+    }
+
+    public boolean isViewAttached() {
+        return weakReference != null && weakReference.get() != null;
+    }
+
+    public T getView() {
+        if (weakReference != null) {
+            return weakReference.get();
+        }
+        return null;
     }
 
 }

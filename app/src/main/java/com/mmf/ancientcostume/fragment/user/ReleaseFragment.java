@@ -1,24 +1,22 @@
 package com.mmf.ancientcostume.fragment.user;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.mmf.ancientcostume.R;
+import com.mmf.ancientcostume.activity.GoodsListActivity;
 import com.mmf.ancientcostume.activity.ImagePreviewActivity;
 import com.mmf.ancientcostume.adapter.home.ReleaseInfoImageAdapter;
+import com.mmf.ancientcostume.base.fragment.BaseFragment;
 import com.mmf.ancientcostume.common.utils.DipUtil;
 import com.mmf.ancientcostume.other.zhy.imageloader.MyAdapter;
 import com.mmf.ancientcostume.other.zhy.imageloader.SelPhotoActivity;
 import com.mmf.ancientcostume.presenter.imp.release.ReleasePresenterImp;
+import com.mmf.ancientcostume.view.home.BaseView;
 import com.mmf.ancientcostume.widget.SpaceItemDecoration;
 
 import java.io.File;
@@ -28,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -40,7 +37,7 @@ import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
  * 添加发布信息界面
  */
 
-public class ReleaseFragment extends Fragment {
+public class ReleaseFragment extends BaseFragment<ReleasePresenterImp,ReleaseFragment> implements BaseView{
     private int TOP_TYPE = 1;
     private int BOTTOM_TYPE = 2;
     @BindView(R.id.tv_sel)
@@ -62,17 +59,16 @@ public class ReleaseFragment extends Fragment {
     private View view;
     private List<String> imgUrls = new ArrayList<>();
     private ReleaseInfoImageAdapter adapter;
-    private ReleasePresenterImp presenter;
 
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_release_info, null);
-        ButterKnife.bind(this, view);
-        presenter = new ReleasePresenterImp(getActivity());
+    public int getLayout(){
+        return R.layout.fragment_release_info;
+    }
+    public void init(){
         setAdapter();
-        return view;
+    }
+    @Override
+    protected ReleasePresenterImp getPresenter() {
+        return new ReleasePresenterImp();
     }
 
     @OnClick({R.id.tv_sel, R.id.tv_release})
@@ -80,6 +76,7 @@ public class ReleaseFragment extends Fragment {
         switch (view.getId()) {
             case R.id.tv_sel:
                 Intent intent = new Intent(getActivity(), SelPhotoActivity.class);
+//                startActivity(intent);
                 startActivityForResult(intent, 1);
                 break;
             case R.id.tv_release:
@@ -171,5 +168,10 @@ public class ReleaseFragment extends Fragment {
                 startActivityForResult(intent, 1);
             }
         });
+    }
+
+    @Override
+    public void onSuccess(Object object) {
+
     }
 }
