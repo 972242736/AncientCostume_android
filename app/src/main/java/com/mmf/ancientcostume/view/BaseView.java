@@ -1,4 +1,4 @@
-package com.mmf.ancientcostume.view.home;
+package com.mmf.ancientcostume.view;
 
 /**
  * Created by MMF on 2017-08-14.

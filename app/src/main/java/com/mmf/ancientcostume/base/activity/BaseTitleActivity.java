@@ -8,11 +8,10 @@ import android.widget.TextView;
 
 import com.mmf.ancientcostume.R;
 import com.mmf.ancientcostume.base.presenter.BasePresenter;
-import com.mmf.ancientcostume.view.home.BaseView;
+import com.mmf.ancientcostume.view.BaseView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * Created by MMF on 2017/6/19.

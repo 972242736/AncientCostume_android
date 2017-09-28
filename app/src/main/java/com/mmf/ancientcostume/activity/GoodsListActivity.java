@@ -1,7 +1,7 @@
 package com.mmf.ancientcostume.activity;
 
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
 import com.mmf.ancientcostume.R;
@@ -10,25 +10,26 @@ import com.mmf.ancientcostume.base.activity.BaseTitleActivity;
 import com.mmf.ancientcostume.common.utils.DipUtil;
 import com.mmf.ancientcostume.model.GoodsDetail;
 import com.mmf.ancientcostume.presenter.imp.goods.GoodsListPresenterImp;
-import com.mmf.ancientcostume.view.home.BaseView;
+import com.mmf.ancientcostume.view.BaseView;
 import com.mmf.ancientcostume.widget.GridSpacingItemDecoration;
-import com.mmf.ancientcostume.widget.RecyclerViewScrollListener;
-import com.mmf.ancientcostume.widget.RecyclerViewScrollListener.LoadingDataListener;
+import com.mmf.ancientcostume.widget.LoadRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by MMF on 2017-09-11.
  */
 
 public class GoodsListActivity extends BaseTitleActivity<GoodsListPresenterImp, GoodsListActivity> implements BaseView<List<GoodsDetail>>, SwipeRefreshLayout.OnRefreshListener {
-    @BindView(R.id.rv_goods_list)
-    RecyclerView rvGoodsList;
+
     @BindView(R.id.srl_refresh)
     SwipeRefreshLayout srlRefresh;
+    @BindView(R.id.rv_goods_list)
+    LoadRecyclerView rvGoodsList;
 
     private final int pageSize = 12;    //设置每页加载的数据条数
     private int pageNo = 1;              //记录加载的页数
@@ -46,13 +47,13 @@ public class GoodsListActivity extends BaseTitleActivity<GoodsListPresenterImp, 
         initAdapter();
         srlRefresh.setOnRefreshListener(this);
         //判断是否滑动到最后一条记录，是就加载数据
-        rvGoodsList.addOnScrollListener(new RecyclerViewScrollListener(new LoadingDataListener() {
+        rvGoodsList.setLoadingDataListener(new LoadRecyclerView.LoadingDataListener() {
             @Override
             public void onLoadMore() {
                 pageNo++;
                 getData();
             }
-        }));
+        });
     }
 
     @Override
@@ -90,5 +91,11 @@ public class GoodsListActivity extends BaseTitleActivity<GoodsListPresenterImp, 
         srlRefresh.setRefreshing(false);
         adapter.setItems(object);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ButterKnife.bind(this);
     }
 }

@@ -6,12 +6,13 @@ import android.view.View;
 
 /**
  * Created by MMF on 2017-07-13.
+ * 设置RecyclerView的item的间距
  */
 
 public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
 
     private int space;
-    private int spanCount = 3;
+    private int spanCount = 4;
 
     public SpaceItemDecoration(int space,int spanCount) {
         this.space = space;

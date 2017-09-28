@@ -3,20 +3,16 @@ package com.mmf.ancientcostume.base.presenter;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
-import com.baidu.platform.comapi.map.M;
 import com.mmf.ancientcostume.common.utils.service.RetrofitUtil;
-import com.mmf.ancientcostume.view.home.BaseView;
+import com.mmf.ancientcostume.view.BaseView;
 import com.mmf.ancientcostume.widget.DialogLoading;
 
 import java.lang.ref.WeakReference;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
-import java.util.List;
 
-import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.functions.Action1;

@@ -46,9 +46,7 @@
                 <View style="@style/Line_horizontal" />
 
                 <LinearLayout
-                    style="@style/Lly_normal_style_horizontal"
-                    android:paddingLeft="@dimen/public_space_value_8"
-                    android:paddingRight="@dimen/public_space_value_8">
+                    style="@style/Lly_normal_style_horizontal">
 
                     <TextView
                         style="@style/Remind_text_style"
@@ -67,9 +65,7 @@
                         android:layout_marginLeft="@dimen/public_space_value_8" />
 
                     <TextView
-                        style="@style/Remind_text_normal_style"
-                        android:layout_marginLeft="@dimen/public_space_value_8"
-                        android:layout_marginRight="@dimen/public_space_value_8"
+                        style="@style/Remind_text_style"
                         android:text="押金：" />
 
                     <EditText
@@ -80,6 +76,28 @@
                         android:hint="￥0.00"
                         android:inputType="numberDecimal" />
                 </LinearLayout>
+                <View style="@style/Line_horizontal" />
+                <LinearLayout
+                    android:id="@+id/lyt_address"
+                    style="@style/Lly_normal_style_horizontal"
+                    android:paddingLeft="@dimen/public_space_value_8"
+                    android:paddingRight="@dimen/public_space_value_8">
+                    <ImageView
+                        android:layout_width="@dimen/public_space_value_20"
+                        android:layout_height="@dimen/public_space_value_20"
+                        android:src="@drawable/localize"/>
+                    <TextView
+                        android:id="@+id/tv_address"
+                        style="@style/Remind_text_style"
+                        android:hint="地址" />
+                </LinearLayout>
+                <View style="@style/Line_horizontal" />
+                <EditText
+                    android:id="@+id/ed_detail_address"
+                    style="@style/Release_edit_style"
+                    android:gravity="left"
+                    android:minHeight="@dimen/public_space_value_90"
+                    android:hint="详细地址" />
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView

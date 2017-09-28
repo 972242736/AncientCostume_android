@@ -51,7 +51,7 @@
             android:process=":remote" />
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="nQS647KWkRaA8LkIXvCKwfuIcrbl9sHC" />
+            android:value="TTF38ie2nrtB05tKZ90jHm7dCHVOYDyU" />
     </application>
 
 </manifest>

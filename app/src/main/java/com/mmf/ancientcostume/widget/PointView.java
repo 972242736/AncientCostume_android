@@ -9,6 +9,7 @@ import com.mmf.ancientcostume.common.utils.DipUtil;
 
 /**
  * Created by MMF on 2017-08-01.
+ * viewPaper底下小圆点的的设置
  */
 
 public class PointView {

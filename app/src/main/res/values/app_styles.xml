@@ -31,6 +31,15 @@
         <item name="android:background">@color/white</item>
         <item name="android:orientation">horizontal</item>
     </style>
+    <style name="Lly_style_horizontal">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:padding">@dimen/public_space_value_8</item>
+        <item name="android:minHeight">@dimen/public_space_value_48</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
     <style name="User_text_style">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">0dp</item>
@@ -42,14 +51,14 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:padding">@dimen/public_space_value_8</item>
-        <item name="android:textSize">@dimen/public_textsize_value_16</item>
+        <item name="android:textSize">@dimen/public_textsize_value_14</item>
         <item name="android:textColor">@color/T4</item>
     </style>
     <style name="Remind_text_normal_style">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:textSize">@dimen/public_textsize_value_16</item>
-        <item name="android:textColor">@color/T5</item>
+        <item name="android:textSize">@dimen/public_textsize_value_14</item>
+        <item name="android:textColor">@color/T4</item>
     </style>
     <style name="Release_edit_style">
         <item name="android:layout_height">wrap_content</item>

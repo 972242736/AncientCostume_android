@@ -4,18 +4,10 @@
     android:layout_height="match_parent"
     android:background="@color/app_background"
     android:orientation="vertical">
-
     <include layout="@layout/base_bar" />
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/srl_refresh"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
-        <com.mmf.ancientcostume.widget.LoadRecyclerView
-            android:id="@+id/rv_goods_list"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_sel_address"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="#ffff0000" />
-    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

@@ -1,14 +1,19 @@
 package com.mmf.ancientcostume.fragment.user;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.baidu.location.BDLocation;
+import com.mmf.ancientcostume.MyApplication;
 import com.mmf.ancientcostume.R;
-import com.mmf.ancientcostume.activity.GoodsListActivity;
 import com.mmf.ancientcostume.activity.ImagePreviewActivity;
 import com.mmf.ancientcostume.adapter.home.ReleaseInfoImageAdapter;
 import com.mmf.ancientcostume.base.fragment.BaseFragment;
@@ -16,7 +21,7 @@ import com.mmf.ancientcostume.common.utils.DipUtil;
 import com.mmf.ancientcostume.other.zhy.imageloader.MyAdapter;
 import com.mmf.ancientcostume.other.zhy.imageloader.SelPhotoActivity;
 import com.mmf.ancientcostume.presenter.imp.release.ReleasePresenterImp;
-import com.mmf.ancientcostume.view.home.BaseView;
+import com.mmf.ancientcostume.view.BaseView;
 import com.mmf.ancientcostume.widget.SpaceItemDecoration;
 
 import java.io.File;
@@ -27,6 +32,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
@@ -37,9 +43,13 @@ import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
  * 添加发布信息界面
  */
 
-public class ReleaseFragment extends BaseFragment<ReleasePresenterImp,ReleaseFragment> implements BaseView{
-    private int TOP_TYPE = 1;
-    private int BOTTOM_TYPE = 2;
+public class ReleaseFragment extends BaseFragment<ReleasePresenterImp, ReleaseFragment> implements BaseView {
+    @BindView(R.id.tv_address)
+    TextView tvAddress;
+    @BindView(R.id.lyt_address)
+    LinearLayout lytAddress;
+    @BindView(R.id.ed_detail_address)
+    EditText edDetailAddress;
     @BindView(R.id.tv_sel)
     TextView tvSel;
     @BindView(R.id.rv_preview_img)
@@ -56,22 +66,49 @@ public class ReleaseFragment extends BaseFragment<ReleasePresenterImp,ReleaseFra
     RecyclerView rvIntroduceImg;
     @BindView(R.id.tv_release)
     TextView tvRelease;
-    private View view;
+    Unbinder unbinder;
+    private int TOP_TYPE = 1;
+    private int BOTTOM_TYPE = 2;
     private List<String> imgUrls = new ArrayList<>();
     private ReleaseInfoImageAdapter adapter;
 
-    public int getLayout(){
+    private String province;    //省份
+    private String city;         //城市
+    private String district;    //地区
+    private String street;       //街道
+
+    public int getLayout() {
         return R.layout.fragment_release_info;
     }
-    public void init(){
+
+    public void init() {
         setAdapter();
     }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        MyApplication.getInstance().setReleaseFragment(this);
+        return view;
+    }
+
+    public void setAddress() {
+        if (MyApplication.getInstance().getCurrlocation() != null) {
+            BDLocation bdLocation= MyApplication.getInstance().getCurrlocation();
+            province = bdLocation.getProvince();
+            city = bdLocation.getCity();
+            district = bdLocation.getDistrict();
+            street = bdLocation.getStreet();
+            tvAddress.setText(province+city+district);
+        }
+    }
+
     @Override
     protected ReleasePresenterImp getPresenter() {
         return new ReleasePresenterImp();
     }
 
-    @OnClick({R.id.tv_sel, R.id.tv_release})
+    @OnClick({R.id.tv_sel, R.id.tv_release, R.id.lyt_address})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_sel:
@@ -80,6 +117,11 @@ public class ReleaseFragment extends BaseFragment<ReleasePresenterImp,ReleaseFra
                 startActivityForResult(intent, 1);
                 break;
             case R.id.tv_release:
+                if (presenter.check(getData())) {
+                    presenter.insertDetail(getImgRequestBody(imgUrls, TOP_TYPE), getData());
+                }
+                break;
+            case R.id.lyt_address:
                 if (presenter.check(getData())) {
                     presenter.insertDetail(getImgRequestBody(imgUrls, TOP_TYPE), getData());
                 }
@@ -140,7 +182,7 @@ public class ReleaseFragment extends BaseFragment<ReleasePresenterImp,ReleaseFra
         //将RecyclerView设置成gridview的样式 每行显示4个
         GridLayoutManager mgr = new GridLayoutManager(getActivity(), 4);
         rvPreviewImg.setLayoutManager(mgr);
-        int space = DipUtil.dip2px(getActivity(), 2);
+        int space = DipUtil.dip2px(getActivity(), 4);
         //设置RecyclerView每个item的间距
         rvPreviewImg.addItemDecoration(new SpaceItemDecoration(space, 4));
         //设置RecyclerView的滑动监听（感觉还是很卡，优化还不行）
@@ -174,4 +216,10 @@ public class ReleaseFragment extends BaseFragment<ReleasePresenterImp,ReleaseFra
     public void onSuccess(Object object) {
 
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
 }

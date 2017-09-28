@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout style="@style/Lly_style_horizontal">
+
+        <TextView
+            android:id="@+id/tv_address"
+            style="@style/Remind_text_normal_style"
+            android:layout_weight="1"
+            android:text="df但是撒多" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_launcher" />
+    </LinearLayout>
+
+    <View style="@style/Line_horizontal_normal" />
+</LinearLayout>

@@ -6,18 +6,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.mmf.ancientcostume.R;
-import com.mmf.ancientcostume.base.activity.BaseActivity;
 import com.mmf.ancientcostume.base.presenter.BasePresenter;
-import com.mmf.ancientcostume.view.home.BaseView;
+import com.mmf.ancientcostume.view.BaseView;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**

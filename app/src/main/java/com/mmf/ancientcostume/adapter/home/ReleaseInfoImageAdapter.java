@@ -16,6 +16,7 @@ import com.mmf.ancientcostume.common.utils.ClippingPicture;
 import com.mmf.ancientcostume.common.utils.DipUtil;
 import com.mmf.ancientcostume.other.zhy.imageloader.MyAdapter;
 import com.mmf.ancientcostume.widget.IImagePreview;
+import com.mmf.ancientcostume.widget.RecyclerTransformation;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -43,7 +44,7 @@ public class ReleaseInfoImageAdapter extends BaseRecyclerAdapter<String> {
     public ReleaseInfoImageAdapter(Context context) {
         super(context);
         picasso = Picasso.with(context);
-        width = (DipUtil.getWidth(context) - DipUtil.dip2px(context, 6)) / 4;
+        width = (DipUtil.getWidth(context) - DipUtil.dip2px(context, 12)) / 4;
 //        padding = DipUtil.dip2px(context,2);
     }
 
@@ -65,11 +66,12 @@ public class ReleaseInfoImageAdapter extends BaseRecyclerAdapter<String> {
         layoutParams9.height = width;//设置图片的高度
         layoutParams9.width = width; //设置图片的宽度
         viewHolder.ivRelease.setLayoutParams(layoutParams9);
-        picasso.setLoggingEnabled(true);
         final String item = itemList.get(position);
         if (!TextUtils.isEmpty(item.trim()) && !isScrolling) {
             picasso.load(ClippingPicture.getImageContentUri(context, new File(item.trim())))
                     .noFade()
+                    .placeholder(R.drawable.pictures_no)
+                    .transform(new RecyclerTransformation(context, 12, 4))
                     .into(viewHolder.ivRelease);
         } else {
             viewHolder.ivRelease.setImageResource(R.drawable.pictures_no);

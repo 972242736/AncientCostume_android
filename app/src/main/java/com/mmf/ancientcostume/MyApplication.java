@@ -9,6 +9,7 @@ import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.model.LatLng;
 import com.mmf.ancientcostume.baidu.BaiduFragment;
 import com.mmf.ancientcostume.baidu.LBSLocation;
+import com.mmf.ancientcostume.fragment.user.ReleaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ public class MyApplication extends Application {
     // 定位结果
     public BDLocation currlocation = null;
     private BaiduFragment baiduFragment;
+    private ReleaseFragment releaseFragment;
 
     //监控所有activity使用
     private List<Activity> activities = new ArrayList<>();
@@ -53,10 +55,18 @@ public class MyApplication extends Application {
         return currlocation;
     }
 
+    public void setReleaseFragment(ReleaseFragment releaseFragment) {
+        this.releaseFragment = releaseFragment;
+    }
+
     public void setCurrlocation(BDLocation currlocation) {
-        if (baiduFragment != null)
-            baiduFragment.setCity(new LatLng(currlocation.getLatitude(), currlocation.getLongitude()));
         this.currlocation = currlocation;
+        if (baiduFragment != null) {
+            baiduFragment.setCity(new LatLng(currlocation.getLatitude(), currlocation.getLongitude()));
+        }
+        if (releaseFragment != null) {
+            releaseFragment.setAddress();
+        }
     }
 
     /**
