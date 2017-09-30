@@ -1,12 +1,12 @@
 package com.mmf.ancientcostume.fragment.user;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.content.IntentFilter;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,6 +19,7 @@ import com.mmf.ancientcostume.activity.SelAddressActivity;
 import com.mmf.ancientcostume.adapter.home.ReleaseInfoImageAdapter;
 import com.mmf.ancientcostume.base.fragment.BaseFragment;
 import com.mmf.ancientcostume.common.utils.DipUtil;
+import com.mmf.ancientcostume.model.StaticData;
 import com.mmf.ancientcostume.other.zhy.imageloader.MyAdapter;
 import com.mmf.ancientcostume.other.zhy.imageloader.SelPhotoActivity;
 import com.mmf.ancientcostume.presenter.imp.release.ReleasePresenterImp;
@@ -33,7 +34,6 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
@@ -69,8 +69,6 @@ public class ReleaseFragment extends BaseFragment<ReleasePresenterImp, ReleaseFr
     TextView tvRelease;
     private int TOP_TYPE = 1;
     private int BOTTOM_TYPE = 2;
-    public static int SEL_IMAGE = 1;
-    public static int SEL_ADDRESS = 3;
     private List<String> imgUrls = new ArrayList<>();
     private ReleaseInfoImageAdapter adapter;
 
@@ -78,6 +76,7 @@ public class ReleaseFragment extends BaseFragment<ReleasePresenterImp, ReleaseFr
     private String city;         //城市
     private String district;    //地区
     private String street;       //街道
+    private BroadcastReceiver receiver;
 
     public int getLayout() {
         return R.layout.fragment_release_info;
@@ -85,13 +84,16 @@ public class ReleaseFragment extends BaseFragment<ReleasePresenterImp, ReleaseFr
 
     public void init() {
         setAdapter();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        MyApplication.getInstance().setReleaseFragment(this);
-        return view;
+        setAddress();
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                setAddress();
+            }
+        };
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(StaticData.LOCATION_SUCCESS_ACTION);
+        getActivity().registerReceiver(receiver, filter);
     }
 
     public void setAddress() {
@@ -102,6 +104,8 @@ public class ReleaseFragment extends BaseFragment<ReleasePresenterImp, ReleaseFr
             district = bdLocation.getDistrict();
             street = bdLocation.getStreet();
             tvAddress.setText(province + city + district);
+        } else {
+            MyApplication.getInstance().startLocation();
         }
     }
 
@@ -115,8 +119,7 @@ public class ReleaseFragment extends BaseFragment<ReleasePresenterImp, ReleaseFr
         switch (view.getId()) {
             case R.id.tv_sel:
                 Intent intent = new Intent(getActivity(), SelPhotoActivity.class);
-//                startActivity(intent);
-                startActivityForResult(intent, SEL_IMAGE);
+                startActivityForResult(intent, StaticData.RELEASE_SEL_IMAGE);
                 break;
             case R.id.tv_release:
                 if (presenter.check(getData())) {
@@ -125,8 +128,7 @@ public class ReleaseFragment extends BaseFragment<ReleasePresenterImp, ReleaseFr
                 break;
             case R.id.lyt_address:
                 Intent intent1 = new Intent(getActivity(), SelAddressActivity.class);
-//                startActivity(intent);
-                startActivityForResult(intent1, SEL_ADDRESS);
+                startActivityForResult(intent1, StaticData.RELEASE_SEL_ADDRESS);
 
                 break;
         }
@@ -171,11 +173,11 @@ public class ReleaseFragment extends BaseFragment<ReleasePresenterImp, ReleaseFr
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //获取选择的图片的真实路劲
-        if (resultCode == SEL_IMAGE) {
+        if (resultCode == StaticData.RELEASE_SEL_IMAGE) {
             imgUrls = data.getStringArrayListExtra("imgUrls");
             adapter.setItems(imgUrls);
             adapter.notifyDataSetChanged();
-        } else if (resultCode == SEL_ADDRESS) {
+        } else if (resultCode == StaticData.RELEASE_SEL_ADDRESS) {
             province = data.getStringExtra("province");
             city = data.getStringExtra("city");
             district = data.getStringExtra("district");
@@ -228,6 +230,7 @@ public class ReleaseFragment extends BaseFragment<ReleasePresenterImp, ReleaseFr
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        getActivity().unregisterReceiver(receiver);
     }
 
 }

@@ -11,8 +11,8 @@ import com.mmf.ancientcostume.R;
 import com.mmf.ancientcostume.adapter.goods.SelAddressAdapter;
 import com.mmf.ancientcostume.base.activity.BaseTitleActivity;
 import com.mmf.ancientcostume.base.adapter.BaseClickRecyclerAdapter;
-import com.mmf.ancientcostume.fragment.user.ReleaseFragment;
 import com.mmf.ancientcostume.model.Address;
+import com.mmf.ancientcostume.model.StaticData;
 import com.mmf.ancientcostume.presenter.imp.goods.SelAddressPresenterImp;
 import com.mmf.ancientcostume.view.BaseView;
 
@@ -75,7 +75,7 @@ public class SelAddressActivity extends BaseTitleActivity<SelAddressPresenterImp
                     mIntent.putExtra("city",city);
                     mIntent.putExtra("district",district);
                     // 设置结果，并进行传送
-                    setResult(ReleaseFragment.SEL_ADDRESS, mIntent);
+                    setResult(StaticData.RELEASE_SEL_ADDRESS, mIntent);
                     finish();
                     return;
                 }

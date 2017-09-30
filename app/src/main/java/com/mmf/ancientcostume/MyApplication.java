@@ -2,14 +2,14 @@ package com.mmf.ancientcostume;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.baidu.location.BDLocation;
 import com.baidu.mapapi.SDKInitializer;
-import com.baidu.mapapi.model.LatLng;
 import com.mmf.ancientcostume.baidu.BaiduFragment;
 import com.mmf.ancientcostume.baidu.LBSLocation;
-import com.mmf.ancientcostume.fragment.user.ReleaseFragment;
+import com.mmf.ancientcostume.model.StaticData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,6 @@ public class MyApplication extends Application {
     // 定位结果
     public BDLocation currlocation = null;
     private BaiduFragment baiduFragment;
-    private ReleaseFragment releaseFragment;
 
     //监控所有activity使用
     private List<Activity> activities = new ArrayList<>();
@@ -36,9 +35,13 @@ public class MyApplication extends Application {
         SDKInitializer.initialize(getApplicationContext());
         mInstance = this;
         // 启动定位
-        LBSLocation.getInstance(this).startLocation();
+        startLocation();
     }
 
+    public void startLocation(){
+        // 启动定位
+        LBSLocation.getInstance(this).startLocation();
+    }
     public static MyApplication getInstance() {
         return mInstance;
     }
@@ -55,18 +58,18 @@ public class MyApplication extends Application {
         return currlocation;
     }
 
-    public void setReleaseFragment(ReleaseFragment releaseFragment) {
-        this.releaseFragment = releaseFragment;
-    }
 
     public void setCurrlocation(BDLocation currlocation) {
         this.currlocation = currlocation;
-        if (baiduFragment != null) {
-            baiduFragment.setCity(new LatLng(currlocation.getLatitude(), currlocation.getLongitude()));
-        }
-        if (releaseFragment != null) {
-            releaseFragment.setAddress();
-        }
+        Intent intent = new Intent();
+        intent.setAction(StaticData.LOCATION_SUCCESS_ACTION);
+        sendBroadcast(intent);
+//        if (baiduFragment != null) {
+//            baiduFragment.setCity(new LatLng(currlocation.getLatitude(), currlocation.getLongitude()));
+//        }
+//        if (releaseFragment != null) {
+//            releaseFragment.setAddress();
+//        }
     }
 
     /**

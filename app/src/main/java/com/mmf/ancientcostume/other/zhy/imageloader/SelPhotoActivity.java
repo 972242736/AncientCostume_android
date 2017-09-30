@@ -24,17 +24,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.JsonArray;
 import com.mmf.ancientcostume.R;
 import com.mmf.ancientcostume.activity.ImagePreviewActivity;
-import com.mmf.ancientcostume.fragment.user.ReleaseFragment;
+import com.mmf.ancientcostume.model.StaticData;
 import com.mmf.ancientcostume.other.zhy.bean.ImageFloder;
 
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
@@ -332,7 +330,7 @@ public class SelPhotoActivity extends Activity implements ListImageDirPopupWindo
         }
         mIntent.putStringArrayListExtra("imgUrls", imgUrls);
         // 设置结果，并进行传送
-        this.setResult(ReleaseFragment.SEL_IMAGE, mIntent);
+        this.setResult(StaticData.RELEASE_SEL_IMAGE, mIntent);
         finish();
     }
 
