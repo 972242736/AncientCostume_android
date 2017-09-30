@@ -18,6 +18,7 @@ public interface AddressServiceApi {
     /**
      * 获取所有省份的信息
      */
+    @GET("address/getProvinceList")
     Observable<Response<List<Address>>> getProvinceList();
 
     /**

@@ -15,6 +15,7 @@ import com.baidu.location.BDLocation;
 import com.mmf.ancientcostume.MyApplication;
 import com.mmf.ancientcostume.R;
 import com.mmf.ancientcostume.activity.ImagePreviewActivity;
+import com.mmf.ancientcostume.activity.SelAddressActivity;
 import com.mmf.ancientcostume.adapter.home.ReleaseInfoImageAdapter;
 import com.mmf.ancientcostume.base.fragment.BaseFragment;
 import com.mmf.ancientcostume.common.utils.DipUtil;
@@ -66,9 +67,10 @@ public class ReleaseFragment extends BaseFragment<ReleasePresenterImp, ReleaseFr
     RecyclerView rvIntroduceImg;
     @BindView(R.id.tv_release)
     TextView tvRelease;
-    Unbinder unbinder;
     private int TOP_TYPE = 1;
     private int BOTTOM_TYPE = 2;
+    public static int SEL_IMAGE = 1;
+    public static int SEL_ADDRESS = 3;
     private List<String> imgUrls = new ArrayList<>();
     private ReleaseInfoImageAdapter adapter;
 
@@ -94,12 +96,12 @@ public class ReleaseFragment extends BaseFragment<ReleasePresenterImp, ReleaseFr
 
     public void setAddress() {
         if (MyApplication.getInstance().getCurrlocation() != null) {
-            BDLocation bdLocation= MyApplication.getInstance().getCurrlocation();
+            BDLocation bdLocation = MyApplication.getInstance().getCurrlocation();
             province = bdLocation.getProvince();
             city = bdLocation.getCity();
             district = bdLocation.getDistrict();
             street = bdLocation.getStreet();
-            tvAddress.setText(province+city+district);
+            tvAddress.setText(province + city + district);
         }
     }
 
@@ -114,7 +116,7 @@ public class ReleaseFragment extends BaseFragment<ReleasePresenterImp, ReleaseFr
             case R.id.tv_sel:
                 Intent intent = new Intent(getActivity(), SelPhotoActivity.class);
 //                startActivity(intent);
-                startActivityForResult(intent, 1);
+                startActivityForResult(intent, SEL_IMAGE);
                 break;
             case R.id.tv_release:
                 if (presenter.check(getData())) {
@@ -122,9 +124,10 @@ public class ReleaseFragment extends BaseFragment<ReleasePresenterImp, ReleaseFr
                 }
                 break;
             case R.id.lyt_address:
-                if (presenter.check(getData())) {
-                    presenter.insertDetail(getImgRequestBody(imgUrls, TOP_TYPE), getData());
-                }
+                Intent intent1 = new Intent(getActivity(), SelAddressActivity.class);
+//                startActivity(intent);
+                startActivityForResult(intent1, SEL_ADDRESS);
+
                 break;
         }
     }
@@ -168,10 +171,15 @@ public class ReleaseFragment extends BaseFragment<ReleasePresenterImp, ReleaseFr
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //获取选择的图片的真实路劲
-        imgUrls = data.getStringArrayListExtra("imgUrls");
-        if (resultCode == 1) {
+        if (resultCode == SEL_IMAGE) {
+            imgUrls = data.getStringArrayListExtra("imgUrls");
             adapter.setItems(imgUrls);
             adapter.notifyDataSetChanged();
+        } else if (resultCode == SEL_ADDRESS) {
+            province = data.getStringExtra("province");
+            city = data.getStringExtra("city");
+            district = data.getStringExtra("district");
+            tvAddress.setText(province + city + district);
         }
     }
 
