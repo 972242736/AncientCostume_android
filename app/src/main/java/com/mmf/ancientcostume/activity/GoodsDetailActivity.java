@@ -164,6 +164,11 @@ public class GoodsDetailActivity extends BaseTitleActivity<GoodsDetailPresenterI
         GoodsDetail goodsDetail = goodsDetailAndImg.getGoodsDetail();
     }
 
+    @Override
+    public void onError(String object) {
+        srlRefresh.setRefreshing(false);
+    }
+
     /**
      * 设置ViewPager的监听
      */

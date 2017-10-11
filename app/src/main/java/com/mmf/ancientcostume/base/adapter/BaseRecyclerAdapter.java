@@ -46,7 +46,6 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
         }
         notifyDataSetChanged();
 
-
     }
 
     /**

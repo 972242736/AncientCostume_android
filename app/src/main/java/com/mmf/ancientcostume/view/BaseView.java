@@ -6,4 +6,5 @@ package com.mmf.ancientcostume.view;
 
 public interface BaseView<T> {
     void onSuccess(T object);
+    void onError(String object);
 }

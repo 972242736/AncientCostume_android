@@ -228,6 +228,11 @@ public class ReleaseFragment extends BaseFragment<ReleasePresenterImp, ReleaseFr
     }
 
     @Override
+    public void onError(String object) {
+
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         getActivity().unregisterReceiver(receiver);

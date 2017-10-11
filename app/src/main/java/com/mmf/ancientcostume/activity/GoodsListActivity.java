@@ -104,12 +104,11 @@ public class GoodsListActivity extends BaseTitleActivity<GoodsListPresenterImp, 
         list = object;
         srlRefresh.setRefreshing(false);
         adapter.setItems(object);
-        adapter.notifyDataSetChanged();
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
+    public void onError(String object) {
+        srlRefresh.setRefreshing(false);
     }
+
 }

@@ -32,7 +32,8 @@
         android:theme="@style/AppTheme">
         <!--<activity android:name=".activity.GoodsDetailActivity">-->
         <!--<activity android:name=".WelcomeActivity">-->
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden">
         <!--<activity android:name=".activity.GoodsListActivity">-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

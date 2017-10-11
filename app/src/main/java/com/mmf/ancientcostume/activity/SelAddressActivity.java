@@ -119,6 +119,11 @@ public class SelAddressActivity extends BaseTitleActivity<SelAddressPresenterImp
     }
 
     @Override
+    public void onError(String object) {
+
+    }
+
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             back();

@@ -31,6 +31,8 @@ public class BasePresenter<T extends BaseView> {
     protected final String TAG = "RxJava";
     protected CompositeSubscription mCompositeSubscription = new CompositeSubscription();
     protected Subscription subscription;
+    private WeakReference<T> weakReference;
+    protected BaseView view;
 
     /**
      * 创建观察者
@@ -57,6 +59,7 @@ public class BasePresenter<T extends BaseView> {
                 } else if (e instanceof ConnectException) {
                     showToast(e.getMessage());
                 }
+//                view.onError(e.getMessage());
                 Log.e(TAG, String.valueOf(e.getMessage()));
                 e.printStackTrace();
             }
@@ -101,11 +104,6 @@ public class BasePresenter<T extends BaseView> {
             loading.dismiss();
         }
     }
-
-
-    private WeakReference<T> weakReference;
-    protected BaseView view;
-
     public void attach(T t,Context context) {
         weakReference = new WeakReference<>(t);
         view =  t;
