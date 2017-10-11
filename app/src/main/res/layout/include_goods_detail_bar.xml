@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout style="@style/bar_style">
+
+        <ImageView
+            android:id="@+id/iv_change_back"
+            style="@style/Image_top_bar"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tv_change_title"
+            style="@style/tv_weight_1"
+            android:layout_centerInParent="true" />
+
+        <ImageView
+            android:id="@+id/iv_change_right"
+            style="@style/Image_top_bar"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_launcher" />
+    </RelativeLayout>
+
+    <LinearLayout
+        style="@style/Lly_style_wrap_paddingLeft_right_horizontal"
+        android:background="@color/bar_color"
+        android:paddingBottom="8dp">
+
+        <TextView
+            android:id="@+id/tv_change_goods"
+            style="@style/Remind_text_normal_style"
+            android:layout_weight="1"
+            android:text="dfs" />
+
+        <TextView
+            android:id="@+id/tv_change_comment"
+            style="@style/Remind_text_normal_style"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_change_detail"
+            style="@style/Remind_text_normal_style"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+</LinearLayout>

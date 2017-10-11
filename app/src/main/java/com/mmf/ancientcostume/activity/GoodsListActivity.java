@@ -1,14 +1,19 @@
 package com.mmf.ancientcostume.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.TextUtils;
+import android.view.View;
 
 import com.mmf.ancientcostume.R;
 import com.mmf.ancientcostume.adapter.goods.GoodsListAdapter;
 import com.mmf.ancientcostume.base.activity.BaseTitleActivity;
+import com.mmf.ancientcostume.base.adapter.BaseClickRecyclerAdapter;
 import com.mmf.ancientcostume.common.utils.DipUtil;
 import com.mmf.ancientcostume.model.GoodsDetail;
+import com.mmf.ancientcostume.model.StaticData;
 import com.mmf.ancientcostume.presenter.imp.goods.GoodsListPresenterImp;
 import com.mmf.ancientcostume.view.BaseView;
 import com.mmf.ancientcostume.widget.GridSpacingItemDecoration;
@@ -71,6 +76,14 @@ public class GoodsListActivity extends BaseTitleActivity<GoodsListPresenterImp, 
         adapter = new GoodsListAdapter(this);
         adapter.setItems(list);
         rvGoodsList.setAdapter(adapter);
+        adapter.setOnItemClickListener(new BaseClickRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(GoodsListActivity.this,GoodsDetailActivity.class);
+                intent.putExtra("id",list.get(position).getId());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -88,6 +101,7 @@ public class GoodsListActivity extends BaseTitleActivity<GoodsListPresenterImp, 
 
     @Override
     public void onSuccess(List<GoodsDetail> object) {
+        list = object;
         srlRefresh.setRefreshing(false);
         adapter.setItems(object);
         adapter.notifyDataSetChanged();

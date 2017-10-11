@@ -4,9 +4,11 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +33,7 @@ import butterknife.OnClick;
  * Created by MMF on 2017-07-31.
  */
 @RequiresApi(api = Build.VERSION_CODES.M)
-public class GoodsDetailActivity extends BaseTitleActivity<GoodsDetailPresenterImp,GoodsDetailActivity> implements IDetailView, SwipeRefreshLayout.OnRefreshListener {
+public class GoodsDetailActivity extends BaseTitleActivity<GoodsDetailPresenterImp, GoodsDetailActivity> implements IDetailView, SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.lly_point)
     LinearLayout llyPoint;
     @BindView(R.id.vp_top_img)
@@ -44,9 +46,34 @@ public class GoodsDetailActivity extends BaseTitleActivity<GoodsDetailPresenterI
     TextView tvChangeTitle;
     @BindView(R.id.srl_refresh)
     SwipeRefreshLayout srlRefresh;
-    private float SCROLL_HEIGHT;
-    private int id;
+    @BindView(R.id.rly_top_img)
+    RelativeLayout rlyTopImg;
+    @BindView(R.id.tv_describe)
+    TextView tvDescribe;
+    @BindView(R.id.tv_rental)
+    TextView tvRental;
+    @BindView(R.id.tv_deposit)
+    TextView tvDeposit;
+    @BindView(R.id.tv_collect)
+    TextView tvCollect;
+    @BindView(R.id.tv_address)
+    TextView tvAddress;
+    @BindView(R.id.rv_detail_img)
+    RecyclerView rvDetailImg;
+    @BindView(R.id.iv_change_back)
+    ImageView ivChangeBack;
+    @BindView(R.id.iv_change_right)
+    ImageView ivChangeRight;
+    @BindView(R.id.tv_change_goods)
+    TextView tvChangeGoods;
+    @BindView(R.id.tv_change_comment)
+    TextView tvChangeComment;
+    @BindView(R.id.tv_change_detail)
+    TextView tvChangeDetail;
 
+
+    private float SCROLL_HEIGHT;    //屏幕的高度
+    private int id;
 
 
     @Override
@@ -62,6 +89,7 @@ public class GoodsDetailActivity extends BaseTitleActivity<GoodsDetailPresenterI
         setSvListener();    //设置ScrollView的滑动监听
         setVpListener();
     }
+
     @Override
     protected void getData() {
         presenter.getGoodsDetail(id);
@@ -122,7 +150,6 @@ public class GoodsDetailActivity extends BaseTitleActivity<GoodsDetailPresenterI
     protected GoodsDetailPresenterImp getPresenter() {
         return new GoodsDetailPresenterImp();
     }
-
 
 
     @Override

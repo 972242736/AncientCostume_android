@@ -40,6 +40,23 @@
         <item name="android:background">@color/white</item>
         <item name="android:orientation">horizontal</item>
     </style>
+    <style name="Lly_style_wrap_padding_horizontal">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:padding">@dimen/public_space_value_8</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+    <style name="Lly_style_wrap_paddingLeft_right_horizontal">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingLeft">@dimen/public_space_value_8</item>
+        <item name="android:paddingRight">@dimen/public_space_value_8</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
     <style name="User_text_style">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">0dp</item>

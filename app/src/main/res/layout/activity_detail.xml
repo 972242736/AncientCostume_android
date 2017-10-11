@@ -2,11 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/app_background"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout style="@style/Lly_normal_style_vertical">
 
@@ -26,6 +28,7 @@
                     <LinearLayout style="@style/Lly_normal_style_vertical">
 
                         <RelativeLayout
+                            android:id="@+id/rly_top_img"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
 
@@ -44,9 +47,65 @@
                                 android:orientation="horizontal" />
                         </RelativeLayout>
 
-                        <ImageView
+                        <TextView
+                            android:id="@+id/tv_title"
+                            style="@style/Remind_text_style" />
+
+                        <TextView
+                            android:id="@+id/tv_describe"
+                            style="@style/Remind_text_normal_style"
+                            android:paddingLeft="@dimen/public_space_value_8"
+                            android:paddingRight="@dimen/public_space_value_8"
+                            android:textColor="@color/T3"
+                            android:textSize="@dimen/public_textsize_value_12" />
+
+                        <LinearLayout style="@style/Lly_style_wrap_padding_horizontal">
+
+                            <TextView
+                                android:id="@+id/tv_rental"
+                                style="@style/User_text_style"
+                                android:text="租金"
+                                android:textColor="@color/T6" />
+
+                            <TextView
+                                android:id="@+id/tv_deposit"
+                                style="@style/User_text_style"
+                                android:gravity="right"
+                                android:text="押金"
+                                android:textColor="@color/top_red" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            style="@style/Lly_style_wrap_paddingLeft_right_horizontal"
+                            android:paddingBottom="8dp">
+
+                            <TextView
+                                android:id="@+id/tv_collect"
+                                style="@style/Remind_text_normal_style"
+                                android:textColor="@color/T3"
+                                android:textSize="@dimen/public_textsize_value_12" />
+
+                            <TextView
+                                android:id="@+id/tv_address"
+                                style="@style/Remind_text_normal_style"
+                                android:textColor="@color/T3"
+                                android:textSize="@dimen/public_textsize_value_12" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            style="@style/Lly_style_horizontal"
+                            android:background="@color/app_background"
+                            android:gravity="center">
+
+                            <TextView
+                                style="@style/Remind_text_normal_style"
+                                android:text="----- 评论 ----" />
+                        </LinearLayout>
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rv_detail_img"
                             android:layout_width="match_parent"
-                            android:layout_height="2000dp" />
+                            android:layout_height="wrap_content"/>
+
                     </LinearLayout>
                 </ScrollView>
 
@@ -57,17 +116,25 @@
             android:id="@+id/lly_change_bar"
             style="@style/Lly_normal_style_horizontal"
             android:alpha="0">
-
-            <TextView
-                android:id="@+id/tv_change_title"
-                android:layout_width="match_parent"
-                android:layout_height="72dp"
-                android:background="@color/bar_color"
-                android:gravity="center"
-                android:text="123456"
-                android:textSize="25sp" />
+            <include layout="@layout/include_goods_detail_bar"/>
         </LinearLayout>
     </RelativeLayout>
+
+    <View style="@style/Line_horizontal_normal" />
+
+    <LinearLayout style="@style/Lly_normal_style_horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            style="@style/tv_width_match_click"
+            android:layout_width="80dp"
+            android:text="预约" />
+
+    </LinearLayout>
 
 
 </LinearLayout>
