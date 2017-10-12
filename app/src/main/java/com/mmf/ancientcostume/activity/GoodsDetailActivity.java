@@ -33,7 +33,7 @@ import butterknife.OnClick;
  * Created by MMF on 2017-07-31.
  */
 @RequiresApi(api = Build.VERSION_CODES.M)
-public class GoodsDetailActivity extends BaseTitleActivity<GoodsDetailPresenterImp, GoodsDetailActivity> implements IDetailView, SwipeRefreshLayout.OnRefreshListener {
+public class GoodsDetailActivity extends BaseTitleActivity<GoodsDetailPresenterImp, GoodsDetailActivity> implements IDetailView{
     @BindView(R.id.lly_point)
     LinearLayout llyPoint;
     @BindView(R.id.vp_top_img)
@@ -44,10 +44,12 @@ public class GoodsDetailActivity extends BaseTitleActivity<GoodsDetailPresenterI
     LinearLayout llyChangeBar;
     @BindView(R.id.tv_change_title)
     TextView tvChangeTitle;
-    @BindView(R.id.srl_refresh)
-    SwipeRefreshLayout srlRefresh;
+//    @BindView(R.id.srl_refresh)
+//    SwipeRefreshLayout srlRefresh;
     @BindView(R.id.rly_top_img)
     RelativeLayout rlyTopImg;
+    @BindView(R.id.tv_goods_title)
+    TextView tvGoodsTitle;
     @BindView(R.id.tv_describe)
     TextView tvDescribe;
     @BindView(R.id.tv_rental)
@@ -84,8 +86,9 @@ public class GoodsDetailActivity extends BaseTitleActivity<GoodsDetailPresenterI
     public void init() {
         id = getIntent().getIntExtra("id", 1);
         SCROLL_HEIGHT = DipUtil.getWidth(this);
-        DipUtil.setLinearLayout(DipUtil.getWidth(this), DipUtil.getWidth(this), svDetail);    //设置viewpager的宽高
-        srlRefresh.setOnRefreshListener(this);
+        DipUtil.setLinearLayout(DipUtil.getWidth(this), DipUtil.getWidth(this), rlyTopImg);    //设置viewpager的宽高
+//        DipUtil.setLinearLayout(DipUtil.getWidth(this), DipUtil.getWidth(this), svDetail);    //设置viewpager的宽高
+//        srlRefresh.setOnRefreshListener(this);
         setSvListener();    //设置ScrollView的滑动监听
         setVpListener();
     }
@@ -98,11 +101,11 @@ public class GoodsDetailActivity extends BaseTitleActivity<GoodsDetailPresenterI
     /**
      * 刷新的监听
      */
-    @Override
-    public void onRefresh() {
-        srlRefresh.setRefreshing(true);
-        getData();
-    }
+//    @Override
+//    public void onRefresh() {
+//        srlRefresh.setRefreshing(true);
+//        getData();
+//    }
 
     /**
      * 设置ScrollView的滑动监听
@@ -154,19 +157,30 @@ public class GoodsDetailActivity extends BaseTitleActivity<GoodsDetailPresenterI
 
     @Override
     public void onSuccess(Object object) {
-        srlRefresh.setRefreshing(false);
+//        srlRefresh.setRefreshing(false);
         GoodsDetailAndImg goodsDetailAndImg = (GoodsDetailAndImg) object;
-        List<GoodsImg> goodsImgList = goodsDetailAndImg.getGoodsImgList();
-        ViewPImgAdapter adapter = new ViewPImgAdapter(this, goodsImgList, 1);
+        List<GoodsImg> goodsTopImgList = goodsDetailAndImg.getGoodsTopImgList();
+        ViewPImgAdapter<GoodsImg> adapter = new ViewPImgAdapter(this, goodsTopImgList, 2);
         vpTopImg.setAdapter(adapter);
         //底下点点的图片
-        PointView.setPoint(this, llyPoint, goodsImgList.size());
-        GoodsDetail goodsDetail = goodsDetailAndImg.getGoodsDetail();
+        PointView.setPoint(this, llyPoint, goodsTopImgList.size());
+        setGoodsInfo(goodsDetailAndImg.getGoodsDetail());
+    }
+
+    private void setGoodsInfo(GoodsDetail goodsDetail) {
+        if (goodsDetail != null) {
+            tvGoodsTitle.setText(goodsDetail.getTitle());
+            tvDescribe.setText(goodsDetail.getDescribe());
+            tvRental.setText("租金："+goodsDetail.getRental());
+            tvDeposit.setText("押金："+goodsDetail.getDeposit());
+            tvCollect.setText("收藏："+goodsDetail.getCollectNum());
+            tvAddress.setText(goodsDetail.getProvince().substring(0,goodsDetail.getProvince().indexOf("省"))+" "+goodsDetail.getCity().substring(0,goodsDetail.getCity().indexOf("市")));
+        }
     }
 
     @Override
     public void onError(String object) {
-        srlRefresh.setRefreshing(false);
+//        srlRefresh.setRefreshing(false);
     }
 
     /**

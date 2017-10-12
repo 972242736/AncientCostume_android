@@ -45,7 +45,7 @@ public interface HomeServiceApi {
     Observable<Response<String>> insertDetail(@QueryMap Map<String, Object> info, @PartMap Map<String, RequestBody> bodyMap);
 
     @GET("goods/getGoodsDetail")
-    Observable<Response<GoodsDetailAndImg>> getGoodsDetail(@Query("id") int id,@Query("type") int type);
+    Observable<Response<GoodsDetailAndImg>> getGoodsDetail(@Query("id") int id);
 
     @GET("goods/getGoodsList")
     Observable<Response<List<GoodsDetail>>> getGoodsList(@Query("pageNo") int pageNo, @Query("pageSize") int pageSize);

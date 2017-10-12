@@ -7,15 +7,24 @@ import java.util.List;
  */
 
 public class GoodsDetailAndImg {
-    private List<GoodsImg> goodsImgList;
+    private List<GoodsImg> goodsTopImgList;
+    private List<GoodsImg> goodsDetailImgList;
     private GoodsDetail goodsDetail;
 
-    public List<GoodsImg> getGoodsImgList() {
-        return goodsImgList;
+    public List<GoodsImg> getGoodsTopImgList() {
+        return goodsTopImgList;
     }
 
-    public void setGoodsImgList(List<GoodsImg> goodsImgList) {
-        this.goodsImgList = goodsImgList;
+    public void setGoodsTopImgList(List<GoodsImg> goodsTopImgList) {
+        this.goodsTopImgList = goodsTopImgList;
+    }
+
+    public List<GoodsImg> getGoodsDetailImgList() {
+        return goodsDetailImgList;
+    }
+
+    public void setGoodsDetailImgList(List<GoodsImg> goodsDetailImgList) {
+        this.goodsDetailImgList = goodsDetailImgList;
     }
 
     public GoodsDetail getGoodsDetail() {

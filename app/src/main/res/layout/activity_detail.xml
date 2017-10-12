@@ -10,15 +10,16 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <LinearLayout style="@style/Lly_normal_style_vertical">
+        <LinearLayout style="@style/Lly_normal_style_vertical"
+            android:layout_height="match_parent">
 
             <include layout="@layout/base_bar" />
 
-            <android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/srl_refresh"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+            <!--<android.support.v4.widget.SwipeRefreshLayout-->
+                <!--android:id="@+id/srl_refresh"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1">-->
 
                 <ScrollView
                     android:id="@+id/sv_detail"
@@ -48,7 +49,7 @@
                         </RelativeLayout>
 
                         <TextView
-                            android:id="@+id/tv_title"
+                            android:id="@+id/tv_goods_title"
                             style="@style/Remind_text_style" />
 
                         <TextView
@@ -72,7 +73,8 @@
                                 style="@style/User_text_style"
                                 android:gravity="right"
                                 android:text="押金"
-                                android:textColor="@color/top_red" />
+                                android:textColor="@color/top_red"
+                                android:textSize="@dimen/public_textsize_value_16"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -82,6 +84,7 @@
                             <TextView
                                 android:id="@+id/tv_collect"
                                 style="@style/Remind_text_normal_style"
+                                android:layout_weight="1"
                                 android:textColor="@color/T3"
                                 android:textSize="@dimen/public_textsize_value_12" />
 
@@ -109,7 +112,7 @@
                     </LinearLayout>
                 </ScrollView>
 
-            </android.support.v4.widget.SwipeRefreshLayout>
+            <!--</android.support.v4.widget.SwipeRefreshLayout>-->
         </LinearLayout>
 
         <LinearLayout

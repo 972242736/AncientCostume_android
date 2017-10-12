@@ -11,6 +11,12 @@ public class GoodsDetail {
     private String rental;
     private String deposit;
     private String imgName;
+    private String province;
+    private String city;
+    private String district;
+    private String address;
+    private String collectNum;
+    private String sellNum;
 
     public int getId() {
         return id;
@@ -58,5 +64,53 @@ public class GoodsDetail {
 
     public void setImgName(String imgName) {
         this.imgName = imgName;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCollectNum() {
+        return collectNum;
+    }
+
+    public void setCollectNum(String collectNum) {
+        this.collectNum = collectNum;
+    }
+
+    public String getSellNum() {
+        return sellNum;
+    }
+
+    public void setSellNum(String sellNum) {
+        this.sellNum = sellNum;
     }
 }

@@ -45,6 +45,7 @@
         <activity android:name="com.mmf.ancientcostume.activity.ImagePreviewActivity" />
         <activity android:name="com.mmf.ancientcostume.activity.GoodsListActivity" />
         <activity android:name="com.mmf.ancientcostume.activity.SelAddressActivity" />
+        <activity android:name="com.mmf.ancientcostume.activity.GoodsDetailActivity" />
         <!--<activity android:name="com.mmf.ancientcostume.fragment.user.ReleaseActivityity" />-->
         <!-- 百度定位开始 -->
         <service

@@ -145,6 +145,10 @@ public class ReleaseFragment extends BaseFragment<ReleasePresenterImp, ReleaseFr
         map.put("describe", etDescribe.getText().toString());
         map.put("rental", edRental.getText().toString());
         map.put("deposit", edDeposit.getText().toString());
+        map.put("province", province);
+        map.put("city", city);
+        map.put("district", district);
+        map.put("address", province + city + district);
         return map;
     }
 
